@@ -16,20 +16,19 @@ export default function ProductDescription() {
             <h3>{name}</h3>
             <Carousel>
                 <Carousel.Item>
-                    <img
-                    className="d-block w-100"
-                    src="holder.js/800x400?text=First slide&bg=373940"
-                    alt="First slide"
-                    />
+                    <img 
+                        className="d-block w-100"
+                        src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png"
+                        alt="First slide" />
                     <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h3>First slide label</h3>
+                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
                     className="d-block w-100"
-                    src="holder.js/800x400?text=Second slide&bg=282c34"
+                    src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png"
                     alt="Second slide"
                     />
 
