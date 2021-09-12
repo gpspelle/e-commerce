@@ -3,7 +3,6 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import './App.css';
 import { PRODUCT_DESCRIPTION } from "./components/Product";
 import ProductContainer from './components/ProductContainer';
 import ProductDescription from "./components/ProductDescription";
