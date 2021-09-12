@@ -6,12 +6,12 @@ import Badge from "react-bootstrap/Badge";
 
 export const PRODUCT_DESCRIPTION = "product-description";
 
-export default function Product({ identifier, description, price, detailURL }) {
+export default function Product({ identifier, description, price }) {
      const history = useHistory();
 
     const openDetailPage = (event) => {
         console.log(event);
-        history.push(`${PRODUCT_DESCRIPTION}/${detailURL}`);
+        history.push(`${PRODUCT_DESCRIPTION}/${identifier}`);
     }
 
     return (

@@ -12,15 +12,13 @@ export default function ProductContainer() {
                     <Product 
                         identifier="Product 1"
                         description="Product 1 small description"
-                        price="10"
-                        detailURL="product-1"/>
+                        price="10" />
                 </Col>
                 <Col>
                     <Product 
                         identifier="Product 2"
                         description="Product 2 small description"
-                        price="20"
-                        detailURL="product-2"/>
+                        price="20" />
                 </Col>
             </Row>
             <Row>
@@ -28,15 +26,13 @@ export default function ProductContainer() {
                     <Product 
                         identifier="Product 3"
                         description="Product 3 small description"
-                        price="30"
-                        detailURL="product-3"/>
+                        price="30" />
                 </Col>
                 <Col>
                     <Product 
                         identifier="Product 4"
                         description="Product 4 small description"
-                        price="40"
-                        detailURL="product-4"/>
+                        price="40" />
                 </Col>
             </Row>
         </Container>
