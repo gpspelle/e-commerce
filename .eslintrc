@@ -8,7 +8,11 @@
     "extends": ["plugin:prettier/recommended"],
     "parserOptions": {
       "ecmaVersion": 2020,
-      "sourceType": "module"
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true,
+        "modules": true
+      }
     },
     "rules": {
       "no-console": "warn",
