@@ -28,7 +28,10 @@
     ]
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,scss,css,md}": ["eslint --fix", "prettier --write"]
+    "**/*.{js,jsx,ts,tsx,scss,css,md}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "husky": {
     "hooks": {
