@@ -26,6 +26,15 @@
       "react-app/jest"
     ]
   },
+  "lint-staged": {
+    "*.+(js|jsx)": "eslint --fix",
+    "*.+(json|css|md)": "prettier --write"
+  },
+  "husky": {
+      "hooks": {
+        "pre-commit": "lint-staged"
+      }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -37,5 +46,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "prettier": "^2.4.1"
   }
 }
