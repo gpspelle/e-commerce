@@ -54,5 +54,8 @@ export class CdkStack extends cdk.Stack {
       "GET",
       new apigateway.LambdaIntegration(getProductsLambda, { proxy: true })
     )
+
+    // 👇 grant the lambda role read permissions to our table
+    table.grantReadData(getProductsLambda)
   }
 }
