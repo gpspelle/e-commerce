@@ -1,6 +1,8 @@
 import * as dynamodb from "@aws-cdk/aws-dynamodb"
 import * as apigateway from "@aws-cdk/aws-apigateway"
 import * as lambda from "@aws-cdk/aws-lambda"
+import * as s3 from "@aws-cdk/aws-s3"
+import * as iam from "@aws-cdk/aws-iam"
 import * as path from "path"
 import * as cdk from "@aws-cdk/core"
 
@@ -57,5 +59,41 @@ export class CdkStack extends cdk.Stack {
 
     // 👇 grant the lambda role read permissions to our table
     table.grantReadData(getProductsLambda)
+
+    // 👇 create bucket
+    const s3Bucket = new s3.Bucket(this, "s3-bucket", {
+      bucketName: "e-commerce-images-bucket",
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      versioned: false,
+      publicReadAccess: true,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      cors: [
+        {
+          allowedMethods: [
+            s3.HttpMethods.GET,
+            s3.HttpMethods.POST,
+            s3.HttpMethods.PUT,
+          ],
+          allowedOrigins: ["*"],
+          allowedHeaders: ["*"],
+        },
+      ],
+      lifecycleRules: [
+        {
+          abortIncompleteMultipartUploadAfter: cdk.Duration.days(90),
+          expiration: cdk.Duration.days(365),
+          transitions: [
+            {
+              storageClass: s3.StorageClass.INFREQUENT_ACCESS,
+              transitionAfter: cdk.Duration.days(30),
+            },
+          ],
+        },
+      ],
+    })
+
+    // 👇 grant access to bucket
+    s3Bucket.grantRead(new iam.AccountRootPrincipal())
   }
 }

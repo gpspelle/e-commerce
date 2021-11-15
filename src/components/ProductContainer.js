@@ -30,6 +30,7 @@ export default function ProductContainer() {
                 identifier={item.PRODUCT_NAME}
                 description={item.PRODUCT_DESCRIPTION}
                 price={item.PRODUCT_PRICE}
+                images={item.PRODUCT_IMAGES}
               ></Product>
             </Col>
           )

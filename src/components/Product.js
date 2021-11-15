@@ -6,7 +6,7 @@ import Badge from "react-bootstrap/Badge"
 
 export const PRODUCT_DESCRIPTION = "product-description"
 
-export default function Product({ identifier, description, price }) {
+export default function Product({ identifier, description, price, images }) {
   const history = useHistory()
 
   const openDetailPage = (event) => {
@@ -15,7 +15,7 @@ export default function Product({ identifier, description, price }) {
 
   return (
     <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="artesanato.jpg" />
+      <Card.Img variant="top" src={images[0]} />
       <Card.Body>
         <Card.Title>{identifier}</Card.Title>
         <Card.Text>{description}</Card.Text>

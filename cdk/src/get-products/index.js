@@ -19,7 +19,15 @@ const main = async (event) => {
     params.ExclusiveStartKey = items.LastEvaluatedKey
   } while (typeof items.LastEvaluatedKey !== "undefined")
 
-  return scanResults
+  return {
+    statusCode: 200,
+    body: JSON.stringify(scanResults),
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
+    },
+    isBase64Encoded: false,
+  }
 }
 
 module.exports = { main }
