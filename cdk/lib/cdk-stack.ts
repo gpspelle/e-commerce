@@ -60,6 +60,26 @@ export class CdkStack extends cdk.Stack {
     // 👇 grant the lambda role read permissions to our table
     table.grantReadData(getProductsLambda)
 
+    // 👇 define PUT product function
+    const putProductLambda = new lambda.Function(this, "put-product-lambda", {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      handler: "index.main",
+      timeout: cdk.Duration.seconds(100),
+      code: lambda.Code.fromAsset(path.join(__dirname, "/../src/put-product")),
+    })
+
+    // 👇 add a /product resource
+    const product = api.root.addResource("product")
+
+    // 👇 integrate PUT /product with putProductLambda
+    product.addMethod(
+      "PUT",
+      new apigateway.LambdaIntegration(putProductLambda, { proxy: true })
+    )
+
+    // 👇 grant the lambda role write permissions to our table
+    table.grantWriteData(putProductLambda)
+
     // 👇 create bucket
     const s3Bucket = new s3.Bucket(this, "s3-bucket", {
       bucketName: "e-commerce-images-bucket",
@@ -94,6 +114,6 @@ export class CdkStack extends cdk.Stack {
     })
 
     // 👇 grant access to bucket
-    s3Bucket.grantRead(new iam.AccountRootPrincipal())
+    s3Bucket.grantWrite(putProductLambda)
   }
 }
