@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Product from "./Product"
 
-const api = "https://2qdcy8r9u1.execute-api.us-east-1.amazonaws.com/dev"
+const api = "https://qbhf2c9996.execute-api.us-east-1.amazonaws.com/dev"
 const endpoint = "products"
 
 export default function ProductContainer() {
