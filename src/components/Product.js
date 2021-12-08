@@ -23,7 +23,7 @@ export default function Product({ identifier, description, price, images }) {
         {images?.map((item, i) => {
           return (
             <Carousel.Item key={i}>
-              <img className="d-block w-100" src={item} alt={`${i} image`} />
+              <img className="d-block w-100" src={item} alt={`${i}`} />
             </Carousel.Item>
           )
         })}
