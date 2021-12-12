@@ -40,7 +40,7 @@ export default function ProductContainer() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  height: "75vh",
+                  padding: "30px",
                 }}
               >
                 <Product
