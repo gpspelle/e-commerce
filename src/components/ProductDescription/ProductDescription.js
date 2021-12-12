@@ -49,7 +49,7 @@ export default function ProductDescription() {
   return (
     <Card style={{ width: "50%", margin: "0 auto" }}>
       <div style={{ display: "flex" }}>
-        <Button onClick={() => history.goBack()}>Voltar</Button>
+        <Button onClick={() => history.push("/")}>Voltar</Button>
         <h3 style={{ margin: "0 auto" }}>{name}</h3>
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
       </div>
