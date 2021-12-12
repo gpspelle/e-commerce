@@ -36,7 +36,9 @@ export default function Product({ id, name, description, price, images }) {
         </Button>
         */}
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
-        <Card.Text style={{ textAlign: "center" }}>R$ {price}</Card.Text>
+        <Card.Text className="notranslate" style={{ textAlign: "center" }}>
+          R$ {price}
+        </Card.Text>
       </Card.Body>
     </Card>
   )
