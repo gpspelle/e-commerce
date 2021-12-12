@@ -30,7 +30,7 @@ export default function ProductContainer() {
       >
         <i className="fa fa-whatsapp whatsapp-icon"></i>
       </a>
-      <Container>
+      <Container style={{ display: "block", width: 700, padding: 30 }}>
         <Row>
           {products?.map((item, i) => {
             return (

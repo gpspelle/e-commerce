@@ -1,6 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { Carousel, Button, Card, Badge } from "react-bootstrap"
+import { Carousel, Button, Card, Badge, Figure } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 
 export const PRODUCT_DESCRIPTION = "product-description"
@@ -17,21 +17,13 @@ export default function Product({ id, name, description, price, images }) {
 
   return (
     <Card style={{ width: "18rem" }}>
-      <Carousel interval={null}>
-        {images?.map((item, i) => {
-          return (
-            <Carousel.Item key={i}>
-              <img
-                className="d-block w-100"
-                width="256px"
-                height="256px"
-                src={item}
-                alt={`${i}`}
-              />
-            </Carousel.Item>
-          )
-        })}
-      </Carousel>
+      <img
+        className="d-block w-100"
+        width="256px"
+        height="256px"
+        src={images[0]}
+        alt={`256x256`}
+      />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>
