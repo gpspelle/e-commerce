@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button } from "react-bootstrap"
 import axios from "axios"
+import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 
 const api = "https://qbhf2c9996.execute-api.us-east-1.amazonaws.com/dev"
 const endpoint = "product"
@@ -10,6 +11,7 @@ export default function ProductDescription() {
   const location = useLocation()
   const history = useHistory()
   const [name, setName] = useState()
+  const [price, setPrice] = useState()
   const [images, setImages] = useState()
   const { id } = useParams()
 
@@ -24,7 +26,9 @@ export default function ProductDescription() {
           params: body,
         })
 
+        console.log(response.data.Item)
         setName(response.data.Item.PRODUCT_NAME.S)
+        setPrice(response.data.Item.PRODUCT_PRICE.S)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
       } catch (e) {
         console.error(e)
@@ -33,6 +37,7 @@ export default function ProductDescription() {
 
     if (location.state) {
       setName(location.state.name)
+      setPrice(location.state.price)
       setImages(location.state.images)
     } else {
       fetchData()
@@ -44,6 +49,7 @@ export default function ProductDescription() {
       <div style={{ display: "flex" }}>
         <Button onClick={() => history.goBack()}>Voltar</Button>
         <h3 style={{ margin: "0 auto" }}>{name}</h3>
+        <SendMessageWhatsAppButton id={id} name={name} price={price} />
       </div>
       <Carousel interval={null}>
         {images?.map((item, i) => {

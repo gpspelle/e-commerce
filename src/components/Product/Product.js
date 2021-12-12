@@ -1,9 +1,9 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
 import { Carousel, Button, Card, Badge } from "react-bootstrap"
+import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 
 export const PRODUCT_DESCRIPTION = "product-description"
-const phoneNumber = "+5519993955537"
 
 export default function Product({ id, name, description, price, images }) {
   const history = useHistory()
@@ -13,16 +13,6 @@ export default function Product({ id, name, description, price, images }) {
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: { name, description, price, images },
     })
-  }
-
-  const sendWhatsAppMessage = () => {
-    const message = `Olá! Estou interessado no produto ${name}, preço R$ ${price}.\n\nLink do produto: <fake_link>`
-    const url =
-      "https://api.whatsapp.com/send?phone=" +
-      phoneNumber +
-      "&text=" +
-      encodeURIComponent(message)
-    window.open(url, "_blank")
   }
 
   return (
@@ -48,7 +38,7 @@ export default function Product({ id, name, description, price, images }) {
         <Button variant="primary" onClick={(event) => openDetailPage(event)}>
           Mais detalhes
         </Button>
-        <Button onClick={() => sendWhatsAppMessage()}>Gostei desse</Button>
+        <SendMessageWhatsAppButton id={id} name={name} price={price} />
         <Badge pill bg="success">
           R$ {price}
         </Badge>
