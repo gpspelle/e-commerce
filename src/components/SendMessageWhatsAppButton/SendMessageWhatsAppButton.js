@@ -16,7 +16,10 @@ const sendWhatsAppMessage = (id, name, price) => {
 export default function SendMessageWhatsAppButton({ id, name, price }) {
   return (
     <div>
-      <Button onClick={() => sendWhatsAppMessage(id, name, price)}>
+      <Button
+        style={{ width: "100%", marginBottom: "8%" }}
+        onClick={() => sendWhatsAppMessage(id, name, price)}
+      >
         Gostei desse
       </Button>
     </div>

@@ -13,6 +13,7 @@ export default function ProductDescription() {
   const [name, setName] = useState()
   const [price, setPrice] = useState()
   const [images, setImages] = useState()
+  const [description, setDescription] = useState()
   const { id } = useParams()
 
   useEffect(() => {
@@ -26,8 +27,8 @@ export default function ProductDescription() {
           params: body,
         })
 
-        console.log(response.data.Item)
         setName(response.data.Item.PRODUCT_NAME.S)
+        setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
         setPrice(response.data.Item.PRODUCT_PRICE.S)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
       } catch (e) {
@@ -37,6 +38,7 @@ export default function ProductDescription() {
 
     if (location.state) {
       setName(location.state.name)
+      setDescription(location.state.description)
       setPrice(location.state.price)
       setImages(location.state.images)
     } else {

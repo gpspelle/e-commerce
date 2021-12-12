@@ -35,11 +35,15 @@ export default function Product({ id, name, description, price, images }) {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>
-        <Button variant="primary" onClick={(event) => openDetailPage(event)}>
+        <Button
+          style={{ width: "100%", marginBottom: "8%" }}
+          variant="primary"
+          onClick={(event) => openDetailPage(event)}
+        >
           Mais detalhes
         </Button>
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
-        <Badge pill bg="success">
+        <Badge pill bg="success" style={{ width: "100%" }}>
           R$ {price}
         </Badge>
       </Card.Body>
