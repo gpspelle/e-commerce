@@ -1,6 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { Carousel, Button, Card, Badge, Figure } from "react-bootstrap"
+import { Button, Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 
 export const PRODUCT_DESCRIPTION = "product-description"
@@ -25,8 +25,8 @@ export default function Product({ id, name, description, price, images }) {
         alt={`256x256`}
       />
       <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <Card.Text>{description}</Card.Text>
+        <Card.Title className="notranslate">{name}</Card.Title>
+        <Card.Text className="notranslate">{description}</Card.Text>
         {/* <Button
           style={{ width: "100%", marginBottom: "8%" }}
           variant="outline-primary"
