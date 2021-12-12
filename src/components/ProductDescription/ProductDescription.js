@@ -1,12 +1,44 @@
-import React from "react"
-import { useLocation, useHistory } from "react-router-dom"
+import React, { useEffect, useState } from "react"
+import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button } from "react-bootstrap"
+import axios from "axios"
+
+const api = "https://qbhf2c9996.execute-api.us-east-1.amazonaws.com/dev"
+const endpoint = "product"
 
 export default function ProductDescription() {
   const location = useLocation()
   const history = useHistory()
-  const name = location.state.name
-  const images = location.state.images
+  const [name, setName] = useState()
+  const [images, setImages] = useState()
+  const { id } = useParams()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const body = {
+          id,
+        }
+
+        const response = await axios.get(`${api}/${endpoint}`, {
+          params: body,
+        })
+
+        setName(response.data.Item.PRODUCT_NAME.S)
+        setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    if (location.state) {
+      setName(location.state.name)
+      setImages(location.state.images)
+    } else {
+      fetchData()
+    }
+  }, [])
+
   return (
     <Card style={{ width: "50%", margin: "0 auto" }}>
       <div style={{ display: "flex" }}>

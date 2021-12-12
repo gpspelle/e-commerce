@@ -10,7 +10,7 @@ export default function Product({ id, name, description, price, images }) {
 
   const openDetailPage = (event) => {
     history.push({
-      pathname: `${PRODUCT_DESCRIPTION}/${id}`,
+      pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: { name, description, price, images },
     })
   }
