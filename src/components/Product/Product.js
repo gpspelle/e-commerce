@@ -27,13 +27,14 @@ export default function Product({ id, name, description, price, images }) {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>
-        <Button
+        {/* <Button
           style={{ width: "100%", marginBottom: "8%" }}
           variant="outline-primary"
           onClick={(event) => openDetailPage(event)}
         >
           Mais detalhes
         </Button>
+        */}
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
         <Card.Text style={{ textAlign: "center" }}>R$ {price}</Card.Text>
       </Card.Body>
