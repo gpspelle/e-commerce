@@ -14,6 +14,8 @@ export default function ProductContainer() {
     async function getProductsFromDatabase() {
       const data = await fetch(`${api}/${endpoint}`)
       const json = await data.json()
+      json.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
+
       setProducts(json)
     }
 
