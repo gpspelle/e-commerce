@@ -2,9 +2,10 @@ import React from "react"
 import { Button } from "react-bootstrap"
 
 const phoneNumber = "+5519993955537"
+const pageBase = "https://master.do9fyga9tdb2l.amplifyapp.com"
 
 const sendWhatsAppMessage = (id, name, price) => {
-  const message = `Olá! Estou interessado no produto ${name}, preço R$ ${price}.\n\nLink do produto: <fake_link>`
+  const message = `Olá! Estou interessado no produto ${name}, preço R$ ${price}.\n\nLink do produto: ${pageBase}/${id}/product-description`
   const url =
     "https://api.whatsapp.com/send?phone=" +
     phoneNumber +
