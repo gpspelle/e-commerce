@@ -17,6 +17,7 @@ export default function SendMessageWhatsAppButton({ id, name, price }) {
   return (
     <div>
       <Button
+        variant="success"
         style={{ width: "100%", marginBottom: "8%" }}
         onClick={() => sendWhatsAppMessage(id, name, price)}
       >

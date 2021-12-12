@@ -37,15 +37,13 @@ export default function Product({ id, name, description, price, images }) {
         <Card.Text>{description}</Card.Text>
         <Button
           style={{ width: "100%", marginBottom: "8%" }}
-          variant="primary"
+          variant="outline-primary"
           onClick={(event) => openDetailPage(event)}
         >
           Mais detalhes
         </Button>
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
-        <Badge pill bg="success" style={{ width: "100%" }}>
-          R$ {price}
-        </Badge>
+        <Card.Text style={{ textAlign: "center" }}>R$ {price}</Card.Text>
       </Card.Body>
     </Card>
   )
