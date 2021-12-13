@@ -3,9 +3,7 @@ import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-
-const api = "https://qbhf2c9996.execute-api.us-east-1.amazonaws.com/dev"
-const endpoint = "product"
+import { PRODUCT_ENDPOINT } from "../../constants/constants"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -23,7 +21,7 @@ export default function ProductDescription() {
           id,
         }
 
-        const response = await axios.get(`${api}/${endpoint}`, {
+        const response = await axios.get(`${API}/${PRODUCT_ENDPOINT}`, {
           params: body,
         })
 

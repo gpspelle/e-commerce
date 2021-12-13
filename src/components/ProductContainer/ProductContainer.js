@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react"
 import { Container, Row, Col } from "react-bootstrap"
+import { API, PHONE_NUMBER, PRODUCTS_ENDPOINT } from "../../constants/constants"
 import Product from "../Product/Product"
 import "./ProductContainer.css"
-
-const api = "https://qbhf2c9996.execute-api.us-east-1.amazonaws.com/dev"
-const endpoint = "products"
-const phoneNumber = "+5519993955537"
 
 export default function ProductContainer() {
   const [products, setProducts] = useState()
 
   useEffect(() => {
     async function getProductsFromDatabase() {
-      const data = await fetch(`${api}/${endpoint}`)
+      const data = await fetch(`${API}/${PRODUCTS_ENDPOINT}`)
       const json = await data.json()
       json.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
 
@@ -25,7 +22,7 @@ export default function ProductContainer() {
   return (
     <div>
       <a
-        href={`https://wa.me/${phoneNumber}`}
+        href={`https://wa.me/${PHONE_NUMBER}`}
         className="whatsapp_float"
         target="_blank"
         rel="noopener noreferrer"
