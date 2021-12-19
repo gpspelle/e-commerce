@@ -3,7 +3,7 @@ import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { PRODUCT_ENDPOINT } from "../../constants/constants"
+import { API, PRODUCT_ENDPOINT } from "../../constants/constants"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -54,7 +54,7 @@ export default function ProductDescription() {
       <Carousel interval={null}>
         {images?.map((item, i) => {
           return (
-            <Carousel.Item key={i} style={{ height: "100vh" }}>
+            <Carousel.Item key={i}>
               <img width="100%" height="100%" src={item} alt={`${i} image`} />
             </Carousel.Item>
           )

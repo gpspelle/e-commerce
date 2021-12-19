@@ -6,14 +6,14 @@ import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageW
 export const PRODUCT_DESCRIPTION = "product-description"
 
 export default function Product({ id, name, description, price, images }) {
-  /*const history = useHistory()
+  const history = useHistory()
 
   const openDetailPage = (event) => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: { name, description, price, images },
     })
-  }*/
+  }
 
   return (
     <Card style={{ width: "18rem" }}>
@@ -27,14 +27,13 @@ export default function Product({ id, name, description, price, images }) {
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
         <Card.Text className="notranslate">{description}</Card.Text>
-        {/* <Button
+        <Button
           style={{ width: "100%", marginBottom: "8%" }}
           variant="outline-primary"
           onClick={(event) => openDetailPage(event)}
         >
           Mais detalhes
         </Button>
-        */}
         <SendMessageWhatsAppButton id={id} name={name} price={price} />
         <Card.Text className="notranslate" style={{ textAlign: "center" }}>
           R$ {price}
