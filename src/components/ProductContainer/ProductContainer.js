@@ -26,7 +26,13 @@ export default function ProductContainer() {
           return true
         }
 
-        if (product?.PRODUCT_TAGS?.includes(lowerCaseSearchBarValue)) {
+        const match = product?.PRODUCT_TAGS?.find((element) => {
+          if (element.includes(lowerCaseSearchBarValue)) {
+            return true
+          }
+        })
+
+        if (match) {
           return true
         }
 

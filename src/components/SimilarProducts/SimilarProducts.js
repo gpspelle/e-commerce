@@ -12,7 +12,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export default function SimilarProducts({ tags }) {
   const history = useHistory()
-  const { height, width } = useWindowDimensions()
+  const { width } = useWindowDimensions()
   const [numberOfVisibleSimilarProducts, setNumberOfVisibleSimilarProducts] =
     useState()
   const [similarProductIds, setSimilarProductsIds] = useState()
@@ -120,8 +120,6 @@ export default function SimilarProducts({ tags }) {
       end: similarProducts.length,
     })
   }
-
-  console.log(numberOfVisibleSimilarProducts)
 
   return (
     <Pagination size="sm">
