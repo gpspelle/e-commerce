@@ -77,6 +77,7 @@ export default function ProductContainer() {
                     ? productOwnerIdToPhoneNumber[item.PRODUCT_OWNER_ID]
                     : false
                 }
+                tags={item.PRODUCT_TAGS}
               ></Product>
             </Col>
           )

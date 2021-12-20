@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory, useParams } from "react-router-dom"
-import { Card, Carousel, Button } from "react-bootstrap"
+import { Card, Carousel, Button, Container } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/constants"
+import SimilarProducts from "../SimilarProducts/SimilarProducts"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -14,6 +15,7 @@ export default function ProductDescription() {
   const [description, setDescription] = useState()
   const [phoneNumber, setPhoneNumber] = useState()
   const [productOwnerId, setProductOwnerId] = useState()
+  const [tags, setTags] = useState()
   const { id } = useParams()
 
   useEffect(() => {
@@ -50,6 +52,7 @@ export default function ProductDescription() {
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
         setPrice(response.data.Item.PRODUCT_PRICE.S)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
+        setTags(response.data.Item.PRODUCT_TAGS.SS)
       } catch (e) {
         console.error(e)
       }
@@ -60,33 +63,38 @@ export default function ProductDescription() {
       setDescription(location.state.description)
       setPrice(location.state.price)
       setImages(location.state.images)
-      setPhoneNumber(location.state.phoneNumber)
+      setProductOwnerId(location.state.productOwnerId)
+      if (location.state.phoneNumber) setPhoneNumber(location.state.phoneNumber)
+      setTags(location.state.tags)
     } else {
       fetchData()
     }
-  }, [])
+  }, [id])
 
   return (
-    <Card style={{ width: "50%", margin: "0 auto" }}>
-      <div style={{ display: "flex" }}>
-        <Button onClick={() => history.push("/")}>Voltar</Button>
-        <h3 style={{ margin: "0 auto" }}>{name}</h3>
-        <SendMessageWhatsAppButton
-          id={id}
-          name={name}
-          price={price}
-          phoneNumber={phoneNumber}
-        />
-      </div>
-      <Carousel interval={null}>
-        {images?.map((item, i) => {
-          return (
-            <Carousel.Item key={i}>
-              <img width="100%" height="100%" src={item} alt={`${i} image`} />
-            </Carousel.Item>
-          )
-        })}
-      </Carousel>
-    </Card>
+    <Container>
+      <Card style={{ width: "50%", margin: "0 auto" }}>
+        <div style={{ display: "flex" }}>
+          <Button onClick={() => history.push("/")}>Voltar</Button>
+          <h3 style={{ margin: "0 auto" }}>{name}</h3>
+          <SendMessageWhatsAppButton
+            id={id}
+            name={name}
+            price={price}
+            phoneNumber={phoneNumber}
+          />
+        </div>
+        <Carousel interval={null}>
+          {images?.map((item, i) => {
+            return (
+              <Carousel.Item key={i}>
+                <img width="100%" height="100%" src={item} alt={`${i} image`} />
+              </Carousel.Item>
+            )
+          })}
+        </Carousel>
+      </Card>
+      <SimilarProducts tags={tags} />
+    </Container>
   )
 }

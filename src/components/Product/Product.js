@@ -2,8 +2,7 @@ import React from "react"
 import { useHistory } from "react-router-dom"
 import { Button, Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-
-export const PRODUCT_DESCRIPTION = "product-description"
+import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 
 export default function Product({
   id,
@@ -12,13 +11,14 @@ export default function Product({
   price,
   images,
   phoneNumber,
+  tags,
 }) {
   const history = useHistory()
 
   const openDetailPage = (event) => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images, phoneNumber },
+      state: { name, description, price, images, phoneNumber, tags },
     })
   }
 

@@ -1,0 +1,104 @@
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import { Card, Pagination } from "react-bootstrap"
+import {
+  API,
+  PRODUCTS_ENDPOINT,
+  TAGS_ENDPOINT,
+  PRODUCT_DESCRIPTION,
+} from "../../constants/constants"
+import { useHistory } from "react-router-dom"
+
+export default function SimilarProducts({ tags }) {
+  const history = useHistory()
+  const [similarProductIds, setSimilarProductsIds] = useState()
+  const [similarProducts, setSimilarProducts] = useState()
+
+  useEffect(() => {
+    const fetchProductsByIds = async () => {
+      if (similarProductIds) {
+        const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`)
+
+        const products = response.data.filter((product) =>
+          similarProductIds.includes(product.id)
+        )
+
+        const productsFlat = products.flat(1)
+        setSimilarProducts(productsFlat)
+      }
+    }
+
+    fetchProductsByIds()
+  }, [similarProductIds])
+
+  useEffect(() => {
+    const fetchProductIdsByTags = async () => {
+      if (tags) {
+        const response = await axios.get(`${API}/${TAGS_ENDPOINT}`)
+
+        const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
+          tags.includes(productsByTag.TAG_NAME)
+        )
+
+        const sameTagProductIds = sameTagProductIdsByTag.map(
+          (sameTagProductIdByTag) => sameTagProductIdByTag.products
+        )
+
+        const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
+
+        setSimilarProductsIds([...sameTagProductIdsSet])
+      }
+    }
+
+    fetchProductIdsByTags()
+  }, [tags])
+
+  const openDetailPage = (
+    id,
+    name,
+    description,
+    price,
+    images,
+    tags,
+    productOwnerId
+  ) => {
+    history.push({
+      pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
+      state: { name, description, price, images, tags, productOwnerId },
+    })
+  }
+
+  return (
+    <Pagination size="sm">
+      <Pagination.First />
+      <Pagination.Prev />
+      {similarProducts &&
+        similarProducts.map((similarProduct, i) => (
+          <Pagination.Item
+            key={i}
+            onClick={() =>
+              openDetailPage(
+                similarProduct.id,
+                similarProduct.PRODUCT_NAME,
+                similarProduct.PRODUCT_DESCRIPTION,
+                similarProduct.PRODUCT_PRICE,
+                similarProduct.PRODUCT_IMAGES,
+                similarProduct.PRODUCT_TAGS,
+                similarProduct.PRODUCT_OWNER_ID
+              )
+            }
+          >
+            <Card style={{ width: "6rem" }}>
+              <img
+                className="d-block w-100"
+                src={similarProduct.PRODUCT_IMAGES[0]}
+                alt={`produto similar ${i}`}
+              />
+            </Card>
+          </Pagination.Item>
+        ))}
+      <Pagination.Next />
+      <Pagination.Last />
+    </Pagination>
+  )
+}
