@@ -9,10 +9,17 @@ import {
 } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
 
+const numberOfVisibleSimilarProducts = 8
+
 export default function SimilarProducts({ tags }) {
   const history = useHistory()
   const [similarProductIds, setSimilarProductsIds] = useState()
   const [similarProducts, setSimilarProducts] = useState()
+  const [visibleSimilarProducts, setVisibleSimilarProducts] = useState()
+  const [positionSimilarProducts, setPositionSimilarProducts] = useState({
+    start: 0,
+    end: numberOfVisibleSimilarProducts,
+  })
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
@@ -68,37 +75,72 @@ export default function SimilarProducts({ tags }) {
     })
   }
 
+  const firstPagination = () => {
+    setPositionSimilarProducts({ start: 0, end: numberOfVisibleSimilarProducts })
+  }
+
+  const nextPagination = () => {
+    var { start, end } = positionSimilarProducts
+
+    if (start < similarProducts.length - numberOfVisibleSimilarProducts) {
+      start = start + 1
+      end = end + 1
+    }
+
+    setPositionSimilarProducts({ start, end })
+  }
+
+  const prevPagination = () => {
+    var { start, end } = positionSimilarProducts
+
+    if (start > 0) {
+      start = start - 1
+      end = end - 1
+    }
+
+    setPositionSimilarProducts({ start, end })
+  }
+
+  const lastPagination = () => {
+    setPositionSimilarProducts({
+      start: similarProducts.length - numberOfVisibleSimilarProducts,
+      end: similarProducts.length,
+    })
+  }
+
   return (
     <Pagination size="sm">
-      <Pagination.First />
-      <Pagination.Prev />
+      <Pagination.First onClick={firstPagination} />
+      <Pagination.Prev onClick={prevPagination} />
       {similarProducts &&
-        similarProducts.map((similarProduct, i) => (
-          <Pagination.Item
-            key={i}
-            onClick={() =>
-              openDetailPage(
-                similarProduct.id,
-                similarProduct.PRODUCT_NAME,
-                similarProduct.PRODUCT_DESCRIPTION,
-                similarProduct.PRODUCT_PRICE,
-                similarProduct.PRODUCT_IMAGES,
-                similarProduct.PRODUCT_TAGS,
-                similarProduct.PRODUCT_OWNER_ID
-              )
-            }
-          >
-            <Card style={{ width: "6rem" }}>
-              <img
-                className="d-block w-100"
-                src={similarProduct.PRODUCT_IMAGES[0]}
-                alt={`produto similar ${i}`}
-              />
-            </Card>
-          </Pagination.Item>
-        ))}
-      <Pagination.Next />
-      <Pagination.Last />
+        similarProducts
+          .slice(positionSimilarProducts.start, positionSimilarProducts.end)
+          .map((similarProduct, i) => (
+            <Pagination.Item
+              key={i}
+              onClick={() =>
+                openDetailPage(
+                  similarProduct.id,
+                  similarProduct.PRODUCT_NAME,
+                  similarProduct.PRODUCT_DESCRIPTION,
+                  similarProduct.PRODUCT_PRICE,
+                  similarProduct.PRODUCT_IMAGES,
+                  similarProduct.PRODUCT_TAGS,
+                  similarProduct.PRODUCT_OWNER_ID
+                )
+              }
+            >
+              <Card style={{ width: "6rem" }}>
+                <img
+                  className="d-block w-100"
+                  src={similarProduct.PRODUCT_IMAGES[0]}
+                  alt={`produto similar ${i}`}
+                />
+              </Card>
+            </Pagination.Item>
+          ))}
+      <Pagination.Next onClick={nextPagination} />
+      <Pagination.Last onClick={lastPagination} />
     </Pagination>
   )
 }
