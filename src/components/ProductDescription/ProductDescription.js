@@ -3,7 +3,7 @@ import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { API, PRODUCT_ENDPOINT } from "../../constants/constants"
+import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/constants"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -12,7 +12,27 @@ export default function ProductDescription() {
   const [price, setPrice] = useState()
   const [images, setImages] = useState()
   const [description, setDescription] = useState()
+  const [phoneNumber, setPhoneNumber] = useState()
+  const [productOwnerId, setProductOwnerId] = useState()
   const { id } = useParams()
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      if (productOwnerId) {
+        const body = {
+          productOwnerIds: [productOwnerId],
+        }
+
+        const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
+          params: body,
+        })
+
+        setPhoneNumber(response.data[0].phone_number)
+      }
+    }
+
+    fetchAccount()
+  }, [productOwnerId])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +45,7 @@ export default function ProductDescription() {
           params: body,
         })
 
+        setProductOwnerId(response.data.Item.PRODUCT_OWNER_ID.S)
         setName(response.data.Item.PRODUCT_NAME.S)
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
         setPrice(response.data.Item.PRODUCT_PRICE.S)
@@ -39,6 +60,7 @@ export default function ProductDescription() {
       setDescription(location.state.description)
       setPrice(location.state.price)
       setImages(location.state.images)
+      setPhoneNumber(location.state.phoneNumber)
     } else {
       fetchData()
     }
@@ -49,7 +71,12 @@ export default function ProductDescription() {
       <div style={{ display: "flex" }}>
         <Button onClick={() => history.push("/")}>Voltar</Button>
         <h3 style={{ margin: "0 auto" }}>{name}</h3>
-        <SendMessageWhatsAppButton id={id} name={name} price={price} />
+        <SendMessageWhatsAppButton
+          id={id}
+          name={name}
+          price={price}
+          phoneNumber={phoneNumber}
+        />
       </div>
       <Carousel interval={null}>
         {images?.map((item, i) => {
