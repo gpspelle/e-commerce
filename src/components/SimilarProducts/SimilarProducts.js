@@ -15,7 +15,6 @@ export default function SimilarProducts({ tags }) {
   const history = useHistory()
   const [similarProductIds, setSimilarProductsIds] = useState()
   const [similarProducts, setSimilarProducts] = useState()
-  const [visibleSimilarProducts, setVisibleSimilarProducts] = useState()
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
     end: numberOfVisibleSimilarProducts,
