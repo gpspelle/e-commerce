@@ -8,17 +8,25 @@ import {
   PRODUCT_DESCRIPTION,
 } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
-
-const numberOfVisibleSimilarProducts = 8
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export default function SimilarProducts({ tags }) {
   const history = useHistory()
+  const { height, width } = useWindowDimensions()
+  const [numberOfVisibleSimilarProducts, setNumberOfVisibleSimilarProducts] =
+    useState()
   const [similarProductIds, setSimilarProductsIds] = useState()
   const [similarProducts, setSimilarProducts] = useState()
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
-    end: numberOfVisibleSimilarProducts,
+    end: 0,
   })
+
+  useEffect(() => {
+    if (numberOfVisibleSimilarProducts) {
+      setPositionSimilarProducts({ start: 0, end: numberOfVisibleSimilarProducts })
+    }
+  }, [numberOfVisibleSimilarProducts])
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
@@ -58,6 +66,12 @@ export default function SimilarProducts({ tags }) {
 
     fetchProductIdsByTags()
   }, [tags])
+
+  useEffect(() => {
+    if (width) {
+      setNumberOfVisibleSimilarProducts(parseInt((width - 130) / 114))
+    }
+  }, [width])
 
   const openDetailPage = (
     id,
@@ -106,6 +120,8 @@ export default function SimilarProducts({ tags }) {
       end: similarProducts.length,
     })
   }
+
+  console.log(numberOfVisibleSimilarProducts)
 
   return (
     <Pagination size="sm">
