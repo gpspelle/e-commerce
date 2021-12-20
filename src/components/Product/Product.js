@@ -5,13 +5,20 @@ import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageW
 
 export const PRODUCT_DESCRIPTION = "product-description"
 
-export default function Product({ id, name, description, price, images }) {
+export default function Product({
+  id,
+  name,
+  description,
+  price,
+  images,
+  phoneNumber,
+}) {
   const history = useHistory()
 
   const openDetailPage = (event) => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images },
+      state: { name, description, price, images, phoneNumber },
     })
   }
 
@@ -34,7 +41,12 @@ export default function Product({ id, name, description, price, images }) {
         >
           Mais detalhes
         </Button>
-        <SendMessageWhatsAppButton id={id} name={name} price={price} />
+        <SendMessageWhatsAppButton
+          id={id}
+          name={name}
+          price={price}
+          phoneNumber={phoneNumber}
+        />
         <Card.Text className="notranslate" style={{ textAlign: "center" }}>
           R$ {price}
         </Card.Text>
