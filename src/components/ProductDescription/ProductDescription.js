@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory, useParams } from "react-router-dom"
-import { Card, Carousel, Button, Container } from "react-bootstrap"
+import { Card, Carousel, Button, Container, ListGroup } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/constants"
@@ -15,6 +15,7 @@ export default function ProductDescription() {
   const [description, setDescription] = useState()
   const [phoneNumber, setPhoneNumber] = useState()
   const [productOwnerId, setProductOwnerId] = useState()
+  const [commercialName, setCommercialName] = useState()
   const [tags, setTags] = useState()
   const { id } = useParams()
 
@@ -29,6 +30,8 @@ export default function ProductDescription() {
           params: body,
         })
 
+        console.log(response.data[0])
+        setCommercialName(response.data[0].commercial_name)
         setPhoneNumber(response.data[0].phone_number)
       }
     }
@@ -66,6 +69,8 @@ export default function ProductDescription() {
       setProductOwnerId(location.state.productOwnerId)
       if (location.state.phoneNumber) setPhoneNumber(location.state.phoneNumber)
       setTags(location.state.tags)
+      if (location.state.commercialName)
+        setCommercialName(location.state.commercialName)
     } else {
       fetchData()
     }
@@ -73,31 +78,49 @@ export default function ProductDescription() {
 
   return (
     <Container>
-      <Card style={{ width: "50%", margin: "0 auto" }}>
-        <div style={{ display: "flex" }}>
-          <Button onClick={() => history.push("/")}>Voltar</Button>
-          <h3 style={{ margin: "0 auto" }}>{name}</h3>
-          <SendMessageWhatsAppButton
-            id={id}
-            name={name}
-            price={price}
-            phoneNumber={phoneNumber}
-          />
-        </div>
+      <div style={{ display: "flex" }}>
+        <Button onClick={() => history.push("/")}>Voltar</Button>
+      </div>
+      <Card>
         {images &&
           (images.length > 1 ? (
             <Carousel interval={null}>
               {images?.map((item, i) => {
                 return (
                   <Carousel.Item key={i}>
-                    <img width="100%" height="100%" src={item} alt={`${i} image`} />
+                    <img
+                      className="d-block w-100"
+                      width="256px"
+                      height="256px"
+                      src={item}
+                      alt={`${i} image`}
+                    />
                   </Carousel.Item>
                 )
               })}
             </Carousel>
           ) : (
-            <img width="100%" height="100%" src={images[0]} alt="image" />
+            <img
+              className="d-block w-100"
+              width="256px"
+              height="256px"
+              src={images[0]}
+              alt="image"
+            />
           ))}
+        <Card.Header as="h4">Detalhes do produto</Card.Header>
+        <ListGroup variant="flush">
+          <ListGroup.Item>Nome: {name}</ListGroup.Item>
+          <ListGroup.Item>Descrição: {description}</ListGroup.Item>
+          <ListGroup.Item>Preço: {price}</ListGroup.Item>
+          <ListGroup.Item>Vendido por: {commercialName}</ListGroup.Item>
+        </ListGroup>
+        <SendMessageWhatsAppButton
+          id={id}
+          name={name}
+          price={price}
+          phoneNumber={phoneNumber}
+        />
       </Card>
       <SimilarProducts tags={tags} />
     </Container>

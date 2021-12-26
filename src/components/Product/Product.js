@@ -12,13 +12,14 @@ export default function Product({
   images,
   phoneNumber,
   tags,
+  commercialName,
 }) {
   const history = useHistory()
 
   const openDetailPage = (event) => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images, phoneNumber, tags },
+      state: { name, description, price, images, phoneNumber, tags, commercialName },
     })
   }
 
@@ -46,6 +47,7 @@ export default function Product({
           name={name}
           price={price}
           phoneNumber={phoneNumber}
+          marginBottom="8%"
         />
         <Card.Text className="notranslate" style={{ textAlign: "center" }}>
           R$ {price}

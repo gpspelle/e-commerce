@@ -81,10 +81,13 @@ export default function ProductContainer() {
     }
   }, [productOwnerIds])
 
-  var productOwnerIdToPhoneNumber = {}
+  var productOwnerIdToOwnerData = {}
   if (accounts) {
     accounts.forEach((account) => {
-      productOwnerIdToPhoneNumber[account.id] = account.phone_number
+      productOwnerIdToOwnerData[account.id] = {
+        phoneNumber: account.phone_number,
+        commercialName: account.commercial_name,
+      }
     })
   }
 
@@ -110,8 +113,17 @@ export default function ProductContainer() {
                   price={item.PRODUCT_PRICE}
                   images={item.PRODUCT_IMAGES}
                   phoneNumber={
-                    Object.keys(productOwnerIdToPhoneNumber).length !== 0
-                      ? productOwnerIdToPhoneNumber[item.PRODUCT_OWNER_ID]
+                    Object.keys(productOwnerIdToOwnerData).length !== 0
+                      ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
+                          "phoneNumber"
+                        ]
+                      : false
+                  }
+                  commercialName={
+                    Object.keys(productOwnerIdToOwnerData).length !== 0
+                      ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
+                          "commercialName"
+                        ]
                       : false
                   }
                   tags={item.PRODUCT_TAGS}

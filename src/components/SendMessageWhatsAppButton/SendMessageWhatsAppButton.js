@@ -12,13 +12,19 @@ const sendWhatsAppMessage = (id, name, price, phoneNumber) => {
   window.open(url, "_blank")
 }
 
-export default function SendMessageWhatsAppButton({ id, name, price, phoneNumber }) {
+export default function SendMessageWhatsAppButton({
+  id,
+  name,
+  price,
+  phoneNumber,
+  marginBottom,
+}) {
   return (
     <div>
       <Button
         disabled={phoneNumber ? false : true}
         variant="success"
-        style={{ width: "100%", marginBottom: "8%" }}
+        style={{ width: "100%", marginBottom }}
         onClick={() => sendWhatsAppMessage(id, name, price, phoneNumber)}
       >
         Gostei desse
