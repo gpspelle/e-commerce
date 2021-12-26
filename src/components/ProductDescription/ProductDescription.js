@@ -84,15 +84,20 @@ export default function ProductDescription() {
             phoneNumber={phoneNumber}
           />
         </div>
-        <Carousel interval={null}>
-          {images?.map((item, i) => {
-            return (
-              <Carousel.Item key={i}>
-                <img width="100%" height="100%" src={item} alt={`${i} image`} />
-              </Carousel.Item>
-            )
-          })}
-        </Carousel>
+        {images &&
+          (images.length > 1 ? (
+            <Carousel interval={null}>
+              {images?.map((item, i) => {
+                return (
+                  <Carousel.Item key={i}>
+                    <img width="100%" height="100%" src={item} alt={`${i} image`} />
+                  </Carousel.Item>
+                )
+              })}
+            </Carousel>
+          ) : (
+            <img width="100%" height="100%" src={images[0]} alt="image" />
+          ))}
       </Card>
       <SimilarProducts tags={tags} />
     </Container>

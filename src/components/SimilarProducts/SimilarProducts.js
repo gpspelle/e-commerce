@@ -145,6 +145,8 @@ export default function SimilarProducts({ tags }) {
             >
               <Card style={{ width: "6rem" }}>
                 <img
+                  width="64px"
+                  height="64px"
                   className="d-block w-100"
                   src={similarProduct.PRODUCT_IMAGES[0]}
                   alt={`produto similar ${i}`}
