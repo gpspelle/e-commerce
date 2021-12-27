@@ -4,6 +4,7 @@ import { Container, Row, Col, Form } from "react-bootstrap"
 import { ACCOUNTS_ENDPOINT, API, PRODUCTS_ENDPOINT } from "../../constants/constants"
 import Product from "../Product/Product"
 import "./ProductContainer.css"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function ProductContainer() {
   const [products, setProducts] = useState()
@@ -133,27 +134,10 @@ export default function ProductContainer() {
           })}
         </Row>
       </Container>
-      <div
-        style={{
-          backgroundColor: "lightblue",
-          height: "54px",
-          width: "100%",
-          position: "fixed",
-          top: "0px",
-        }}
-      >
-        <Form onSubmit={() => {}}>
-          <Form.Group controlId="formSearchBar">
-            <Form.Control
-              style={{ marginTop: "10px" }}
-              value={searchBarValue}
-              onChange={(e) => setSearchBarValue(e.target.value)}
-              type="text"
-              placeholder="Pesquisar..."
-            />
-          </Form.Group>
-        </Form>
-      </div>
+      <SearchBar
+        searchBarValue={searchBarValue}
+        setSearchBarValue={setSearchBarValue}
+      />
     </div>
   )
 }
