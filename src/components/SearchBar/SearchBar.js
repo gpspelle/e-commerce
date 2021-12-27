@@ -2,6 +2,12 @@ import React from "react"
 import { Col, Form } from "react-bootstrap"
 
 export default function SearchBar({ searchBarValue, setSearchBarValue }) {
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && event.shiftKey === false) {
+      event.preventDefault()
+    }
+  }
+
   return (
     <div
       className="justify-content-md-center"
@@ -14,7 +20,11 @@ export default function SearchBar({ searchBarValue, setSearchBarValue }) {
       }}
     >
       <Col md="auto">
-        <Form onSubmit={() => {}}>
+        <Form
+          onKeyDown={(e) => {
+            handleKeyDown(e)
+          }}
+        >
           <Form.Group controlId="formSearchBar">
             <Form.Control
               style={{ margin: "10px auto", width: "70%" }}
