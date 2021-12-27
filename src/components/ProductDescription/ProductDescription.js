@@ -77,52 +77,53 @@ export default function ProductDescription() {
   }, [id])
 
   return (
-    <Container>
-      <div style={{ display: "flex" }}>
-        <Button onClick={() => history.push("/")}>Voltar</Button>
-      </div>
-      <Card>
-        {images &&
-          (images.length > 1 ? (
-            <Carousel interval={null}>
-              {images?.map((item, i) => {
-                return (
-                  <Carousel.Item key={i}>
-                    <img
-                      className="d-block w-100"
-                      width="256px"
-                      height="256px"
-                      src={item}
-                      alt={`${i} image`}
-                    />
-                  </Carousel.Item>
-                )
-              })}
-            </Carousel>
-          ) : (
-            <img
-              className="d-block w-100"
-              width="256px"
-              height="256px"
-              src={images[0]}
-              alt="image"
-            />
-          ))}
-        <Card.Header as="h4">Detalhes do produto</Card.Header>
-        <ListGroup variant="flush">
-          <ListGroup.Item>Nome: {name}</ListGroup.Item>
-          <ListGroup.Item>Descrição: {description}</ListGroup.Item>
-          <ListGroup.Item>Preço: {price}</ListGroup.Item>
-          <ListGroup.Item>Vendido por: {commercialName}</ListGroup.Item>
-        </ListGroup>
-        <SendMessageWhatsAppButton
-          id={id}
-          name={name}
-          price={price}
-          phoneNumber={phoneNumber}
-        />
-      </Card>
+    <div>
+      <Container>
+        <div style={{ display: "flex" }}>
+          <Button onClick={() => history.push("/")}>Voltar</Button>
+        </div>
+        <Card style={{ width: "22rem", margin: "0 auto" }}>
+          {images &&
+            (images.length > 1 ? (
+              <Carousel interval={null}>
+                {images?.map((item, i) => {
+                  return (
+                    <Carousel.Item key={i}>
+                      <img
+                        className="w-100"
+                        height="256px"
+                        src={item}
+                        alt={`${i} image`}
+                      />
+                    </Carousel.Item>
+                  )
+                })}
+              </Carousel>
+            ) : (
+              <img className="w-100" height="256px" src={images[0]} alt="image" />
+            ))}
+          <Card.Header as="h4">Detalhes do produto</Card.Header>
+          <ListGroup variant="flush">
+            <ListGroup.Item className="notranslate">Nome: {name}</ListGroup.Item>
+            <ListGroup.Item className="notranslate">
+              Descrição: {description}
+            </ListGroup.Item>
+            <ListGroup.Item className="notranslate">
+              Preço: R$ {price}
+            </ListGroup.Item>
+            <ListGroup.Item className="notranslate">
+              Vendido por: {commercialName}
+            </ListGroup.Item>
+          </ListGroup>
+          <SendMessageWhatsAppButton
+            id={id}
+            name={name}
+            price={price}
+            phoneNumber={phoneNumber}
+          />
+        </Card>
+      </Container>
       <SimilarProducts tags={tags} />
-    </Container>
+    </div>
   )
 }
