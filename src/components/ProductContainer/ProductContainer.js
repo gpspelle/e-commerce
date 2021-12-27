@@ -105,6 +105,7 @@ export default function ProductContainer() {
                   justifyContent: "center",
                   alignItems: "center",
                   padding: "30px",
+                  paddingTop: "62px",
                 }}
               >
                 <Product

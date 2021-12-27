@@ -1,28 +1,31 @@
 import React from "react"
-import { Form } from "react-bootstrap"
+import { Col, Form } from "react-bootstrap"
 
 export default function SearchBar({ searchBarValue, setSearchBarValue }) {
   return (
     <div
+      className="justify-content-md-center"
       style={{
-        backgroundColor: "lightblue",
+        backgroundColor: "#F0F0F0",
         height: "54px",
-        width: "100%",
         position: "fixed",
         top: "0px",
+        width: "100%",
       }}
     >
-      <Form onSubmit={() => {}}>
-        <Form.Group controlId="formSearchBar">
-          <Form.Control
-            style={{ marginTop: "10px" }}
-            value={searchBarValue}
-            onChange={(e) => setSearchBarValue(e.target.value)}
-            type="text"
-            placeholder="Pesquisar..."
-          />
-        </Form.Group>
-      </Form>
+      <Col md="auto">
+        <Form onSubmit={() => {}}>
+          <Form.Group controlId="formSearchBar">
+            <Form.Control
+              style={{ margin: "10px auto", width: "70%" }}
+              value={searchBarValue}
+              onChange={(e) => setSearchBarValue(e.target.value)}
+              type="text"
+              placeholder="Pesquisar..."
+            />
+          </Form.Group>
+        </Form>
+      </Col>
     </div>
   )
 }
