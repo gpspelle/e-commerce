@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import { Card, Pagination, Container } from "react-bootstrap"
+import { Card, Pagination, Container, Spinner } from "react-bootstrap"
 import {
   API,
   PRODUCTS_ENDPOINT,
@@ -111,10 +111,6 @@ export default function SimilarProducts({ tags }) {
     setPositionSimilarProducts({ start, end })
   }
 
-  if (!similarProducts || !numberOfVisibleSimilarProducts) {
-    return <></>
-  }
-
   return (
     <div className="similar-products">
       <Container>
@@ -126,49 +122,56 @@ export default function SimilarProducts({ tags }) {
           }}
         />
         <div className="my-4">Produtos similares</div>
-        <Pagination size="sm">
-          <Pagination.Prev
-            onClick={prevPagination}
-            style={{ position: "relative", margin: "auto" }}
+        {!similarProducts || !numberOfVisibleSimilarProducts ? (
+          <Spinner
+            style={{ margin: "0 auto", display: "flex", color: "#212529" }}
+            animation="border"
           />
-          {similarProducts &&
-            similarProducts
-              .slice(positionSimilarProducts.start, positionSimilarProducts.end)
-              .map((similarProduct, i) => (
-                <Pagination.Item
-                  style={{ position: "relative", margin: "auto" }}
-                  key={i}
-                  onClick={() =>
-                    openDetailPage(
-                      similarProduct.id,
-                      similarProduct.PRODUCT_NAME,
-                      similarProduct.PRODUCT_DESCRIPTION,
-                      similarProduct.PRODUCT_PRICE,
-                      similarProduct.PRODUCT_IMAGES,
-                      similarProduct.PRODUCT_TAGS,
-                      similarProduct.PRODUCT_OWNER_ID
-                    )
-                  }
-                >
-                  <Card style={{ width: "6rem" }}>
-                    <img
-                      width="128px"
-                      height="128px"
-                      className="d-block w-100"
-                      src={similarProduct.PRODUCT_IMAGES[0]}
-                      alt={`produto similar ${i}`}
-                    />
-                    <Card.Body>
-                      <Card.Text>{similarProduct.PRODUCT_NAME}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Pagination.Item>
-              ))}
-          <Pagination.Next
-            onClick={nextPagination}
-            style={{ position: "relative", margin: "auto" }}
-          />
-        </Pagination>
+        ) : (
+          <Pagination size="sm">
+            <Pagination.Prev
+              onClick={prevPagination}
+              style={{ position: "relative", margin: "auto" }}
+            />
+            {similarProducts &&
+              similarProducts
+                .slice(positionSimilarProducts.start, positionSimilarProducts.end)
+                .map((similarProduct, i) => (
+                  <Pagination.Item
+                    style={{ position: "relative", margin: "auto" }}
+                    key={i}
+                    onClick={() =>
+                      openDetailPage(
+                        similarProduct.id,
+                        similarProduct.PRODUCT_NAME,
+                        similarProduct.PRODUCT_DESCRIPTION,
+                        similarProduct.PRODUCT_PRICE,
+                        similarProduct.PRODUCT_IMAGES,
+                        similarProduct.PRODUCT_TAGS,
+                        similarProduct.PRODUCT_OWNER_ID
+                      )
+                    }
+                  >
+                    <Card style={{ width: "6rem" }}>
+                      <img
+                        width="128px"
+                        height="128px"
+                        className="d-block w-100"
+                        src={similarProduct.PRODUCT_IMAGES[0]}
+                        alt={`produto similar ${i}`}
+                      />
+                      <Card.Body>
+                        <Card.Text>{similarProduct.PRODUCT_NAME}</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Pagination.Item>
+                ))}
+            <Pagination.Next
+              onClick={nextPagination}
+              style={{ position: "relative", margin: "auto" }}
+            />
+          </Pagination>
+        )}
       </Container>
     </div>
   )
