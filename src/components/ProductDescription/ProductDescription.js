@@ -30,7 +30,6 @@ export default function ProductDescription() {
           params: body,
         })
 
-        console.log(response.data[0])
         setCommercialName(response.data[0].commercial_name)
         setPhoneNumber(response.data[0].phone_number)
       }
