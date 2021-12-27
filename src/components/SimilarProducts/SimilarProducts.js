@@ -112,7 +112,7 @@ export default function SimilarProducts({ tags }) {
   }
 
   return (
-    <div className="similar-products">
+    <div className="similar-products" style={{ minHeight: "150px" }}>
       <Container>
         <hr
           style={{
@@ -124,7 +124,7 @@ export default function SimilarProducts({ tags }) {
         <div className="my-4">Produtos similares</div>
         {!similarProducts || !numberOfVisibleSimilarProducts ? (
           <Spinner
-            style={{ margin: "0 auto", display: "flex", color: "#212529" }}
+            style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"
           />
         ) : (
