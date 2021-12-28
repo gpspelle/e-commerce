@@ -4,6 +4,7 @@ import { Button, Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
+import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 
 export default function Product({
   id,
@@ -94,6 +95,12 @@ export default function Product({
             </div>
           )}
         </Card.Text>
+        {isLightingDeal && (
+          <LightingDealDuration
+            lightingDealDuration={lightingDealDuration}
+            lightingDealStartTime={lightingDealStartTime}
+          />
+        )}
       </Card.Body>
     </Card>
   )
