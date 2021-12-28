@@ -22,6 +22,8 @@ export default function SimilarProducts({ tags }) {
     start: 0,
     end: 0,
   })
+  const [paginationToken, setPaginationToken] = useState(undefined)
+  const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
 
   useEffect(() => {
     if (numberOfVisibleSimilarProducts) {
@@ -32,19 +34,35 @@ export default function SimilarProducts({ tags }) {
   useEffect(() => {
     const fetchProductsByIds = async () => {
       if (similarProductIds) {
-        const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`)
+        const body = {
+          key: paginationToken,
+        }
 
-        const products = response.data.filter((product) =>
+        const config = {
+          params: {
+            body,
+          },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
+        const { data, key } = response.data
+        const products = data.filter((product) =>
           similarProductIds.includes(product.id)
         )
 
         const productsFlat = products.flat(1)
         setSimilarProducts(productsFlat)
+        setPaginationToken(key)
+        setHasMoreDataToFetch(key ? true : false)
       }
     }
 
-    fetchProductsByIds()
-  }, [similarProductIds])
+    if (hasMoreDataToFetch) {
+      fetchProductsByIds()
+    }
+  }, [similarProductIds, paginationToken, hasMoreDataToFetch])
 
   useEffect(() => {
     const fetchProductIdsByTags = async () => {

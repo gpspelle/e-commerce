@@ -1,8 +1,11 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
 import { Form, Button } from "react-bootstrap"
-import { AiFillHome, AiFillThunderbolt } from "react-icons/ai"
 import { pageStates } from "../ProductContainer/ProductContainer"
+import {
+  HomeButtonContent,
+  LightingDealsButtonContent,
+} from "../ButtonContent/ButtonContent"
 
 export default function SearchBar({
   switchPage,
@@ -62,13 +65,9 @@ export default function SearchBar({
         style={{ float: "right", margin: "9px 30px" }}
       >
         {switchPage.name === "LIGHTING_DEALS" ? (
-          <div>
-            Home <AiFillHome />
-          </div>
+          <HomeButtonContent />
         ) : (
-          <div>
-            Ofertas <AiFillThunderbolt />
-          </div>
+          <LightingDealsButtonContent />
         )}
       </Button>
     </div>

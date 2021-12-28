@@ -7,6 +7,10 @@ import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/consta
 import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import { pageStates } from "../ProductContainer/ProductContainer"
+import {
+  HomeButtonContent,
+  LightingDealsButtonContent,
+} from "../ButtonContent/ButtonContent"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -107,16 +111,26 @@ export default function ProductDescription() {
       <Container>
         <div style={{ display: "flex" }}>
           <Button
+            style={{ margin: "0 auto" }}
             onClick={() =>
               history.push({
-                pathname: isLightingDeal
-                  ? pageStates.LIGHTING_DEALS.pathname
-                  : pageStates.HOME.pathname,
-                state: { isLightingDeal },
+                pathname: pageStates.HOME.pathname,
+                state: { isLightingDeal: false },
               })
             }
           >
-            Voltar
+            <HomeButtonContent />
+          </Button>
+          <Button
+            style={{ margin: "0 auto" }}
+            onClick={() =>
+              history.push({
+                pathname: pageStates.LIGHTING_DEALS.pathname,
+                state: { isLightingDeal: true },
+              })
+            }
+          >
+            <LightingDealsButtonContent />
           </Button>
         </div>
         <Card style={{ width: "22rem", margin: "0 auto" }}>
