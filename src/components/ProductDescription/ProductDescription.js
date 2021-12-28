@@ -111,6 +111,7 @@ export default function ProductDescription() {
       <Container>
         <div style={{ display: "flex" }}>
           <Button
+            variant="success"
             style={{ margin: "0 auto" }}
             onClick={() =>
               history.push({
@@ -122,6 +123,7 @@ export default function ProductDescription() {
             <HomeButtonContent />
           </Button>
           <Button
+            variant="success"
             style={{ margin: "0 auto" }}
             onClick={() =>
               history.push({
