@@ -25,6 +25,8 @@ export default function ProductContainer() {
   const [accounts, setAccounts] = useState()
   const [searchBarValue, setSearchBarValue] = useState("")
   const [switchPage, setSwitchPage] = useState(pageStates.HOME)
+  const [paginationToken, setPaginationToken] = useState(undefined)
+  const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
 
   useEffect(() => {
     if (location.state) {
@@ -69,22 +71,39 @@ export default function ProductContainer() {
 
   useEffect(() => {
     async function getProductsFromDatabase() {
-      const data = await fetch(`${API}/${PRODUCTS_ENDPOINT}`)
-      var productsJson = await data.json()
+      const body = {
+        key: paginationToken,
+      }
 
-      productsJson.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
+      const config = {
+        params: {
+          body,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+
+      const res = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
+      const { data, key } = res.data
+
+      data.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
 
       const productOwnerIdsSet = new Set(
-        productsJson.map((product) => product.PRODUCT_OWNER_ID)
+        data.map((product) => product.PRODUCT_OWNER_ID)
       )
 
-      setProducts(productsJson)
-      setAllProducts(productsJson)
+      setProducts(data)
+      setAllProducts(data)
       setProductOwnerIds([...productOwnerIdsSet])
+      setPaginationToken(key)
+      setHasMoreDataToFetch(key ? true : false)
     }
 
-    getProductsFromDatabase()
-  }, [])
+    if (hasMoreDataToFetch) {
+      getProductsFromDatabase()
+    }
+  }, [paginationToken, hasMoreDataToFetch])
 
   useEffect(() => {
     async function getAccountsFromDatabase() {
