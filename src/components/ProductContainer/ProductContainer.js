@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import { Container, Row, Col, Form } from "react-bootstrap"
-import { ACCOUNTS_ENDPOINT, API, PRODUCTS_ENDPOINT } from "../../constants/constants"
+import { Container, Row, Col } from "react-bootstrap"
+import {
+  ACCOUNTS_ENDPOINT,
+  API,
+  LIGHTING_DEALS,
+  PRODUCTS_ENDPOINT,
+} from "../../constants/constants"
 import Product from "../Product/Product"
 import "./ProductContainer.css"
 import SearchBar from "../SearchBar/SearchBar"
+import { useLocation } from "react-router-dom"
+
+export const pageStates = {
+  HOME: { name: "HOME", pathname: "/" },
+  LIGHTING_DEALS: { name: "LIGHTING_DEALS", pathname: `/${LIGHTING_DEALS}` },
+}
 
 export default function ProductContainer() {
+  const location = useLocation()
   const [products, setProducts] = useState()
   const [productOwnerIds, setProductOwnerIds] = useState()
   const [allProducts, setAllProducts] = useState()
   const [accounts, setAccounts] = useState()
   const [searchBarValue, setSearchBarValue] = useState("")
+  const [switchPage, setSwitchPage] = useState(pageStates.HOME)
+
+  useEffect(() => {
+    if (location.state) {
+      setSwitchPage(
+        location.state.isLightingDeal ? pageStates.LIGHTING_DEALS : pageStates.HOME
+      )
+    }
+  }, [location])
 
   useEffect(() => {
     if (searchBarValue) {
@@ -49,7 +70,8 @@ export default function ProductContainer() {
   useEffect(() => {
     async function getProductsFromDatabase() {
       const data = await fetch(`${API}/${PRODUCTS_ENDPOINT}`)
-      const productsJson = await data.json()
+      var productsJson = await data.json()
+
       productsJson.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
 
       const productOwnerIdsSet = new Set(
@@ -68,6 +90,10 @@ export default function ProductContainer() {
     async function getAccountsFromDatabase() {
       const body = {
         productOwnerIds,
+      }
+
+      if (productOwnerIds.length === 0) {
+        return
       }
 
       const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
@@ -92,11 +118,20 @@ export default function ProductContainer() {
     })
   }
 
+  var displayProducts
+  if (switchPage.name === "LIGHTING_DEALS") {
+    displayProducts = products?.filter(
+      (product) => product.PRODUCT_TYPE === "LIGHTING_DEAL"
+    )
+  } else {
+    displayProducts = products
+  }
+
   return (
     <div>
       <Container>
         <Row>
-          {products?.map((item, i) => {
+          {displayProducts?.map((item, i) => {
             return (
               <Col
                 key={i}
@@ -129,6 +164,10 @@ export default function ProductContainer() {
                       : false
                   }
                   tags={item.PRODUCT_TAGS}
+                  productType={item.PRODUCT_TYPE}
+                  lightingDealPrice={item.LIGHTING_DEAL_PRICE}
+                  lightingDealDuration={item.LIGHTING_DEAL_DURATION}
+                  lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
                 ></Product>
               </Col>
             )
@@ -136,6 +175,8 @@ export default function ProductContainer() {
         </Row>
       </Container>
       <SearchBar
+        switchPage={switchPage}
+        setSwitchPage={setSwitchPage}
         searchBarValue={searchBarValue}
         setSearchBarValue={setSearchBarValue}
       />

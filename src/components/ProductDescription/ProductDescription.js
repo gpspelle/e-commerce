@@ -5,6 +5,8 @@ import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/constants"
 import SimilarProducts from "../SimilarProducts/SimilarProducts"
+import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
+import { pageStates } from "../ProductContainer/ProductContainer"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -17,6 +19,10 @@ export default function ProductDescription() {
   const [productOwnerId, setProductOwnerId] = useState()
   const [commercialName, setCommercialName] = useState()
   const [tags, setTags] = useState()
+  const [productType, setProductType] = useState()
+  const [lightingDealPrice, setLightingDealPrice] = useState()
+  const [lightingDealDuration, setLightingDealDuration] = useState()
+  const [lightingDealStartTime, setLightingDealStartTime] = useState()
   const { id } = useParams()
 
   useEffect(() => {
@@ -52,9 +58,20 @@ export default function ProductDescription() {
         setProductOwnerId(response.data.Item.PRODUCT_OWNER_ID.S)
         setName(response.data.Item.PRODUCT_NAME.S)
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
-        setPrice(response.data.Item.PRODUCT_PRICE.S)
+        setPrice(
+          response.data.Item.PRODUCT_PRICE.N || response.data.Item.PRODUCT_PRICE.S
+        )
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
         setTags(response.data.Item.PRODUCT_TAGS.SS)
+
+        const productType = response.data.Item?.PRODUCT_TYPE?.S
+        setProductType(productType)
+
+        if (productType === "LIGHTING_DEAL") {
+          setLightingDealPrice(response.data.Item.LIGHTING_DEAL_PRICE.S)
+          setLightingDealDuration(response.data.Item.LIGHTING_DEAL_DURATION.S)
+          setLightingDealStartTime(response.data.Item.LIGHTING_DEAL_START_TIME.S)
+        }
       } catch (e) {
         console.error(e)
       }
@@ -70,16 +87,37 @@ export default function ProductDescription() {
       setTags(location.state.tags)
       if (location.state.commercialName)
         setCommercialName(location.state.commercialName)
+
+      setProductType(location.state.productType)
+      if (location.state.productType === "LIGHTING_DEAL") {
+        setLightingDealPrice(location.state.lightingDealPrice)
+        setLightingDealDuration(location.state.lightingDealDuration)
+        setLightingDealStartTime(location.state.lightingDealStartTime)
+      }
     } else {
       fetchData()
     }
   }, [id])
 
+  const isLightingDeal =
+    lightingDealPrice && lightingDealDuration && lightingDealStartTime
+
   return (
     <div>
       <Container>
         <div style={{ display: "flex" }}>
-          <Button onClick={() => history.push("/")}>Voltar</Button>
+          <Button
+            onClick={() =>
+              history.push({
+                pathname: isLightingDeal
+                  ? pageStates.LIGHTING_DEALS.pathname
+                  : pageStates.HOME.pathname,
+                state: { isLightingDeal },
+              })
+            }
+          >
+            Voltar
+          </Button>
         </div>
         <Card style={{ width: "22rem", margin: "0 auto" }}>
           {images &&
@@ -101,6 +139,7 @@ export default function ProductDescription() {
             ) : (
               <img className="w-100" height="256px" src={images[0]} alt="image" />
             ))}
+          {isLightingDeal && <LightingDealWaterMark />}
           <Card.Header as="h4">Detalhes do produto</Card.Header>
           <ListGroup variant="flush">
             <ListGroup.Item className="notranslate">Nome: {name}</ListGroup.Item>
@@ -108,7 +147,19 @@ export default function ProductDescription() {
               Descrição: {description}
             </ListGroup.Item>
             <ListGroup.Item className="notranslate">
-              Preço: R$ {price}
+              {isLightingDeal ? (
+                <div style={{ display: "block ruby" }}>
+                  Preço:{" "}
+                  <div
+                    style={{ textDecoration: "line-through", color: "lightgray" }}
+                  >
+                    R$ {price}
+                  </div>{" "}
+                  R$ {lightingDealPrice}
+                </div>
+              ) : (
+                <div>R$ {price}</div>
+              )}
             </ListGroup.Item>
             <ListGroup.Item className="notranslate">
               Vendido por: {commercialName}
@@ -117,7 +168,7 @@ export default function ProductDescription() {
           <SendMessageWhatsAppButton
             id={id}
             name={name}
-            price={price}
+            price={isLightingDeal ? lightingDealPrice : price}
             phoneNumber={phoneNumber}
           />
         </Card>

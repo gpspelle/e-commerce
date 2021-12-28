@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import ProductContainer from "./components/ProductContainer/ProductContainer"
 import ProductDescription from "./components/ProductDescription/ProductDescription"
 import {
+  LIGHTING_DEALS,
   PAGE_DESCRIPTION,
   PAGE_TITLE,
   PRODUCT_DESCRIPTION,
@@ -26,6 +27,9 @@ function App() {
           </Route>
           <Route path="/">
             <ProductContainer />
+          </Route>
+          <Route path={`/${LIGHTING_DEALS}`}>
+            <ProductContainer lightingDeals={true} />
           </Route>
         </Switch>
       </Router>

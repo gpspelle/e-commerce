@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import { Button, Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
+import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 
 export default function Product({
   id,
@@ -13,13 +14,33 @@ export default function Product({
   phoneNumber,
   tags,
   commercialName,
+  productType,
+  lightingDealPrice,
+  lightingDealStartTime,
+  lightingDealDuration,
 }) {
   const history = useHistory()
 
-  const openDetailPage = (event) => {
+  const isLightingDeal =
+    lightingDealPrice && lightingDealPrice && lightingDealDuration
+
+  const openDetailPage = () => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images, phoneNumber, tags, commercialName },
+      state: {
+        name,
+        description,
+        price,
+        images,
+        phoneNumber,
+        tags,
+        commercialName,
+        productType,
+        isLightingDeal,
+        lightingDealPrice,
+        lightingDealStartTime,
+        lightingDealDuration,
+      },
     })
   }
 
@@ -32,6 +53,7 @@ export default function Product({
         src={images[0]}
         alt={`256x256`}
       />
+      {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
         <Card.Text className="notranslate">{description}</Card.Text>
@@ -45,12 +67,32 @@ export default function Product({
         <SendMessageWhatsAppButton
           id={id}
           name={name}
-          price={price}
+          price={isLightingDeal ? lightingDealPrice : price}
           phoneNumber={phoneNumber}
           marginBottom="8%"
         />
-        <Card.Text className="notranslate" style={{ textAlign: "center" }}>
-          R$ {price}
+        <Card.Text style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            className="notranslate"
+            style={{
+              textAlign: "center",
+              textDecoration: isLightingDeal ? "line-through" : "none",
+              color: isLightingDeal ? "lightgray" : "inherit",
+            }}
+          >
+            R$ {price}
+          </div>
+          {isLightingDeal && (
+            <div
+              className="notranslate"
+              style={{
+                textAlign: "center",
+                paddingLeft: "6px",
+              }}
+            >
+              R$ {lightingDealPrice}
+            </div>
+          )}
         </Card.Text>
       </Card.Body>
     </Card>
