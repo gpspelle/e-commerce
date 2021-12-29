@@ -3,7 +3,12 @@ import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Card, Carousel, Button, Container, ListGroup } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { ACCOUNTS_ENDPOINT, API, PRODUCT_ENDPOINT } from "../../constants/constants"
+import {
+  ACCOUNTS_ENDPOINT,
+  API,
+  PRODUCT_TYPES,
+  PRODUCT_ENDPOINT,
+} from "../../constants/constants"
 import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import { pageStates } from "../ProductContainer/ProductContainer"
@@ -13,6 +18,8 @@ import {
 } from "../ButtonContent/ButtonContent"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
+import { getIsDeal } from "../../utils/DealUtils"
+import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -71,9 +78,9 @@ export default function ProductDescription() {
         const productType = response.data.Item?.PRODUCT_TYPE?.S
         setProductType(productType)
 
-        if (productType === "DEAL") {
+        if (productType === PRODUCT_TYPES.DEAL) {
           setDealPrice(response.data.Item.DEAL_PRICE.N)
-        } else if (productType === "LIGHTING_DEAL") {
+        } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {
           setDealPrice(response.data.Item.DEAL_PRICE.N)
           setLightingDealDuration(response.data.Item.LIGHTING_DEAL_DURATION.S)
           setLightingDealStartTime(response.data.Item.LIGHTING_DEAL_START_TIME.S)
@@ -95,9 +102,9 @@ export default function ProductDescription() {
         setCommercialName(location.state.commercialName)
 
       setProductType(location.state.productType)
-      if (location.state.productType === "DEAL") {
+      if (location.state.productType === PRODUCT_TYPES.DEAL) {
         setDealPrice(location.state.dealPrice)
-      } else if (location.state.productType === "LIGHTING_DEAL") {
+      } else if (location.state.productType === PRODUCT_TYPES.LIGHTING_DEAL) {
         setDealPrice(location.state.dealPrice)
         setLightingDealDuration(location.state.lightingDealDuration)
         setLightingDealStartTime(location.state.lightingDealStartTime)
@@ -107,8 +114,8 @@ export default function ProductDescription() {
     }
   }, [id])
 
-  const isDeal = productType === "DEAL" || productType === "LIGHTING_DEAL"
-  const isLightingDeal = productType === "LIGHTING_DEAL"
+  const isDeal = getIsDeal(productType)
+  const isLightingDeal = getIsLightingDeal(productType)
   return (
     <div>
       <Container>

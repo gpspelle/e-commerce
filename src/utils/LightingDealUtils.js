@@ -1,3 +1,5 @@
+import { PRODUCT_TYPES } from "../constants/constants"
+
 export const processLightingDealInformation = ({
   now,
   lightingDealDuration,
@@ -28,3 +30,6 @@ export const msToTime = (ms) => {
 
   return hours + ":" + minutes + ":" + seconds
 }
+
+export const getIsLightingDeal = (productType) =>
+  productType === PRODUCT_TYPES.LIGHTING_DEAL

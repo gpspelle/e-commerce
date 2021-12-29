@@ -8,3 +8,8 @@ export const PAGE_TITLE = "Ateliê das Artes"
 export const PAGE_DESCRIPTION = "Loja virtual do Ateliê das Artes"
 export const PRODUCT_DESCRIPTION = "product-description"
 export const DEALS = "ofertas"
+export const PRODUCT_TYPES = {
+  DEAL: "DEAL",
+  LIGHTING_DEAL: "LIGHTING_DEAL",
+  NORMAL: "NORMAL",
+}

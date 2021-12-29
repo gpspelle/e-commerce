@@ -2,9 +2,11 @@ import React from "react"
 import { useHistory } from "react-router-dom"
 import { Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { PRODUCT_DESCRIPTION } from "../../constants/constants"
+import { PRODUCT_TYPES, PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
+import { getIsDeal } from "../../utils/DealUtils"
+import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 
 export default function Product({
   id,
@@ -22,8 +24,8 @@ export default function Product({
 }) {
   const history = useHistory()
 
-  const isDeal = productType === "DEAL" || productType === "LIGHTING_DEAL"
-  const isLightingDeal = productType === "LIGHTING_DEAL"
+  const isDeal = getIsDeal(productType)
+  const isLightingDeal = getIsLightingDeal(productType)
   const openDetailPage = (event) => {
     if (event.target.type === "button") return
     history.push({
