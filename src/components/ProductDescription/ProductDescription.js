@@ -176,23 +176,30 @@ export default function ProductDescription() {
                   R$ {dealPrice}
                 </div>
               ) : (
-                <div>R$ {price}</div>
+                <div>Preço: R$ {price}</div>
               )}
             </ListGroup.Item>
             <ListGroup.Item className="notranslate">
               Vendido por: {commercialName}
             </ListGroup.Item>
+            {isLightingDeal && (
+              <ListGroup.Item className="notranslate">
+                <div>Tempo restante da promoção:</div>
+                <LightingDealDuration
+                  lightingDealDuration={lightingDealDuration}
+                  lightingDealStartTime={lightingDealStartTime}
+                />{" "}
+              </ListGroup.Item>
+            )}
           </ListGroup>
         </Card>
         <SendMessageWhatsAppButton
+          style={{ paddingTop: "12px", width: "22rem", margin: "0 auto" }}
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}
           phoneNumber={phoneNumber}
-        />
-        <LightingDealDuration
-          lightingDealDuration={lightingDealDuration}
-          lightingDealStartTime={lightingDealStartTime}
+          isLightingDeal={isLightingDeal}
         />
       </Container>
       <SimilarProducts tags={tags} />

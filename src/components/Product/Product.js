@@ -1,6 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { Button, Card } from "react-bootstrap"
+import { Card } from "react-bootstrap"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
@@ -24,7 +24,8 @@ export default function Product({
 
   const isDeal = productType === "DEAL" || productType === "LIGHTING_DEAL"
   const isLightingDeal = productType === "LIGHTING_DEAL"
-  const openDetailPage = () => {
+  const openDetailPage = (event) => {
+    if (event.target.type === "button") return
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: {
@@ -45,7 +46,7 @@ export default function Product({
   }
 
   return (
-    <Card style={{ width: "18rem" }}>
+    <Card style={{ width: "18rem", cursor: "pointer" }} onClick={openDetailPage}>
       <img
         className="d-block w-100"
         width="256px"
@@ -56,19 +57,12 @@ export default function Product({
       {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
-        <Button
-          style={{ width: "100%", marginBottom: "8%" }}
-          variant="outline-primary"
-          onClick={(event) => openDetailPage(event)}
-        >
-          Mais detalhes
-        </Button>
         <SendMessageWhatsAppButton
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}
           phoneNumber={phoneNumber}
-          marginBottom="8%"
+          marginBottom="4%"
         />
         <Card.Text style={{ display: "flex", justifyContent: "center" }}>
           <div

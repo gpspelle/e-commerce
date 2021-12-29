@@ -8,7 +8,6 @@ import {
   PRODUCTS_ENDPOINT,
 } from "../../constants/constants"
 import Product from "../Product/Product"
-import "./ProductContainer.css"
 import SearchBar from "../SearchBar/SearchBar"
 import { useLocation } from "react-router-dom"
 import {
@@ -175,7 +174,6 @@ export default function ProductContainer() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  padding: "30px",
                   paddingTop: "62px",
                 }}
               >
