@@ -9,9 +9,6 @@ export default function LightingDealDuration({
   lightingDealDuration,
   lightingDealStartTime,
 }) {
-  if (!lightingDealDuration || !lightingDealStartTime) {
-    return <></>
-  }
   const [now, setNow] = useState(new Date())
 
   const getProgressBarVariant = (val) => {
@@ -30,6 +27,10 @@ export default function LightingDealDuration({
     }, 1000)
     return () => clearInterval(interval)
   }, [])
+
+  if (!lightingDealDuration || !lightingDealStartTime) {
+    return <></>
+  }
 
   const { miliseconds, hoursDuration } = processLightingDealInformation({
     now,

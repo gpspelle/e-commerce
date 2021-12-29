@@ -88,7 +88,7 @@ export default function SimilarProducts({ tags }) {
 
   useEffect(() => {
     if (width) {
-      setNumberOfVisibleSimilarProducts(parseInt((width - 130) / 114))
+      setNumberOfVisibleSimilarProducts(parseInt(width / 150))
     }
   }, [width])
 
@@ -170,7 +170,7 @@ export default function SimilarProducts({ tags }) {
                       )
                     }
                   >
-                    <Card style={{ width: "6rem" }}>
+                    <Card style={{ width: "8rem" }}>
                       <img
                         width="128px"
                         height="128px"
@@ -179,7 +179,11 @@ export default function SimilarProducts({ tags }) {
                         alt={`produto similar ${i}`}
                       />
                       <Card.Body>
-                        <Card.Text>{similarProduct.PRODUCT_NAME}</Card.Text>
+                        <Card.Text>
+                          {similarProduct.PRODUCT_NAME.length > 18
+                            ? similarProduct.PRODUCT_NAME.substring(0, 15) + "..."
+                            : similarProduct.PRODUCT_NAME}
+                        </Card.Text>
                       </Card.Body>
                     </Card>
                   </Pagination.Item>
