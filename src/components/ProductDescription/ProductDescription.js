@@ -137,7 +137,7 @@ export default function ProductDescription() {
             <DealsButtonContent />
           </Button>
         </div>
-        <Card style={{ width: "22rem", margin: "0 auto" }}>
+        <Card style={{ width: "20rem", margin: "0 auto" }}>
           {images &&
             (images.length > 1 ? (
               <Carousel interval={null}>
@@ -194,7 +194,7 @@ export default function ProductDescription() {
           </ListGroup>
         </Card>
         <SendMessageWhatsAppButton
-          style={{ paddingTop: "12px", width: "22rem", margin: "0 auto" }}
+          style={{ paddingTop: "12px", width: "20rem", margin: "0 auto" }}
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}
