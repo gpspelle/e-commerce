@@ -12,6 +12,7 @@ import {
   DealsButtonContent,
 } from "../ButtonContent/ButtonContent"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
+import ImageCarousel from "../ImageCarousel/ImageCarousel"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -140,20 +141,7 @@ export default function ProductDescription() {
         <Card style={{ width: "20rem", margin: "0 auto" }}>
           {images &&
             (images.length > 1 ? (
-              <Carousel interval={null}>
-                {images?.map((item, i) => {
-                  return (
-                    <Carousel.Item key={i}>
-                      <img
-                        className="w-100"
-                        height="256px"
-                        src={item}
-                        alt={`${i} image`}
-                      />
-                    </Carousel.Item>
-                  )
-                })}
-              </Carousel>
+              <ImageCarousel images={images} />
             ) : (
               <img className="w-100" height="256px" src={images[0]} alt="image" />
             ))}
