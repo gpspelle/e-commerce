@@ -8,7 +8,7 @@ export function HomeButtonContent() {
   )
 }
 
-export function LightingDealsButtonContent() {
+export function DealsButtonContent() {
   return (
     <div>
       Ofertas <AiFillThunderbolt />

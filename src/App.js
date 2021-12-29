@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import ProductContainer from "./components/ProductContainer/ProductContainer"
 import ProductDescription from "./components/ProductDescription/ProductDescription"
 import {
-  LIGHTING_DEALS,
+  DEALS,
   PAGE_DESCRIPTION,
   PAGE_TITLE,
   PRODUCT_DESCRIPTION,
@@ -28,8 +28,8 @@ function App() {
           <Route path="/">
             <ProductContainer />
           </Route>
-          <Route path={`/${LIGHTING_DEALS}`}>
-            <ProductContainer lightingDeals={true} />
+          <Route path={`/${DEALS}`}>
+            <ProductContainer />
           </Route>
         </Switch>
       </Router>

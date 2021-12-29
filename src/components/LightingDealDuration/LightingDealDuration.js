@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from "react"
+import { ProgressBar } from "react-bootstrap"
+import {
+  msToTime,
+  processLightingDealInformation,
+} from "../../utils/LightingDealUtils"
 
 export default function LightingDealDuration({
   lightingDealDuration,
   lightingDealStartTime,
 }) {
+  if (!lightingDealDuration || !lightingDealStartTime) {
+    return <></>
+  }
   const [now, setNow] = useState(new Date())
+
+  const getProgressBarVariant = (val) => {
+    if (val > 0.4) {
+      return "success"
+    } else if (val > 0.2) {
+      return "warning"
+    }
+
+    return "danger"
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -13,20 +31,22 @@ export default function LightingDealDuration({
     return () => clearInterval(interval)
   }, [])
 
-  const hoursDuration = lightingDealDuration.substring(0, 2)
-  var endLightingDealTime = new Date(lightingDealStartTime)
-  endLightingDealTime.setHours(
-    endLightingDealTime.getHours() + parseInt(hoursDuration)
-  )
+  const { miliseconds, hoursDuration } = processLightingDealInformation({
+    now,
+    lightingDealDuration,
+    lightingDealStartTime,
+  })
+  const totalDuration = hoursDuration * 3600000
+  const displayLeftDuration = msToTime(miliseconds)
 
-  var miliseconds = endLightingDealTime.getTime() - now.getTime()
-  const displayLeftDuration =
-    miliseconds < 3600000
-      ? new Date(miliseconds).toISOString().substr(14, 5)
-      : new Date(miliseconds).toISOString().substr(11, 8)
+  const percentageLeft = miliseconds / totalDuration
   return (
-    <div style={{ textAlign: "center", fontSize: "14px", color: "gray" }}>
+    <div style={{ textAlign: "left", fontSize: "14px", color: "gray" }}>
       {displayLeftDuration}
+      <ProgressBar
+        variant={getProgressBarVariant(percentageLeft)}
+        now={percentageLeft * 100}
+      ></ProgressBar>
     </div>
   )
 }

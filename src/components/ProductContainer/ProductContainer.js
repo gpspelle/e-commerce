@@ -4,17 +4,21 @@ import { Container, Row, Col } from "react-bootstrap"
 import {
   ACCOUNTS_ENDPOINT,
   API,
-  LIGHTING_DEALS,
+  DEALS,
   PRODUCTS_ENDPOINT,
 } from "../../constants/constants"
 import Product from "../Product/Product"
 import "./ProductContainer.css"
 import SearchBar from "../SearchBar/SearchBar"
 import { useLocation } from "react-router-dom"
+import {
+  isLightingDealValid,
+  processLightingDealInformation,
+} from "../../utils/LightingDealUtils"
 
 export const pageStates = {
   HOME: { name: "HOME", pathname: "/" },
-  LIGHTING_DEALS: { name: "LIGHTING_DEALS", pathname: `/${LIGHTING_DEALS}` },
+  DEALS: { name: "DEALS", pathname: `/${DEALS}` },
 }
 
 export default function ProductContainer() {
@@ -30,9 +34,7 @@ export default function ProductContainer() {
 
   useEffect(() => {
     if (location.state) {
-      setSwitchPage(
-        location.state.isLightingDeal ? pageStates.LIGHTING_DEALS : pageStates.HOME
-      )
+      setSwitchPage(location.state.isDeal ? pageStates.DEALS : pageStates.HOME)
     }
   }, [location])
 
@@ -138,10 +140,25 @@ export default function ProductContainer() {
   }
 
   var displayProducts
-  if (switchPage.name === "LIGHTING_DEALS") {
+  if (switchPage.name === "DEALS") {
     displayProducts = products?.filter(
-      (product) => product.PRODUCT_TYPE === "LIGHTING_DEAL"
+      (product) =>
+        product.PRODUCT_TYPE === "DEAL" || product.PRODUCT_TYPE === "LIGHTING_DEAL"
     )
+
+    displayProducts = displayProducts?.filter((product) => {
+      const isLightingDeal = product.PRODUCT_TYPE === "LIGHTING_DEAL"
+      if (isLightingDeal) {
+        const { miliseconds } = processLightingDealInformation({
+          now: new Date(),
+          lightingDealDuration: product.LIGHTING_DEAL_DURATION,
+          lightingDealStartTime: product.LIGHTING_DEAL_START_TIME,
+        })
+        return isLightingDealValid(miliseconds)
+      }
+
+      return true
+    })
   } else {
     displayProducts = products
   }
@@ -184,10 +201,10 @@ export default function ProductContainer() {
                   }
                   tags={item.PRODUCT_TAGS}
                   productType={item.PRODUCT_TYPE}
-                  lightingDealPrice={item.LIGHTING_DEAL_PRICE}
+                  dealPrice={item.DEAL_PRICE}
                   lightingDealDuration={item.LIGHTING_DEAL_DURATION}
                   lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
-                ></Product>
+                />
               </Col>
             )
           })}

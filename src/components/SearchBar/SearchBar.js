@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap"
 import { pageStates } from "../ProductContainer/ProductContainer"
 import {
   HomeButtonContent,
-  LightingDealsButtonContent,
+  DealsButtonContent,
 } from "../ButtonContent/ButtonContent"
 
 export default function SearchBar({
@@ -14,9 +14,9 @@ export default function SearchBar({
   setSearchBarValue,
 }) {
   const handleOpenLightingDeals = () => {
-    setSwitchPage(pageStates.LIGHTING_DEALS)
+    setSwitchPage(pageStates.DEALS)
     history.push({
-      pathname: pageStates.LIGHTING_DEALS.pathname,
+      pathname: pageStates.DEALS.pathname,
     })
   }
 
@@ -57,17 +57,17 @@ export default function SearchBar({
       </Form.Group>
       <Button
         onClick={
-          switchPage.name === "LIGHTING_DEALS"
+          switchPage.name === "DEALS"
             ? handleOpenAllProducts
             : handleOpenLightingDeals
         }
         variant="success"
         style={{ float: "right", margin: "9px 30px" }}
       >
-        {switchPage.name === "LIGHTING_DEALS" ? (
+        {switchPage.name === "DEALS" ? (
           <HomeButtonContent />
         ) : (
-          <LightingDealsButtonContent />
+          <DealsButtonContent />
         )}
       </Button>
     </div>

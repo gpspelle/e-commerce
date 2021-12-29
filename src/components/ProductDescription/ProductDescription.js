@@ -9,8 +9,9 @@ import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMar
 import { pageStates } from "../ProductContainer/ProductContainer"
 import {
   HomeButtonContent,
-  LightingDealsButtonContent,
+  DealsButtonContent,
 } from "../ButtonContent/ButtonContent"
+import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -24,7 +25,7 @@ export default function ProductDescription() {
   const [commercialName, setCommercialName] = useState()
   const [tags, setTags] = useState()
   const [productType, setProductType] = useState()
-  const [lightingDealPrice, setLightingDealPrice] = useState()
+  const [dealPrice, setDealPrice] = useState()
   const [lightingDealDuration, setLightingDealDuration] = useState()
   const [lightingDealStartTime, setLightingDealStartTime] = useState()
   const { id } = useParams()
@@ -62,17 +63,17 @@ export default function ProductDescription() {
         setProductOwnerId(response.data.Item.PRODUCT_OWNER_ID.S)
         setName(response.data.Item.PRODUCT_NAME.S)
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
-        setPrice(
-          response.data.Item.PRODUCT_PRICE.N || response.data.Item.PRODUCT_PRICE.S
-        )
+        setPrice(response.data.Item.PRODUCT_PRICE.N)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
         setTags(response.data.Item.PRODUCT_TAGS.SS)
 
         const productType = response.data.Item?.PRODUCT_TYPE?.S
         setProductType(productType)
 
-        if (productType === "LIGHTING_DEAL") {
-          setLightingDealPrice(response.data.Item.LIGHTING_DEAL_PRICE.S)
+        if (productType === "DEAL") {
+          setDealPrice(response.data.Item.DEAL_PRICE.N)
+        } else if (productType === "LIGHTING_DEAL") {
+          setDealPrice(response.data.Item.DEAL_PRICE.N)
           setLightingDealDuration(response.data.Item.LIGHTING_DEAL_DURATION.S)
           setLightingDealStartTime(response.data.Item.LIGHTING_DEAL_START_TIME.S)
         }
@@ -93,8 +94,10 @@ export default function ProductDescription() {
         setCommercialName(location.state.commercialName)
 
       setProductType(location.state.productType)
-      if (location.state.productType === "LIGHTING_DEAL") {
-        setLightingDealPrice(location.state.lightingDealPrice)
+      if (location.state.productType === "DEAL") {
+        setDealPrice(location.state.dealPrice)
+      } else if (location.state.productType === "LIGHTING_DEAL") {
+        setDealPrice(location.state.dealPrice)
         setLightingDealDuration(location.state.lightingDealDuration)
         setLightingDealStartTime(location.state.lightingDealStartTime)
       }
@@ -103,9 +106,8 @@ export default function ProductDescription() {
     }
   }, [id])
 
-  const isLightingDeal =
-    lightingDealPrice && lightingDealDuration && lightingDealStartTime
-
+  const isDeal = productType === "DEAL" || productType === "LIGHTING_DEAL"
+  const isLightingDeal = productType === "LIGHTING_DEAL"
   return (
     <div>
       <Container>
@@ -116,7 +118,7 @@ export default function ProductDescription() {
             onClick={() =>
               history.push({
                 pathname: pageStates.HOME.pathname,
-                state: { isLightingDeal: false },
+                state: { isDeal: false },
               })
             }
           >
@@ -127,12 +129,12 @@ export default function ProductDescription() {
             style={{ margin: "0 auto" }}
             onClick={() =>
               history.push({
-                pathname: pageStates.LIGHTING_DEALS.pathname,
-                state: { isLightingDeal: true },
+                pathname: pageStates.DEALS.pathname,
+                state: { isDeal: true },
               })
             }
           >
-            <LightingDealsButtonContent />
+            <DealsButtonContent />
           </Button>
         </div>
         <Card style={{ width: "22rem", margin: "0 auto" }}>
@@ -163,7 +165,7 @@ export default function ProductDescription() {
               Descrição: {description}
             </ListGroup.Item>
             <ListGroup.Item className="notranslate">
-              {isLightingDeal ? (
+              {isDeal ? (
                 <div style={{ display: "block ruby" }}>
                   Preço:{" "}
                   <div
@@ -171,7 +173,7 @@ export default function ProductDescription() {
                   >
                     R$ {price}
                   </div>{" "}
-                  R$ {lightingDealPrice}
+                  R$ {dealPrice}
                 </div>
               ) : (
                 <div>R$ {price}</div>
@@ -181,13 +183,17 @@ export default function ProductDescription() {
               Vendido por: {commercialName}
             </ListGroup.Item>
           </ListGroup>
-          <SendMessageWhatsAppButton
-            id={id}
-            name={name}
-            price={isLightingDeal ? lightingDealPrice : price}
-            phoneNumber={phoneNumber}
-          />
         </Card>
+        <SendMessageWhatsAppButton
+          id={id}
+          name={name}
+          price={isDeal ? dealPrice : price}
+          phoneNumber={phoneNumber}
+        />
+        <LightingDealDuration
+          lightingDealDuration={lightingDealDuration}
+          lightingDealStartTime={lightingDealStartTime}
+        />
       </Container>
       <SimilarProducts tags={tags} />
     </div>

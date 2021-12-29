@@ -16,15 +16,14 @@ export default function Product({
   tags,
   commercialName,
   productType,
-  lightingDealPrice,
+  dealPrice,
   lightingDealStartTime,
   lightingDealDuration,
 }) {
   const history = useHistory()
 
-  const isLightingDeal =
-    lightingDealPrice && lightingDealPrice && lightingDealDuration
-
+  const isDeal = productType === "DEAL" || productType === "LIGHTING_DEAL"
+  const isLightingDeal = productType === "LIGHTING_DEAL"
   const openDetailPage = () => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
@@ -37,8 +36,8 @@ export default function Product({
         tags,
         commercialName,
         productType,
-        isLightingDeal,
-        lightingDealPrice,
+        isDeal,
+        dealPrice,
         lightingDealStartTime,
         lightingDealDuration,
       },
@@ -57,7 +56,6 @@ export default function Product({
       {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
-        <Card.Text className="notranslate">{description}</Card.Text>
         <Button
           style={{ width: "100%", marginBottom: "8%" }}
           variant="outline-primary"
@@ -68,7 +66,7 @@ export default function Product({
         <SendMessageWhatsAppButton
           id={id}
           name={name}
-          price={isLightingDeal ? lightingDealPrice : price}
+          price={isDeal ? dealPrice : price}
           phoneNumber={phoneNumber}
           marginBottom="8%"
         />
@@ -77,13 +75,13 @@ export default function Product({
             className="notranslate"
             style={{
               textAlign: "center",
-              textDecoration: isLightingDeal ? "line-through" : "none",
-              color: isLightingDeal ? "lightgray" : "inherit",
+              textDecoration: isDeal ? "line-through" : "none",
+              color: isDeal ? "lightgray" : "inherit",
             }}
           >
             R$ {price}
           </div>
-          {isLightingDeal && (
+          {isDeal && (
             <div
               className="notranslate"
               style={{
@@ -91,16 +89,14 @@ export default function Product({
                 paddingLeft: "6px",
               }}
             >
-              R$ {lightingDealPrice}
+              R$ {dealPrice}
             </div>
           )}
         </Card.Text>
-        {isLightingDeal && (
-          <LightingDealDuration
-            lightingDealDuration={lightingDealDuration}
-            lightingDealStartTime={lightingDealStartTime}
-          />
-        )}
+        <LightingDealDuration
+          lightingDealDuration={lightingDealDuration}
+          lightingDealStartTime={lightingDealStartTime}
+        />
       </Card.Body>
     </Card>
   )
