@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
 import Magnifier from "./Magnifier"
-import ReactDOM from "react-dom"
 
 export default function CursorZoom({
   size = 200,
@@ -10,9 +9,9 @@ export default function CursorZoom({
   borderSize,
   borderColor,
   pointerStyle,
+  style,
 }) {
   const imageRef = useRef()
-  const [portalElement, setPortalElement] = useState(null)
   const [coordinates, setCoordinates] = useState({
     x: 0,
     y: 0,
@@ -20,49 +19,13 @@ export default function CursorZoom({
     offsetY: -1,
   })
 
-  function removeElementsByClass(className) {
-    const elements = document.getElementsByClassName(className)
-    while (elements.length > 0) {
-      elements[0].parentNode.removeChild(elements[0])
-    }
-  }
-
   useEffect(() => {
     document.addEventListener("mousemove", onMouseMove)
-    const element = document.createElement("div")
-    setPortalElement(element)
+
     return () => {
       document.removeEventListener("mousemove", onMouseMove)
-      removeElementsByClass("cursor-zoom-magnifier-container")
     }
   }, [])
-
-  useEffect(() => {
-    if (portalElement) {
-      document.body.appendChild(portalElement)
-    }
-  }, [portalElement])
-
-  useEffect(() => {
-    if (coordinates && portalElement) {
-      ReactDOM.render(
-        React.createElement(Magnifier, {
-          size,
-          smallImage: image,
-          zoomImage,
-          cursorOffset,
-          borderSize,
-          borderColor,
-          pointerStyle,
-          x: coordinates.x,
-          y: coordinates.y,
-          offsetX: coordinates.offsetX,
-          offsetY: coordinates.offsetY,
-        }),
-        portalElement
-      )
-    }
-  }, [coordinates, portalElement])
 
   const onMouseMove = (e) => {
     var offset = getOffset(imageRef.current)
@@ -101,13 +64,30 @@ export default function CursorZoom({
     return { x, y }
   }
 
+  const magnifierProps = {
+    size,
+    smallImage: image,
+    zoomImage,
+    cursorOffset,
+    borderSize,
+    borderColor,
+    pointerStyle,
+    x: coordinates.x,
+    y: coordinates.y,
+    offsetX: coordinates.offsetX,
+    offsetY: coordinates.offsetY,
+  }
+
   return (
-    <img
-      ref={imageRef}
-      width={image.width}
-      height={image.height}
-      src={image.src}
-      style={image.style}
-    />
+    <div style={style}>
+      <img
+        ref={imageRef}
+        width={image.width}
+        height={image.height}
+        src={image.src}
+        style={image.style}
+      />
+      <Magnifier {...magnifierProps} />
+    </div>
   )
 }

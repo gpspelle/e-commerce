@@ -13,8 +13,8 @@ export default function Magnifier({
   offsetX,
   offsetY,
 }) {
-  const halfSizeY = size / 2
-  const halfSizeX = (size + size * 0.4) / 2
+  const halfSizeY = (size * 1.4) / 2
+  const halfSizeX = (size * 1.4) / 2
   const magX = zoomImage.width / smallImage.width
   const magY = zoomImage.height / smallImage.height
   const bgX = -(offsetX * magX - halfSizeX)
@@ -31,15 +31,14 @@ export default function Magnifier({
       style={{
         position: "absolute",
         display: isVisible ? "block" : "none",
-        top: y,
-        left: x,
-        width: size + size * 0.4,
-        height: size,
-        marginLeft: -halfSizeX + cursorOffset.x,
-        marginTop: -halfSizeY + cursorOffset.y,
+        top: 0,
+        left: 0,
+        width: smallImage.width,
+        height: smallImage.height,
+        marginLeft: smallImage.width,
         backgroundColor: "white",
         boxShadow: "1px 1px 6px rgba(0,0,0,0.3)",
-        zIndex: 9999,
+        zIndex: 999999,
       }}
     >
       {pointerStyle && (
@@ -48,12 +47,16 @@ export default function Magnifier({
       <div
         className={"cursor-zoom-magnifier"}
         style={{
-          width: size + size * 0.8,
-          height: size * 1.4,
+          width: smallImage.width,
+          height: smallImage.height,
           backgroundImage: "url(" + zoomImage.src + ")",
           backgroundRepeat: "no-repeat",
           backgroundPosition: bgX + "px " + bgY + "px",
           border: borderSize + " solid " + borderColor,
+          zIndex: 999999,
+          top: 0,
+          left: 0,
+          position: "absolute",
         }}
       />
     </div>

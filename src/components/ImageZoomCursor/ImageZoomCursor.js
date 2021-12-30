@@ -8,11 +8,29 @@ export default function ImageZoomCursor({
   imageWidth,
   originalWidth,
   originalHeight,
+  imageStyle,
+  style,
 }) {
   const { width } = useWindowDimensions()
 
-  if (width < 568) {
-    return <img className="w-100" height="256px" src={src} alt="image" />
+  if (!src) {
+    return <></>
+  }
+
+  if (
+    (imageStyle && !imageStyle.marginTop) ||
+    width < 568 ||
+    !originalWidth ||
+    !originalHeight
+  ) {
+    return (
+      <img
+        width={`${imageWidth}px`}
+        height={`${imageHeight}px`}
+        src={src}
+        alt="image"
+      />
+    )
   }
 
   return (
@@ -21,6 +39,7 @@ export default function ImageZoomCursor({
         src,
         width: imageWidth,
         height: imageHeight,
+        style: imageStyle,
       }}
       zoomImage={{
         src,
@@ -33,6 +52,7 @@ export default function ImageZoomCursor({
         x: 300,
         y: 0,
       }}
+      style={style}
     />
   )
 }
