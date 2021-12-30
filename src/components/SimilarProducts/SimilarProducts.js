@@ -174,7 +174,6 @@ export default function SimilarProducts({ tags }) {
                       <img
                         width="128px"
                         height="128px"
-                        className="d-block w-100"
                         src={similarProduct.PRODUCT_IMAGES[0]}
                         alt={`produto similar ${i}`}
                       />

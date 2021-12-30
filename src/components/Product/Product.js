@@ -50,13 +50,7 @@ export default function Product({
 
   return (
     <Card style={{ width: "18rem", cursor: "pointer" }} onClick={openDetailPage}>
-      <img
-        className="d-block w-100"
-        width="256px"
-        height="256px"
-        src={images[0]}
-        alt={`256x256`}
-      />
+      <img width="286px" height="256px" src={images[0]} alt={`319x256`} />
       {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
