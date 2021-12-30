@@ -19,7 +19,7 @@ export default function ImageZoomCursor({
 
   if (
     (imageStyle && !imageStyle.marginTop) ||
-    width < 568 ||
+    width < 1024 ||
     !originalWidth ||
     !originalHeight
   ) {
