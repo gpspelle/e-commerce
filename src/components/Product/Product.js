@@ -16,6 +16,7 @@ export default function Product({
   images,
   phoneNumber,
   tags,
+  productOwnerId,
   commercialName,
   productType,
   dealPrice,
@@ -23,7 +24,6 @@ export default function Product({
   lightingDealDuration,
 }) {
   const history = useHistory()
-
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
   const openDetailPage = (event) => {
@@ -43,6 +43,7 @@ export default function Product({
         dealPrice,
         lightingDealStartTime,
         lightingDealDuration,
+        productOwnerId,
       },
     })
   }

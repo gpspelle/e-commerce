@@ -199,6 +199,7 @@ export default function ProductContainer() {
                         ]
                       : false
                   }
+                  productOwnerId={item.PRODUCT_OWNER_ID}
                   tags={item.PRODUCT_TAGS}
                   productType={item.PRODUCT_TYPE}
                   dealPrice={item.DEAL_PRICE}

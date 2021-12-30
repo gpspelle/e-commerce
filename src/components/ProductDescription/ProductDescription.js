@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory, useParams } from "react-router-dom"
-import { Card, Carousel, Button, Container, ListGroup } from "react-bootstrap"
+import { Card, Button, Container, ListGroup } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
@@ -20,6 +20,7 @@ import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
+import ImageZoomCursor from "../ImageZoomCursor/ImageZoomCursor"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -36,6 +37,7 @@ export default function ProductDescription() {
   const [dealPrice, setDealPrice] = useState()
   const [lightingDealDuration, setLightingDealDuration] = useState()
   const [lightingDealStartTime, setLightingDealStartTime] = useState()
+  const [originalImageDimensions, setOriginalImageDimensions] = useState()
   const { id } = useParams()
 
   useEffect(() => {
@@ -114,6 +116,27 @@ export default function ProductDescription() {
     }
   }, [id])
 
+  useEffect(() => {
+    const asyncGetBase64ImageDimensions = async (image) => {
+      const result = await getBase64ImageDimensions(images[0])
+      setOriginalImageDimensions(result)
+    }
+
+    if (images && images.length === 1) {
+      asyncGetBase64ImageDimensions(images[0])
+    }
+  }, [images])
+
+  const getBase64ImageDimensions = (base64Image) => {
+    return new Promise((resolved, rejected) => {
+      var i = new Image()
+      i.onload = () => {
+        resolved({ w: i.width, h: i.height })
+      }
+      i.src = base64Image
+    })
+  }
+
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
   return (
@@ -150,7 +173,15 @@ export default function ProductDescription() {
             (images.length > 1 ? (
               <ImageCarousel images={images} />
             ) : (
-              <img className="w-100" height="256px" src={images[0]} alt="image" />
+              originalImageDimensions && (
+                <ImageZoomCursor
+                  src={images[0]}
+                  imageHeight={256}
+                  imageWidth={319}
+                  originalHeight={originalImageDimensions.h}
+                  originalWidth={originalImageDimensions.w}
+                />
+              )
             ))}
           {isLightingDeal && <LightingDealWaterMark />}
           <Card.Header as="h4">Detalhes do produto</Card.Header>
