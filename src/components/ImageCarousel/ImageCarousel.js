@@ -20,7 +20,13 @@ export default function ImageCarousel({ images }) {
   useEffect(() => {
     const components = images?.map((item, i) => {
       return (
-        <ImageZoomCursor key={i} src={item} imageHeight={256} imageWidth={319} />
+        <ImageZoomCursor
+          screenWidth={width}
+          key={i}
+          src={item}
+          imageHeight={256}
+          imageWidth={319}
+        />
       )
     })
 
@@ -86,6 +92,7 @@ export default function ImageCarousel({ images }) {
               ? originalImagesDimensions[actualShowingImageNumber].h
               : undefined
           }
+          screenWidth={width}
         />
       )}
     </div>

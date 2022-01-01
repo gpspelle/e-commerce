@@ -1,5 +1,4 @@
 import React from "react"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
 import CursorZoom from "./CursorZoom"
 
 export default function ImageZoomCursor({
@@ -10,26 +9,28 @@ export default function ImageZoomCursor({
   originalHeight,
   imageStyle,
   style,
+  screenWidth,
 }) {
-  const { width } = useWindowDimensions()
-
   if (!src) {
     return <></>
   }
 
   if (
     (imageStyle && !imageStyle.marginTop) ||
-    width < 1024 ||
+    screenWidth < 1024 ||
     !originalWidth ||
     !originalHeight
   ) {
     return (
-      <img
-        width={`${imageWidth}px`}
-        height={`${imageHeight}px`}
-        src={src}
-        alt="image"
-      />
+      <div style={style}>
+        <img
+          width={`${imageWidth}px`}
+          height={`${imageHeight}px`}
+          src={src}
+          alt="image"
+          style={imageStyle}
+        />
+      </div>
     )
   }
 
