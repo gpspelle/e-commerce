@@ -68,24 +68,26 @@ export default function ImageCarousel({ images }) {
         disableButtonsControls={true}
         onSlideChanged={(e) => setActualShowingImageNumber(e.item)}
       />
-      <ImageZoomCursor
-        style={{ height: "0px" }}
-        imageStyle={{ marginTop: "-332px" }}
-        key={actualShowingImageNumber}
-        src={images[actualShowingImageNumber]}
-        imageHeight={256}
-        imageWidth={319}
-        originalWidth={
-          originalImagesDimensions
-            ? originalImagesDimensions[actualShowingImageNumber].w
-            : undefined
-        }
-        originalHeight={
-          originalImagesDimensions
-            ? originalImagesDimensions[actualShowingImageNumber].h
-            : undefined
-        }
-      />
+      {width > 1024 && (
+        <ImageZoomCursor
+          style={{ height: "0px" }}
+          imageStyle={{ marginTop: "-332px" }}
+          key={actualShowingImageNumber}
+          src={images[actualShowingImageNumber]}
+          imageHeight={256}
+          imageWidth={319}
+          originalWidth={
+            originalImagesDimensions
+              ? originalImagesDimensions[actualShowingImageNumber].w
+              : undefined
+          }
+          originalHeight={
+            originalImagesDimensions
+              ? originalImagesDimensions[actualShowingImageNumber].h
+              : undefined
+          }
+        />
+      )}
     </div>
   )
 }
