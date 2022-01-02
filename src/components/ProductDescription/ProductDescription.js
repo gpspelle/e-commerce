@@ -20,7 +20,7 @@ import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
-import ImageZoomCursor from "../ImageZoomCursor/ImageZoomCursor"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -38,7 +38,9 @@ export default function ProductDescription() {
   const [lightingDealDuration, setLightingDealDuration] = useState()
   const [lightingDealStartTime, setLightingDealStartTime] = useState()
   const [originalImageDimensions, setOriginalImageDimensions] = useState()
+  const [isFullScreen, setIsFullScreen] = useState(false)
   const { id } = useParams()
+  const { width, height } = useWindowDimensions()
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -139,8 +141,13 @@ export default function ProductDescription() {
 
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
+  const imagesIsDefined = images && images.length > 0
   return (
-    <div>
+    <div
+      style={{
+        visibility: isFullScreen ? "hidden" : "",
+      }}
+    >
       <Container>
         <div style={{ display: "flex" }}>
           <Button
@@ -169,20 +176,15 @@ export default function ProductDescription() {
           </Button>
         </div>
         <Card style={{ width: "20rem", margin: "0 auto" }}>
-          {images &&
-            (images.length > 1 ? (
-              <ImageCarousel images={images} />
-            ) : (
-              originalImageDimensions && (
-                <ImageZoomCursor
-                  src={images[0]}
-                  imageHeight={256}
-                  imageWidth={319}
-                  originalHeight={originalImageDimensions.h}
-                  originalWidth={originalImageDimensions.w}
-                />
-              )
-            ))}
+          {imagesIsDefined && (
+            <ImageCarousel
+              isFullScreen={isFullScreen}
+              setIsFullScreen={setIsFullScreen}
+              images={images}
+              screenWidth={width}
+              screenHeight={height}
+            />
+          )}
           {isLightingDeal && <LightingDealWaterMark />}
           <Card.Header as="h4">Detalhes do produto</Card.Header>
           <ListGroup variant="flush">

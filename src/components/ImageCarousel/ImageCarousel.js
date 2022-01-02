@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
-import ImageZoomCursor from "../ImageZoomCursor/ImageZoomCursor"
+import ImageZoom from "../ImageZoom/ImageZoom"
 import "./ImageCarousel.css"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 const responsive = {
   0: { items: 1 },
@@ -11,27 +10,36 @@ const responsive = {
   1024: { items: 1 },
 }
 
-export default function ImageCarousel({ images }) {
+export default function ImageCarousel({
+  images,
+  screenWidth,
+  screenHeight,
+  isFullScreen,
+  setIsFullScreen,
+}) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
   const [items, setItems] = useState()
-  const { width } = useWindowDimensions()
 
   useEffect(() => {
     const components = images?.map((item, i) => {
       return (
-        <ImageZoomCursor
-          screenWidth={width}
+        <ImageZoom
           key={i}
           src={item}
           imageHeight={256}
           imageWidth={319}
+          screenWidth={screenWidth}
+          screenHeight={screenHeight}
+          isFullScreen={isFullScreen}
+          setIsFullScreen={setIsFullScreen}
+          shouldBeDisplayed={i === actualShowingImageNumber}
         />
       )
     })
 
     setItems(components)
-  }, [])
+  }, [isFullScreen, actualShowingImageNumber])
 
   useEffect(() => {
     const asyncGetBase64ImageDimensions = async () => {
@@ -67,15 +75,16 @@ export default function ImageCarousel({ images }) {
   return (
     <div>
       <AliceCarousel
-        mouseTracking={width < 1024 ? true : false}
+        activeIndex={actualShowingImageNumber}
+        mouseTracking={screenWidth < 1024 ? true : false}
         items={items}
         responsive={responsive}
         controlsStrategy="alternate"
         disableButtonsControls={true}
         onSlideChanged={(e) => setActualShowingImageNumber(e.item)}
       />
-      {width > 1024 && (
-        <ImageZoomCursor
+      {screenWidth > 1024 && (
+        <ImageZoom
           style={{ height: "0px" }}
           imageStyle={{ marginTop: "-332px" }}
           key={actualShowingImageNumber}
@@ -92,7 +101,10 @@ export default function ImageCarousel({ images }) {
               ? originalImagesDimensions[actualShowingImageNumber].h
               : undefined
           }
-          screenWidth={width}
+          screenWidth={screenWidth}
+          screenHeight={screenHeight}
+          isFullScreen={isFullScreen}
+          setIsFullScreen={setIsFullScreen}
         />
       )}
     </div>

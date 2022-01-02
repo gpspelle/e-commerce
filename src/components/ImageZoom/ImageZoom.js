@@ -1,7 +1,8 @@
 import React from "react"
+import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
 import CursorZoom from "./CursorZoom"
 
-export default function ImageZoomCursor({
+export default function ImageZoom({
   src,
   imageHeight,
   imageWidth,
@@ -10,7 +11,17 @@ export default function ImageZoomCursor({
   imageStyle,
   style,
   screenWidth,
+  screenHeight,
+  isFullScreen,
+  setIsFullScreen,
+  shouldBeDisplayed,
 }) {
+  if (isFullScreen) {
+    document.body.style.overflow = "hidden"
+  } else {
+    document.body.style.overflow = ""
+  }
+
   if (!src) {
     return <></>
   }
@@ -22,15 +33,17 @@ export default function ImageZoomCursor({
     !originalHeight
   ) {
     return (
-      <div style={style}>
-        <img
-          width={`${imageWidth}px`}
-          height={`${imageHeight}px`}
-          src={src}
-          alt="image"
-          style={imageStyle}
-        />
-      </div>
+      <OnClickImageZoom
+        src={src}
+        screenHeight={screenHeight}
+        imageWidth={imageWidth}
+        imageHeight={imageHeight}
+        style={style}
+        imageStyle={imageStyle}
+        isFullScreen={isFullScreen}
+        setIsFullScreen={setIsFullScreen}
+        shouldBeDisplayed={shouldBeDisplayed}
+      />
     )
   }
 
