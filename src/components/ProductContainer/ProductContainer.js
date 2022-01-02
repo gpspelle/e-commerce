@@ -185,6 +185,7 @@ export default function ProductContainer() {
                   description={item.PRODUCT_DESCRIPTION}
                   price={item.PRODUCT_PRICE}
                   images={item.PRODUCT_IMAGES}
+                  coverImage={item.PRODUCT_COVER_IMAGE}
                   phoneNumber={
                     Object.keys(productOwnerIdToOwnerData).length !== 0
                       ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
