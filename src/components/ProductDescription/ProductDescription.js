@@ -209,7 +209,7 @@ export default function ProductDescription() {
           isLightingDeal={isLightingDeal}
         />
       </Container>
-      <SimilarProducts tags={tags} />
+      <SimilarProducts id={id} screenWidth={width} tags={tags} />
     </div>
   )
 }

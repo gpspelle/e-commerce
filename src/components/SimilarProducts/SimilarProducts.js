@@ -8,12 +8,10 @@ import {
   PRODUCT_DESCRIPTION,
 } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
 import "./SimilarProducts.css"
 
-export default function SimilarProducts({ tags }) {
+export default function SimilarProducts({ id, screenWidth, tags }) {
   const history = useHistory()
-  const { width } = useWindowDimensions()
   const [numberOfVisibleSimilarProducts, setNumberOfVisibleSimilarProducts] =
     useState()
   const [similarProductIds, setSimilarProductsIds] = useState()
@@ -78,7 +76,7 @@ export default function SimilarProducts({ tags }) {
         )
 
         const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
-
+        sameTagProductIdsSet.delete(id)
         setSimilarProductsIds([...sameTagProductIdsSet])
       }
     }
@@ -87,10 +85,10 @@ export default function SimilarProducts({ tags }) {
   }, [tags])
 
   useEffect(() => {
-    if (width) {
-      setNumberOfVisibleSimilarProducts(parseInt(width / 150))
+    if (screenWidth) {
+      setNumberOfVisibleSimilarProducts(parseInt(screenWidth / 150))
     }
-  }, [width])
+  }, [screenWidth])
 
   const openDetailPage = (
     id,
