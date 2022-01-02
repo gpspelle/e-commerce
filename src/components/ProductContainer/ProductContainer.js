@@ -40,7 +40,7 @@ export default function ProductContainer() {
 
   useEffect(() => {
     if (searchBarValue) {
-      const filteredProducts = allProducts.filter((product) => {
+      const filteredProducts = allProducts?.filter((product) => {
         const lowerCaseSearchBarValue = searchBarValue.toLowerCase()
         if (product.PRODUCT_NAME.toLowerCase().includes(lowerCaseSearchBarValue)) {
           return true

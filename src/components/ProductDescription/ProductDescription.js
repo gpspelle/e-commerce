@@ -77,7 +77,7 @@ export default function ProductDescription() {
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
         setPrice(response.data.Item.PRODUCT_PRICE.N)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
-        setTags(response.data.Item.PRODUCT_TAGS.SS)
+        setTags(response.data.Item?.PRODUCT_TAGS.SS)
 
         const productType = response.data.Item?.PRODUCT_TYPE?.S
         setProductType(productType)

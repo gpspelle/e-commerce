@@ -139,7 +139,7 @@ export default function SimilarProducts({ tags }) {
             height: 1,
           }}
         />
-        <div className="my-4">Produtos similares</div>
+        <div className="my-4">Produtos relacionados</div>
         {!similarProducts || !numberOfVisibleSimilarProducts ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
