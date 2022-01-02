@@ -36,6 +36,7 @@ export default function ImageZoom({
       <OnClickImageZoom
         src={src}
         screenHeight={screenHeight}
+        screenWidth={screenWidth}
         imageWidth={imageWidth}
         imageHeight={imageHeight}
         style={style}

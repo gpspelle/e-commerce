@@ -4,6 +4,7 @@ import { CloseButton } from "react-bootstrap"
 export default function OnClickImageZoom({
   src,
   screenHeight,
+  screenWidth,
   imageWidth,
   imageHeight,
   style,
@@ -12,12 +13,20 @@ export default function OnClickImageZoom({
   setIsFullScreen,
   shouldBeDisplayed,
 }) {
+  const x = document.getElementsByClassName("card")
+  if (isFullScreen && screenWidth > 1024) {
+    x[0].style.width = "40rem"
+  } else {
+    x[0].style.width = "20rem"
+  }
+
   return (
     <div
       style={{
         ...style,
         cursor: isFullScreen ? "" : "pointer",
         height: isFullScreen ? screenHeight : "",
+        width: screenWidth > 1024 ? "100%" : "",
         visibility: "visible",
         zIndex: shouldBeDisplayed ? "11" : "0",
         position: "relative",
