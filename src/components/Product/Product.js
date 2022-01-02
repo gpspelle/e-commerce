@@ -27,6 +27,7 @@ export default function Product({
   const history = useHistory()
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
+
   const openDetailPage = (event) => {
     if (event.target.type === "button") return
     history.push({

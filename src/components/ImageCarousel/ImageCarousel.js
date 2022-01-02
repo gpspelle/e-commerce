@@ -39,7 +39,7 @@ export default function ImageCarousel({
     })
 
     setItems(components)
-  }, [isFullScreen, actualShowingImageNumber])
+  }, [isFullScreen, actualShowingImageNumber, images])
 
   useEffect(() => {
     const asyncGetBase64ImageDimensions = async () => {

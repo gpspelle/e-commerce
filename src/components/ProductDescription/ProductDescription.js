@@ -37,7 +37,6 @@ export default function ProductDescription() {
   const [dealPrice, setDealPrice] = useState()
   const [lightingDealDuration, setLightingDealDuration] = useState()
   const [lightingDealStartTime, setLightingDealStartTime] = useState()
-  const [originalImageDimensions, setOriginalImageDimensions] = useState()
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { id } = useParams()
   const { width, height } = useWindowDimensions()
@@ -118,30 +117,10 @@ export default function ProductDescription() {
     }
   }, [id])
 
-  useEffect(() => {
-    const asyncGetBase64ImageDimensions = async (image) => {
-      const result = await getBase64ImageDimensions(images[0])
-      setOriginalImageDimensions(result)
-    }
-
-    if (images && images.length === 1) {
-      asyncGetBase64ImageDimensions(images[0])
-    }
-  }, [images])
-
-  const getBase64ImageDimensions = (base64Image) => {
-    return new Promise((resolved, rejected) => {
-      var i = new Image()
-      i.onload = () => {
-        resolved({ w: i.width, h: i.height })
-      }
-      i.src = base64Image
-    })
-  }
-
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
   const imagesIsDefined = images && images.length > 0
+
   return (
     <div
       style={{

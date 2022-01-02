@@ -16,6 +16,10 @@ export default function OnClickImageZoom({
   const x = document.getElementsByClassName("card")
   if (isFullScreen && screenWidth > 1024) {
     x[0].style.width = "40rem"
+  } else if (isFullScreen && screenWidth > 800) {
+    x[0].style.width = "30rem"
+  } else if (isFullScreen && screenWidth > 568) {
+    x[0].style.width = "25rem"
   } else {
     x[0].style.width = "20rem"
   }
