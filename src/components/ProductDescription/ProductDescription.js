@@ -76,7 +76,7 @@ export default function ProductDescription() {
         setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
         setPrice(response.data.Item.PRODUCT_PRICE.N)
         setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
-        setTags(response.data.Item?.PRODUCT_TAGS.SS)
+        setTags(response.data.Item?.PRODUCT_TAGS?.SS)
 
         const productType = response.data.Item?.PRODUCT_TYPE?.S
         setProductType(productType)
@@ -173,14 +173,14 @@ export default function ProductDescription() {
             </ListGroup.Item>
             <ListGroup.Item className="notranslate">
               {isDeal ? (
-                <div style={{ display: "block ruby" }}>
-                  Preço:{" "}
+                <div style={{ display: "flex" }}>
+                  Preço:
                   <div
                     style={{ textDecoration: "line-through", color: "lightgray" }}
                   >
-                    R$ {price}
+                    &nbsp;R$ {price}
                   </div>{" "}
-                  R$ {dealPrice}
+                  &nbsp;R$ {dealPrice}
                 </div>
               ) : (
                 <div>Preço: R$ {price}</div>

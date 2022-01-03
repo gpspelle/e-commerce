@@ -1,5 +1,6 @@
 import React from "react"
 import { CloseButton } from "react-bootstrap"
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock"
 
 export default function OnClickImageZoom({
   src,
@@ -11,17 +12,22 @@ export default function OnClickImageZoom({
   imageStyle,
   isFullScreen,
   setIsFullScreen,
-  shouldBeDisplayed,
 }) {
   const x = document.getElementsByClassName("card")
-  if (isFullScreen && screenWidth > 1024) {
-    x[0].style.width = "40rem"
-  } else if (isFullScreen && screenWidth > 800) {
-    x[0].style.width = "30rem"
-  } else if (isFullScreen && screenWidth > 568) {
-    x[0].style.width = "25rem"
+  if (isFullScreen) {
+    if (screenWidth > 1024) {
+      x[0].style.width = "40rem"
+    } else if (screenWidth > 800) {
+      x[0].style.width = "30rem"
+    } else if (screenWidth > 568) {
+      x[0].style.width = "25rem"
+    } else {
+      x[0].style.width = "20rem"
+    }
+    disableBodyScroll(document.body)
   } else {
     x[0].style.width = "20rem"
+    enableBodyScroll(document.body)
   }
 
   return (
@@ -32,10 +38,8 @@ export default function OnClickImageZoom({
         height: isFullScreen ? screenHeight : "",
         width: screenWidth > 1024 ? "100%" : "",
         visibility: "visible",
-        zIndex: shouldBeDisplayed ? "11" : "0",
         position: "relative",
         display: "flex",
-        justifyContent: "right",
       }}
       onClick={(e) => {
         if (e.target.type === "button") return
@@ -49,8 +53,6 @@ export default function OnClickImageZoom({
           src={src}
           alt="image"
           style={{
-            zIndex: "10",
-            position: "fixed",
             paddingBottom: "12vh",
             paddingTop: "2vh",
           }}
@@ -68,11 +70,12 @@ export default function OnClickImageZoom({
         onClick={() => setIsFullScreen(false)}
         style={{
           display: isFullScreen ? "" : "none",
-          position: "fixed",
+          position: "absolute",
           zIndex: "11",
           backgroundColor: "white",
           border: "3px solid",
           fontSize: "32px",
+          right: "0px",
         }}
       />
     </div>

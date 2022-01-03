@@ -33,13 +33,12 @@ export default function ImageCarousel({
           screenHeight={screenHeight}
           isFullScreen={isFullScreen}
           setIsFullScreen={setIsFullScreen}
-          shouldBeDisplayed={i === actualShowingImageNumber}
         />
       )
     })
 
     setItems(components)
-  }, [isFullScreen, actualShowingImageNumber, images])
+  }, [isFullScreen, images])
 
   useEffect(() => {
     const asyncGetBase64ImageDimensions = async () => {
