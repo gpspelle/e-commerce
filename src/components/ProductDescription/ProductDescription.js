@@ -174,7 +174,7 @@ export default function ProductDescription() {
             <ListGroup.Item className="notranslate">
               {isDeal ? (
                 <div style={{ display: "flex" }}>
-                  Preço:
+                  Preço:&nbsp;
                   <div
                     style={{ textDecoration: "line-through", color: "lightgray" }}
                   >
