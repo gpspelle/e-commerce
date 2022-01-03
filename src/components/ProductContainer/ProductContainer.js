@@ -23,9 +23,9 @@ export const pageStates = {
 
 export default function ProductContainer() {
   const location = useLocation()
-  const [products, setProducts] = useState()
+  const [products, setProducts] = useState([])
   const [productOwnerIds, setProductOwnerIds] = useState()
-  const [allProducts, setAllProducts] = useState()
+  const [allProducts, setAllProducts] = useState([])
   const [accounts, setAccounts] = useState()
   const [searchBarValue, setSearchBarValue] = useState("")
   const [switchPage, setSwitchPage] = useState(pageStates.HOME)
@@ -39,8 +39,14 @@ export default function ProductContainer() {
   }, [location])
 
   useEffect(() => {
-    if (searchBarValue) {
-      const filteredProducts = allProducts?.filter((product) => {
+    if (
+      searchBarValue &&
+      allProducts &&
+      allProducts.length > 0 &&
+      products &&
+      products.length > 0
+    ) {
+      const filteredProducts = allProducts.filter((product) => {
         const lowerCaseSearchBarValue = searchBarValue.toLowerCase()
         if (product.PRODUCT_NAME.toLowerCase().includes(lowerCaseSearchBarValue)) {
           return true
@@ -88,15 +94,16 @@ export default function ProductContainer() {
 
       const res = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
       const { data, key } = res.data
+      const concatProducts = products.length > 0 ? products.concat(data) : data
 
-      data.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
+      concatProducts.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
 
       const productOwnerIdsSet = new Set(
-        data.map((product) => product.PRODUCT_OWNER_ID)
+        concatProducts.map((product) => product.PRODUCT_OWNER_ID)
       )
 
-      setProducts(data)
-      setAllProducts(data)
+      setProducts(concatProducts)
+      setAllProducts(concatProducts)
       setProductOwnerIds([...productOwnerIdsSet])
       setPaginationToken(key)
       setHasMoreDataToFetch(key ? true : false)
@@ -140,14 +147,14 @@ export default function ProductContainer() {
   }
 
   var displayProducts
-  if (switchPage.name === "DEALS") {
-    displayProducts = products?.filter(
+  if (switchPage.name === "DEALS" && products && products.length > 0) {
+    displayProducts = products.filter(
       (product) =>
         product.PRODUCT_TYPE === PRODUCT_TYPES.DEAL ||
         product.PRODUCT_TYPE === PRODUCT_TYPES.LIGHTING_DEAL
     )
 
-    displayProducts = displayProducts?.filter((product) => {
+    displayProducts = displayProducts.filter((product) => {
       const isLightingDeal = product.PRODUCT_TYPE === PRODUCT_TYPES.LIGHTING_DEAL
       if (isLightingDeal) {
         const { miliseconds } = processLightingDealInformation({
@@ -160,7 +167,7 @@ export default function ProductContainer() {
 
       return true
     })
-  } else {
+  } else if (products && products.length > 0) {
     displayProducts = products
   }
 
@@ -206,6 +213,7 @@ export default function ProductContainer() {
                   dealPrice={item.DEAL_PRICE}
                   lightingDealDuration={item.LIGHTING_DEAL_DURATION}
                   lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
+                  hasMoreDataToFetch={hasMoreDataToFetch}
                 />
               </Col>
             )
