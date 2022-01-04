@@ -1,6 +1,5 @@
 import React from "react"
 import { CloseButton } from "react-bootstrap"
-import useScrollBlock from "../../hooks/useScrollBlock"
 
 export default function OnClickImageZoom({
   src,
@@ -12,8 +11,9 @@ export default function OnClickImageZoom({
   imageStyle,
   isFullScreen,
   setIsFullScreen,
+  allowScroll,
+  blockScroll,
 }) {
-  const [blockScroll, allowScroll] = useScrollBlock()
   const x = document.getElementsByClassName("card")
   if (isFullScreen) {
     if (screenWidth > 1024) {
@@ -25,14 +25,10 @@ export default function OnClickImageZoom({
     } else {
       x[0].style.width = "20rem"
     }
-    //document.body.style.position = "fixed"
-    //document.body.style.overflow = "hidden"
     blockScroll()
   } else {
     x[0].style.width = "20rem"
     allowScroll()
-    //document.body.style.position = ""
-    //document.body.style.overflow = ""
   }
 
   return (

@@ -16,6 +16,7 @@ import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
+import useScrollBlock from "../../hooks/useScrollBlock"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -34,6 +35,14 @@ export default function ProductDescription() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { id } = useParams()
   const { width, height } = useWindowDimensions()
+  const [blockScroll, allowScroll] = useScrollBlock()
+
+  useEffect(() => {
+    return () => {
+      setIsFullScreen(false)
+      allowScroll()
+    }
+  }, [])
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -130,6 +139,8 @@ export default function ProductDescription() {
               images={images}
               screenWidth={width}
               screenHeight={height}
+              allowScroll={allowScroll}
+              blockScroll={blockScroll}
             />
           )}
           {isLightingDeal && <LightingDealWaterMark />}

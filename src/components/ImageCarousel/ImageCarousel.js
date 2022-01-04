@@ -16,6 +16,8 @@ export default function ImageCarousel({
   screenHeight,
   isFullScreen,
   setIsFullScreen,
+  allowScroll,
+  blockScroll,
 }) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
@@ -33,6 +35,8 @@ export default function ImageCarousel({
           screenHeight={screenHeight}
           isFullScreen={isFullScreen}
           setIsFullScreen={setIsFullScreen}
+          allowScroll={allowScroll}
+          blockScroll={blockScroll}
         />
       )
     })
@@ -104,6 +108,8 @@ export default function ImageCarousel({
           screenHeight={screenHeight}
           isFullScreen={isFullScreen}
           setIsFullScreen={setIsFullScreen}
+          allowScroll={allowScroll}
+          blockScroll={blockScroll}
         />
       )}
     </div>

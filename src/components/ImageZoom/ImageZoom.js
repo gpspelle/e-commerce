@@ -15,6 +15,8 @@ export default function ImageZoom({
   isFullScreen,
   setIsFullScreen,
   shouldBeDisplayed,
+  allowScroll,
+  blockScroll,
 }) {
   if (isFullScreen) {
     document.body.style.overflow = "hidden"
@@ -44,6 +46,8 @@ export default function ImageZoom({
         isFullScreen={isFullScreen}
         setIsFullScreen={setIsFullScreen}
         shouldBeDisplayed={shouldBeDisplayed}
+        allowScroll={allowScroll}
+        blockScroll={blockScroll}
       />
     )
   }
