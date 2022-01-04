@@ -3,6 +3,7 @@ import { Card, Button, Col, Spinner } from "react-bootstrap"
 import { useHistory } from "react-router"
 
 export default function NoProductFoundMessage({
+  screenWidth,
   hasMoreDataToFetch,
   searchBarValue,
 }) {
@@ -21,7 +22,6 @@ export default function NoProductFoundMessage({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        paddingTop: "20px",
       }}
     >
       {hasMoreDataToFetch ? (
@@ -33,14 +33,15 @@ export default function NoProductFoundMessage({
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Card style={{ width: "18rem" }}>
+        <Card
+          style={{ width: screenWidth < 1024 ? "100%" : "24rem", border: "none" }}
+        >
           <Card.Img
             variant="top"
-            src="not-found-dog.jpeg"
-            style={{ height: "40vh" }}
+            src="not-found-dog.png"
+            style={{ height: "35vh" }}
           />
           <Card.Body>
-            <Card.Title>Oops!</Card.Title>
             <Card.Text style={{ textAlign: "center" }}>
               {`Não encontramos nenhum produto relacionado à sua busca`}{" "}
               <div style={{ margin: "10px auto", fontWeight: "bold" }}>

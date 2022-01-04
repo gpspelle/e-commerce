@@ -23,7 +23,7 @@ export const pageStates = {
   DEALS: { name: "DEALS", pathname: `/${DEALS}` },
 }
 
-export default function ProductContainer({ setSearchBarValue }) {
+export default function ProductContainer() {
   const location = useLocation()
   const query = useQuery()
   const [products, setProducts] = useState([])
@@ -219,6 +219,7 @@ export default function ProductContainer({ setSearchBarValue }) {
             })
           ) : (
             <NoProductFoundMessage
+              screenWidth={width}
               hasMoreDataToFetch={hasMoreDataToFetch}
               searchBarValue={searchBarValue}
             />
