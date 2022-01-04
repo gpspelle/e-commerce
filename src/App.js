@@ -1,5 +1,6 @@
 import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import NavigationBar from "./components/NavigationBar/NavigationBar"
 import ProductContainer from "./components/ProductContainer/ProductContainer"
 import ProductDescription from "./components/ProductDescription/ProductDescription"
 import {
@@ -19,8 +20,9 @@ const meta = {
 
 function App() {
   return (
-    <div>
+    <div style={{ paddingTop: "30px" }}>
       <Router>
+        <NavigationBar />
         <Switch>
           <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
             <ProductDescription />

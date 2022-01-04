@@ -28,15 +28,8 @@ export default function ProductContainer() {
   const [allProducts, setAllProducts] = useState([])
   const [accounts, setAccounts] = useState()
   const [searchBarValue, setSearchBarValue] = useState("")
-  const [switchPage, setSwitchPage] = useState(pageStates.HOME)
   const [paginationToken, setPaginationToken] = useState(undefined)
   const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
-
-  useEffect(() => {
-    if (location.state) {
-      setSwitchPage(location.state.isDeal ? pageStates.DEALS : pageStates.HOME)
-    }
-  }, [location])
 
   useEffect(() => {
     if (
@@ -147,7 +140,7 @@ export default function ProductContainer() {
   }
 
   var displayProducts
-  if (switchPage.name === "DEALS" && products && products.length > 0) {
+  if (location.pathname === `/${DEALS}` && products && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
         product.PRODUCT_TYPE === PRODUCT_TYPES.DEAL ||
@@ -174,7 +167,7 @@ export default function ProductContainer() {
   return (
     <div>
       <Container>
-        <Row>
+        <Row style={{ paddingTop: "32px" }}>
           {displayProducts?.map((item, i) => {
             return (
               <Col
@@ -183,7 +176,7 @@ export default function ProductContainer() {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  paddingTop: "62px",
+                  paddingTop: "20px",
                 }}
               >
                 <Product
@@ -221,8 +214,6 @@ export default function ProductContainer() {
         </Row>
       </Container>
       <SearchBar
-        switchPage={switchPage}
-        setSwitchPage={setSwitchPage}
         searchBarValue={searchBarValue}
         setSearchBarValue={setSearchBarValue}
       />

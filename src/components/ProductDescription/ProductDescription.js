@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useHistory, useParams } from "react-router-dom"
-import { Card, Button, Container, ListGroup } from "react-bootstrap"
+import { Card, Container, ListGroup } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
@@ -11,11 +11,6 @@ import {
 } from "../../constants/constants"
 import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
-import { pageStates } from "../ProductContainer/ProductContainer"
-import {
-  HomeButtonContent,
-  DealsButtonContent,
-} from "../ButtonContent/ButtonContent"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
@@ -127,33 +122,7 @@ export default function ProductDescription() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
-      <Container>
-        <div style={{ display: "flex" }}>
-          <Button
-            variant="success"
-            style={{ margin: "0 auto" }}
-            onClick={() =>
-              history.push({
-                pathname: pageStates.HOME.pathname,
-                state: { isDeal: false },
-              })
-            }
-          >
-            <HomeButtonContent />
-          </Button>
-          <Button
-            variant="success"
-            style={{ margin: "0 auto" }}
-            onClick={() =>
-              history.push({
-                pathname: pageStates.DEALS.pathname,
-                state: { isDeal: true },
-              })
-            }
-          >
-            <DealsButtonContent />
-          </Button>
-        </div>
+      <Container style={{ paddingTop: "40px" }}>
         <Card style={{ width: "20rem", margin: "0 auto" }}>
           {imagesIsDefined && (
             <ImageCarousel

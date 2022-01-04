@@ -1,34 +1,7 @@
 import React from "react"
-import { useHistory } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
-import { pageStates } from "../ProductContainer/ProductContainer"
-import {
-  HomeButtonContent,
-  DealsButtonContent,
-} from "../ButtonContent/ButtonContent"
+import { Form } from "react-bootstrap"
 
-export default function SearchBar({
-  switchPage,
-  setSwitchPage,
-  searchBarValue,
-  setSearchBarValue,
-}) {
-  const handleOpenLightingDeals = () => {
-    setSwitchPage(pageStates.DEALS)
-    history.push({
-      pathname: pageStates.DEALS.pathname,
-    })
-  }
-
-  const handleOpenAllProducts = () => {
-    setSwitchPage(pageStates.HOME)
-    history.push({
-      pathname: pageStates.HOME.pathname,
-    })
-  }
-
-  const history = useHistory()
-
+export default function SearchBar({ searchBarValue, setSearchBarValue }) {
   return (
     <div
       style={{
@@ -55,21 +28,6 @@ export default function SearchBar({
           placeholder="Pesquisar..."
         />
       </Form.Group>
-      <Button
-        onClick={
-          switchPage.name === "DEALS"
-            ? handleOpenAllProducts
-            : handleOpenLightingDeals
-        }
-        variant="success"
-        style={{ float: "right", margin: "9px 30px" }}
-      >
-        {switchPage.name === "DEALS" ? (
-          <HomeButtonContent />
-        ) : (
-          <DealsButtonContent />
-        )}
-      </Button>
     </div>
   )
 }
