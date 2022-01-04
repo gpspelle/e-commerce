@@ -15,14 +15,17 @@ import {
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
+import useQuery from "../../hooks/useQuery"
+import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 
 export const pageStates = {
   HOME: { name: "HOME", pathname: "/" },
   DEALS: { name: "DEALS", pathname: `/${DEALS}` },
 }
 
-export default function ProductContainer({ searchBarValue }) {
+export default function ProductContainer({ setSearchBarValue }) {
   const location = useLocation()
+  const query = useQuery()
   const [products, setProducts] = useState([])
   const [productOwnerIds, setProductOwnerIds] = useState()
   const [allProducts, setAllProducts] = useState([])
@@ -30,6 +33,8 @@ export default function ProductContainer({ searchBarValue }) {
   const [paginationToken, setPaginationToken] = useState(undefined)
   const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
   const { width } = useWindowDimensions()
+
+  const searchBarValue = query.get("q")
 
   useEffect(() => {
     if (
@@ -68,7 +73,7 @@ export default function ProductContainer({ searchBarValue }) {
     } else {
       setProducts(allProducts)
     }
-  }, [searchBarValue])
+  }, [searchBarValue, allProducts])
 
   useEffect(() => {
     async function getProductsFromDatabase() {
@@ -168,49 +173,56 @@ export default function ProductContainer({ searchBarValue }) {
     <div>
       <Container>
         <Row style={{ paddingTop: width < 1024 ? "64px" : "12px" }}>
-          {displayProducts?.map((item, i) => {
-            return (
-              <Col
-                key={i}
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingTop: "20px",
-                }}
-              >
-                <Product
-                  id={item.id}
-                  name={item.PRODUCT_NAME}
-                  description={item.PRODUCT_DESCRIPTION}
-                  price={item.PRODUCT_PRICE}
-                  images={item.PRODUCT_IMAGES}
-                  coverImage={item.PRODUCT_COVER_IMAGE}
-                  phoneNumber={
-                    Object.keys(productOwnerIdToOwnerData).length !== 0
-                      ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
-                          "phoneNumber"
-                        ]
-                      : false
-                  }
-                  commercialName={
-                    Object.keys(productOwnerIdToOwnerData).length !== 0
-                      ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
-                          "commercialName"
-                        ]
-                      : false
-                  }
-                  productOwnerId={item.PRODUCT_OWNER_ID}
-                  tags={item.PRODUCT_TAGS}
-                  productType={item.PRODUCT_TYPE}
-                  dealPrice={item.DEAL_PRICE}
-                  lightingDealDuration={item.LIGHTING_DEAL_DURATION}
-                  lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
-                  hasMoreDataToFetch={hasMoreDataToFetch}
-                />
-              </Col>
-            )
-          })}
+          {displayProducts && displayProducts.length > 0 ? (
+            displayProducts.map((item, i) => {
+              return (
+                <Col
+                  key={i}
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingTop: "20px",
+                  }}
+                >
+                  <Product
+                    id={item.id}
+                    name={item.PRODUCT_NAME}
+                    description={item.PRODUCT_DESCRIPTION}
+                    price={item.PRODUCT_PRICE}
+                    images={item.PRODUCT_IMAGES}
+                    coverImage={item.PRODUCT_COVER_IMAGE}
+                    phoneNumber={
+                      Object.keys(productOwnerIdToOwnerData).length !== 0
+                        ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
+                            "phoneNumber"
+                          ]
+                        : false
+                    }
+                    commercialName={
+                      Object.keys(productOwnerIdToOwnerData).length !== 0
+                        ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
+                            "commercialName"
+                          ]
+                        : false
+                    }
+                    productOwnerId={item.PRODUCT_OWNER_ID}
+                    tags={item.PRODUCT_TAGS}
+                    productType={item.PRODUCT_TYPE}
+                    dealPrice={item.DEAL_PRICE}
+                    lightingDealDuration={item.LIGHTING_DEAL_DURATION}
+                    lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
+                    hasMoreDataToFetch={hasMoreDataToFetch}
+                  />
+                </Col>
+              )
+            })
+          ) : (
+            <NoProductFoundMessage
+              hasMoreDataToFetch={hasMoreDataToFetch}
+              searchBarValue={searchBarValue}
+            />
+          )}
         </Row>
       </Container>
     </div>

@@ -21,7 +21,6 @@ const meta = {
 
 function App() {
   const [searchBarValue, setSearchBarValue] = useState("")
-
   return (
     <div style={{ paddingTop: "30px" }}>
       <Router>
@@ -34,10 +33,10 @@ function App() {
             <ProductDescription />
           </Route>
           <Route path="/">
-            <ProductContainer searchBarValue={searchBarValue} />
+            <ProductContainer setSearchBarValue={setSearchBarValue} />
           </Route>
           <Route path={`/${DEALS}`}>
-            <ProductContainer />
+            <ProductContainer setSearchBarValue={setSearchBarValue} />
           </Route>
         </Switch>
       </Router>
