@@ -3,11 +3,22 @@ import "./NavigationBar.css"
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap"
 import { DEALS } from "../../constants/constants"
 import { AiFillThunderbolt } from "react-icons/ai"
+import SearchBar from "../SearchBar/SearchBar"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
-export default function NavigationBar() {
+export default function NavigationBar({ searchBarValue, setSearchBarValue }) {
+  const { width } = useWindowDimensions()
+
   return (
-    <Navbar expand={false} collapseOnSelect fixed="top" bg="dark" variant="dark">
-      <Container fluid>
+    <Navbar
+      expand={false}
+      collapseOnSelect
+      fixed="top"
+      bg="dark"
+      variant="dark"
+      style={{ height: width < 1024 ? "100px" : "55px" }}
+    >
+      <Container fluid style={{ position: "absolute", top: "10px" }}>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Offcanvas
           id="offcanvasNavbar"
@@ -28,6 +39,11 @@ export default function NavigationBar() {
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
+        <SearchBar
+          screenWidth={width}
+          searchBarValue={searchBarValue}
+          setSearchBarValue={setSearchBarValue}
+        />
         <Navbar.Brand href="/">Loja das Artes</Navbar.Brand>
       </Container>
     </Navbar>

@@ -9,27 +9,27 @@ import {
   PRODUCT_TYPES,
 } from "../../constants/constants"
 import Product from "../Product/Product"
-import SearchBar from "../SearchBar/SearchBar"
 import { useLocation } from "react-router-dom"
 import {
   isLightingDealValid,
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export const pageStates = {
   HOME: { name: "HOME", pathname: "/" },
   DEALS: { name: "DEALS", pathname: `/${DEALS}` },
 }
 
-export default function ProductContainer() {
+export default function ProductContainer({ searchBarValue }) {
   const location = useLocation()
   const [products, setProducts] = useState([])
   const [productOwnerIds, setProductOwnerIds] = useState()
   const [allProducts, setAllProducts] = useState([])
   const [accounts, setAccounts] = useState()
-  const [searchBarValue, setSearchBarValue] = useState("")
   const [paginationToken, setPaginationToken] = useState(undefined)
   const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
+  const { width } = useWindowDimensions()
 
   useEffect(() => {
     if (
@@ -167,7 +167,7 @@ export default function ProductContainer() {
   return (
     <div>
       <Container>
-        <Row style={{ paddingTop: "32px" }}>
+        <Row style={{ paddingTop: width < 1024 ? "64px" : "12px" }}>
           {displayProducts?.map((item, i) => {
             return (
               <Col
@@ -213,10 +213,6 @@ export default function ProductContainer() {
           })}
         </Row>
       </Container>
-      <SearchBar
-        searchBarValue={searchBarValue}
-        setSearchBarValue={setSearchBarValue}
-      />
     </div>
   )
 }

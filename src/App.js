@@ -1,3 +1,4 @@
+import React, { useState } from "react"
 import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
@@ -19,16 +20,21 @@ const meta = {
 }
 
 function App() {
+  const [searchBarValue, setSearchBarValue] = useState("")
+
   return (
     <div style={{ paddingTop: "30px" }}>
       <Router>
-        <NavigationBar />
+        <NavigationBar
+          searchBarValue={searchBarValue}
+          setSearchBarValue={setSearchBarValue}
+        />
         <Switch>
           <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
             <ProductDescription />
           </Route>
           <Route path="/">
-            <ProductContainer />
+            <ProductContainer searchBarValue={searchBarValue} />
           </Route>
           <Route path={`/${DEALS}`}>
             <ProductContainer />

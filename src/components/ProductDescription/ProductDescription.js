@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useLocation, useHistory, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { Card, Container, ListGroup } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
@@ -19,7 +19,6 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export default function ProductDescription() {
   const location = useLocation()
-  const history = useHistory()
   const [name, setName] = useState()
   const [price, setPrice] = useState()
   const [images, setImages] = useState()
@@ -122,7 +121,7 @@ export default function ProductDescription() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
-      <Container style={{ paddingTop: "40px" }}>
+      <Container style={{ paddingTop: width < 1024 ? "82px" : "40px" }}>
         <Card style={{ width: "20rem", margin: "0 auto" }}>
           {imagesIsDefined && (
             <ImageCarousel
