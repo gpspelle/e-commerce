@@ -9,6 +9,7 @@ import {
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
+import SimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
@@ -180,7 +181,12 @@ export default function ProductDescription() {
           </ListGroup>
         </Card>
         <SendMessageWhatsAppButton
-          style={{ paddingTop: "12px", width: "20rem", margin: "0 auto" }}
+          style={{
+            paddingTop: "12px",
+            paddingBottom: "12px",
+            width: "20rem",
+            margin: "0 auto",
+          }}
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}
@@ -188,7 +194,11 @@ export default function ProductDescription() {
           isLightingDeal={isLightingDeal}
         />
       </Container>
-      <SimilarProducts id={id} screenWidth={width} tags={tags} />
+      {width < 1024 ? (
+        <SimilarProductsMobile id={id} screenWidth={width} tags={tags} />
+      ) : (
+        <SimilarProducts id={id} screenWidth={width} tags={tags} />
+      )}
     </div>
   )
 }

@@ -16,6 +16,7 @@ li.page-item > a.page-link > span {
     color:  #212529;
 }
 
-li.page-item.disabled * span {
-    font-size: 30px;
+.similar-products * ul.alice-carousel__stage {
+    justify-content: center !important;
+    display: flex !important;
 }

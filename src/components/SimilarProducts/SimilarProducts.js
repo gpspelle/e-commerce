@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import { Card, Pagination, Container, Spinner } from "react-bootstrap"
+import { Pagination, Container, Spinner } from "react-bootstrap"
 import {
   API,
   PRODUCTS_ENDPOINT,
@@ -127,8 +127,15 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
     setPositionSimilarProducts({ start, end })
   }
 
+  if (!similarProducts || similarProducts.length === 0) {
+    return <></>
+  }
+
+  const { start, end } = positionSimilarProducts
+  console.log(start, end, similarProducts.length)
+  console.log(similarProducts)
   return (
-    <div className="similar-products" style={{ minHeight: "150px" }}>
+    <div className="similar-products" style={{ minHeight: "220px" }}>
       <Container>
         <hr
           style={{
@@ -137,8 +144,8 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
             height: 1,
           }}
         />
-        <div className="my-4">Produtos relacionados</div>
-        {!similarProducts || !numberOfVisibleSimilarProducts ? (
+        <div className="my-4 mx-2">Produtos relacionados</div>
+        {!numberOfVisibleSimilarProducts ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"
@@ -148,6 +155,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
             <Pagination.Prev
               onClick={prevPagination}
               style={{ position: "relative", margin: "auto" }}
+              disabled={start === 0}
             />
             {similarProducts &&
               similarProducts
@@ -168,26 +176,21 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
                       )
                     }
                   >
-                    <Card style={{ width: "8rem" }}>
-                      <img
-                        width="128px"
-                        height="128px"
-                        src={similarProduct.PRODUCT_IMAGES[0]}
-                        alt={`produto similar ${i}`}
-                      />
-                      <Card.Body>
-                        <Card.Text>
-                          {similarProduct.PRODUCT_NAME.length > 18
-                            ? similarProduct.PRODUCT_NAME.substring(0, 15) + "..."
-                            : similarProduct.PRODUCT_NAME}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
+                    <img
+                      width="128px"
+                      height="128px"
+                      src={similarProduct.PRODUCT_IMAGES[0]}
+                      alt={`produto similar ${i}`}
+                    />
                   </Pagination.Item>
                 ))}
             <Pagination.Next
               onClick={nextPagination}
               style={{ position: "relative", margin: "auto" }}
+              disabled={
+                end === similarProducts.length - 1 ||
+                similarProducts.length < numberOfVisibleSimilarProducts
+              }
             />
           </Pagination>
         )}
