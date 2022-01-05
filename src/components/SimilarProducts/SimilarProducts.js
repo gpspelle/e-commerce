@@ -132,8 +132,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
   }
 
   const { start, end } = positionSimilarProducts
-  console.log(start, end, similarProducts.length)
-  console.log(similarProducts)
+
   return (
     <div className="similar-products" style={{ minHeight: "220px" }}>
       <Container>
