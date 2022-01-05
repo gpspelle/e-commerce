@@ -88,11 +88,11 @@ export default function Product({
           {isDeal && (
             <Card.Text className="notranslate">&nbsp;R$ {dealPrice}</Card.Text>
           )}
-          <LightingDealDuration
-            lightingDealDuration={lightingDealDuration}
-            lightingDealStartTime={lightingDealStartTime}
-          />
         </div>
+        <LightingDealDuration
+          lightingDealDuration={lightingDealDuration}
+          lightingDealStartTime={lightingDealStartTime}
+        />
       </Card.Body>
     </Card>
   )
