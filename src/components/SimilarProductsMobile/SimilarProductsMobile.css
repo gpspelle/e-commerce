@@ -15,8 +15,3 @@ li.page-item > a.page-link > span {
 .card-text {
     color:  #212529;
 }
-
-.similar-products * ul.alice-carousel__stage {
-    justify-content: center !important;
-    display: flex !important;
-}
