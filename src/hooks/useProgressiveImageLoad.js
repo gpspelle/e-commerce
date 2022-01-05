@@ -14,7 +14,7 @@ const useProgressiveImageLoad = (lowQualitySrc, highQualitySrc) => {
         setSrc(highQualitySrc)
       }
     }
-  }, [lowQualitySrc, highQualitySrc])
+  }, [lowQualitySrc, highQualitySrc, isMounted])
 
   return [src, { blur: src === lowQualitySrc }]
 }

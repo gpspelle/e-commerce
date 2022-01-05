@@ -38,7 +38,7 @@ export default function ProductContainer() {
   const searchBarValue = query.get("q")
 
   useEffect(() => {
-    if (searchBarValue) {
+    if (searchBarValue && allProducts.length > 0) {
       const filteredProducts = allProducts.filter((product) => {
         const lowerCaseSearchBarValue = searchBarValue.toLowerCase()
         if (product.PRODUCT_NAME.toLowerCase().includes(lowerCaseSearchBarValue)) {
@@ -65,10 +65,10 @@ export default function ProductContainer() {
       })
 
       setProductData({ ...productData, products: filteredProducts })
-    } else if (searchBarValue !== null) {
+    } else {
       setProductData({ ...productData, products: allProducts })
     }
-  }, [searchBarValue])
+  }, [searchBarValue, allProducts])
 
   useEffect(() => {
     async function getAccountsFromDatabase(productOwnerIds) {

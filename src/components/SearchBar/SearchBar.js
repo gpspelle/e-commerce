@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Container, Form } from "react-bootstrap"
 import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { useHistory } from "react-router-dom"
+import "./SearchBar.css"
 
 export default function SearchBar({
   screenWidth,
@@ -9,6 +10,11 @@ export default function SearchBar({
   setSearchBarValue,
 }) {
   const history = useHistory()
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
+  useEffect(() => {
+    setIsSubmitted(false)
+  }, [searchBarValue])
 
   const applySearchOnProducts = (event) => {
     event.preventDefault()
@@ -17,7 +23,13 @@ export default function SearchBar({
         pathname: "/",
         search: `?q=${searchBarValue}`,
       })
+    } else {
+      setSearchBarValue("")
+      history.push({
+        pathname: "/",
+      })
     }
+    setIsSubmitted(true)
   }
 
   return (
@@ -36,6 +48,7 @@ export default function SearchBar({
       <Form style={{ display: "flex" }} onSubmit={applySearchOnProducts}>
         <Form.Group controlId="formSearchBar" style={{ width: "100%" }}>
           <Form.Control
+            className={isSubmitted ? "remove-focus-search-bar" : ""}
             value={searchBarValue}
             onChange={(e) => setSearchBarValue(e.target.value)}
             type="text"
