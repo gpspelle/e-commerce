@@ -26,24 +26,19 @@ export const pageStates = {
 export default function ProductContainer() {
   const location = useLocation()
   const query = useQuery()
-  const [products, setProducts] = useState([])
-  const [productOwnerIds, setProductOwnerIds] = useState()
-  const [allProducts, setAllProducts] = useState([])
-  const [accounts, setAccounts] = useState()
-  const [paginationToken, setPaginationToken] = useState(undefined)
-  const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
+  const [productData, setProductData] = useState({
+    products: [],
+    allProducts: [],
+    accounts: [],
+    pagination: { key: undefined, fetch: true },
+  })
   const { width } = useWindowDimensions()
 
+  const { products, allProducts, accounts, pagination } = productData
   const searchBarValue = query.get("q")
 
   useEffect(() => {
-    if (
-      searchBarValue &&
-      allProducts &&
-      allProducts.length > 0 &&
-      products &&
-      products.length > 0
-    ) {
+    if (searchBarValue) {
       const filteredProducts = allProducts.filter((product) => {
         const lowerCaseSearchBarValue = searchBarValue.toLowerCase()
         if (product.PRODUCT_NAME.toLowerCase().includes(lowerCaseSearchBarValue)) {
@@ -69,16 +64,32 @@ export default function ProductContainer() {
         return false
       })
 
-      setProducts(filteredProducts)
-    } else {
-      setProducts(allProducts)
+      setProductData({ ...productData, products: filteredProducts })
+    } else if (searchBarValue !== null) {
+      setProductData({ ...productData, products: allProducts })
     }
-  }, [searchBarValue, allProducts])
+  }, [searchBarValue])
 
   useEffect(() => {
+    async function getAccountsFromDatabase(productOwnerIds) {
+      const body = {
+        productOwnerIds,
+      }
+
+      if (productOwnerIds.length === 0) {
+        return
+      }
+
+      const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
+        params: body,
+      })
+
+      return response.data
+    }
+
     async function getProductsFromDatabase() {
       const body = {
-        key: paginationToken,
+        key: pagination.key,
       }
 
       const config = {
@@ -100,39 +111,22 @@ export default function ProductContainer() {
         concatProducts.map((product) => product.PRODUCT_OWNER_ID)
       )
 
-      setProducts(concatProducts)
-      setAllProducts(concatProducts)
-      setProductOwnerIds([...productOwnerIdsSet])
-      setPaginationToken(key)
-      setHasMoreDataToFetch(key ? true : false)
+      // notice that since productOwnerIdsSet is using concatProduct we are fetching multiple
+      // times the accounts based on the whole list. this happens when pagination is used
+      const newAccounts = await getAccountsFromDatabase([...productOwnerIdsSet])
+
+      setProductData({
+        products: concatProducts,
+        allProducts: concatProducts,
+        accounts: newAccounts,
+        pagination: { key, fetch: key ? true : false },
+      })
     }
 
-    if (hasMoreDataToFetch) {
+    if (pagination.fetch) {
       getProductsFromDatabase()
     }
-  }, [paginationToken, hasMoreDataToFetch])
-
-  useEffect(() => {
-    async function getAccountsFromDatabase() {
-      const body = {
-        productOwnerIds,
-      }
-
-      if (productOwnerIds.length === 0) {
-        return
-      }
-
-      const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
-        params: body,
-      })
-
-      setAccounts(response.data)
-    }
-
-    if (productOwnerIds) {
-      getAccountsFromDatabase()
-    }
-  }, [productOwnerIds])
+  }, [pagination.key])
 
   var productOwnerIdToOwnerData = {}
   if (accounts) {
@@ -212,7 +206,7 @@ export default function ProductContainer() {
                     dealPrice={item.DEAL_PRICE}
                     lightingDealDuration={item.LIGHTING_DEAL_DURATION}
                     lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
-                    hasMoreDataToFetch={hasMoreDataToFetch}
+                    hasMoreDataToFetch={pagination.fetch}
                   />
                 </Col>
               )
@@ -220,7 +214,7 @@ export default function ProductContainer() {
           ) : (
             <NoProductFoundMessage
               screenWidth={width}
-              hasMoreDataToFetch={hasMoreDataToFetch}
+              hasMoreDataToFetch={pagination.fetch}
               searchBarValue={searchBarValue}
             />
           )}

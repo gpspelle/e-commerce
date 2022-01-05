@@ -42,14 +42,17 @@ export default function NoProductFoundMessage({
             style={{ height: "35vh" }}
           />
           <Card.Body>
-            <Card.Text style={{ textAlign: "center" }}>
-              {`Não encontramos nenhum produto relacionado à sua busca`}{" "}
+            <div style={{ textAlign: "center" }}>
+              <Card.Text>
+                {`Não encontramos nenhum produto relacionado à sua busca`}{" "}
+              </Card.Text>
               <div style={{ margin: "10px auto", fontWeight: "bold" }}>
                 {searchBarValue}
               </div>
-              {`Tente buscar com outras palavras
-            ou clique em voltar.`}
-            </Card.Text>
+              <Card.Text>
+                {`Tente buscar com outras palavras ou clique em voltar.`}
+              </Card.Text>
+            </div>
             <Button
               onClick={handleClick}
               style={{ width: "100%" }}
