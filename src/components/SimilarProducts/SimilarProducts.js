@@ -90,15 +90,15 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
     }
   }, [screenWidth])
 
-  const openDetailPage = (
+  const openDetailPage = ({
     id,
     name,
     description,
     price,
     images,
     tags,
-    productOwnerId
-  ) => {
+    productOwnerId,
+  }) => {
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: { name, description, price, images, tags, productOwnerId },
@@ -159,30 +159,38 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
             {similarProducts &&
               similarProducts
                 .slice(positionSimilarProducts.start, positionSimilarProducts.end)
-                .map((similarProduct, i) => (
-                  <Pagination.Item
-                    style={{ position: "relative", margin: "auto" }}
-                    key={i}
-                    onClick={() =>
-                      openDetailPage(
-                        similarProduct.id,
-                        similarProduct.PRODUCT_NAME,
-                        similarProduct.PRODUCT_DESCRIPTION,
-                        similarProduct.PRODUCT_PRICE,
-                        similarProduct.PRODUCT_IMAGES,
-                        similarProduct.PRODUCT_TAGS,
-                        similarProduct.PRODUCT_OWNER_ID
-                      )
-                    }
-                  >
-                    <img
-                      width="128px"
-                      height="128px"
-                      src={similarProduct.PRODUCT_IMAGES[0]}
-                      alt={`produto similar ${i}`}
-                    />
-                  </Pagination.Item>
-                ))}
+                .map((similarProduct, i) => {
+                  const coverImage = similarProduct.PRODUCT_COVER_IMAGE
+                  const image = similarProduct.PRODUCT_IMAGES[0]
+                  return (
+                    <Pagination.Item
+                      style={{ position: "relative", margin: "auto" }}
+                      key={i}
+                      onClick={() =>
+                        openDetailPage({
+                          id: similarProduct.id,
+                          name: similarProduct.PRODUCT_NAME,
+                          description: similarProduct.PRODUCT_DESCRIPTION,
+                          price: similarProduct.PRODUCT_PRICE,
+                          images: similarProduct.PRODUCT_IMAGES,
+                          tags: similarProduct.PRODUCT_TAGS,
+                          productOwnerId: similarProduct.PRODUCT_OWNER_ID,
+                        })
+                      }
+                    >
+                      {coverImage ? (
+                        <ProgressiveBlurryImageLoad
+                          width={128}
+                          height={128}
+                          small={`data:image/jpeg;base64,${coverImage}`}
+                          large={image}
+                        />
+                      ) : (
+                        <img style={{ width: 128, height: 128 }} src={image} />
+                      )}
+                    </Pagination.Item>
+                  )
+                })}
             <Pagination.Next
               onClick={nextPagination}
               style={{ position: "relative", margin: "auto" }}

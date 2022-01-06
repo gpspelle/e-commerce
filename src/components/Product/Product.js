@@ -63,7 +63,6 @@ export default function Product({
       ) : (
         <img style={{ width: 286, height: 256 }} src={images[0]} />
       )}
-
       {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>

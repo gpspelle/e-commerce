@@ -10,6 +10,7 @@ import {
   PRODUCT_DESCRIPTION,
 } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProductsMobile.css"
 
 export default function SimilarProductsMobile({ id, screenWidth, tags }) {
@@ -27,27 +28,34 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
 
   useEffect(() => {
     if (similarProducts && !hasMoreDataToFetch) {
-      const components = similarProducts?.map((product, i) => {
-        return (
+      const components = similarProducts?.map((similarProduct, i) => {
+        const coverImage = similarProduct.PRODUCT_COVER_IMAGE
+        const image = similarProduct.PRODUCT_IMAGES[0]
+        return coverImage ? (
+          <ProgressiveBlurryImageLoad
+            width={128}
+            height={128}
+            small={`data:image/jpeg;base64,${coverImage}`}
+            large={image}
+          />
+        ) : (
           <img
-            className="item"
-            key={i}
-            src={product.PRODUCT_IMAGES[0]}
             style={{
-              width: "128px",
-              height: "128px",
+              width: 128,
+              height: 128,
               cursor: "pointer",
               paddingRight: i === similarProducts.lenght - 1 ? "0px" : "8px",
             }}
+            src={image}
             onClick={() =>
               openDetailPage({
-                id: product.id,
-                name: product.PRODUCT_NAME,
-                description: product.PRODUCT_DESCRIPTION,
-                price: product.PRODUCT_PRICE,
-                images: product.PRODUCT_IMAGES,
-                tags: product.PRODUCT_TAGS,
-                productOwnerId: product.PRODUCT_OWNER_ID,
+                id: similarProduct.id,
+                name: similarProduct.PRODUCT_NAME,
+                description: similarProduct.PRODUCT_DESCRIPTION,
+                price: similarProduct.PRODUCT_PRICE,
+                images: similarProduct.PRODUCT_IMAGES,
+                tags: similarProduct.PRODUCT_TAGS,
+                productOwnerId: similarProduct.PRODUCT_OWNER_ID,
               })
             }
           />
