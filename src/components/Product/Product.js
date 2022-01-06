@@ -67,6 +67,7 @@ export default function Product({
       <Card.Body>
         <Card.Title className="notranslate">{name}</Card.Title>
         <SendMessageWhatsAppButton
+          commercialName={commercialName}
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}

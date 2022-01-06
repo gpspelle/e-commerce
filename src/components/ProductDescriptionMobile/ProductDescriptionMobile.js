@@ -166,7 +166,7 @@ export default function ProductDescriptionMobile() {
           name={name}
           price={isDeal ? dealPrice : price}
           phoneNumber={phoneNumber}
-          isLightingDeal={isLightingDeal}
+          commercialName={commercialName}
         />
         {isLightingDeal && (
           <LightingDealDuration

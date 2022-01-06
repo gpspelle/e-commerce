@@ -191,7 +191,7 @@ export default function ProductDescription() {
           name={name}
           price={isDeal ? dealPrice : price}
           phoneNumber={phoneNumber}
-          isLightingDeal={isLightingDeal}
+          commercialName={commercialName}
         />
       </Container>
       <SimilarProducts id={id} screenWidth={width} tags={tags} />

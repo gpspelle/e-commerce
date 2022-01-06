@@ -1,9 +1,9 @@
 import React from "react"
 import { Button } from "react-bootstrap"
-import { PAGE_BASE } from "../../constants/constants"
+import { PAGE_BASE, PRODUCT_DESCRIPTION } from "../../constants/constants"
 
-const sendWhatsAppMessage = ({ id, name, price, phoneNumber, isLightingDeal }) => {
-  const message = `Olá! Estou interessado no produto ${name}, preço R$ ${price}.\n\nLink do produto: ${PAGE_BASE}/${id}/product-description`
+const sendWhatsAppMessage = ({ id, name, price, phoneNumber, commercialName }) => {
+  const message = `Link do produto: ${PAGE_BASE}/${id}/${PRODUCT_DESCRIPTION}\n\nOlá, ${commercialName}!\nTenho interesse no produto ${name}, preço R$ ${price}.`
   const url =
     "https://api.whatsapp.com/send?phone=" +
     phoneNumber +
@@ -19,16 +19,16 @@ export default function SendMessageWhatsAppButton({
   price,
   phoneNumber,
   marginBottom,
-  isLightingDeal,
+  commercialName,
 }) {
   return (
     <div style={style}>
       <Button
-        disabled={phoneNumber ? false : true}
+        disabled={phoneNumber && commercialName ? false : true}
         variant="success"
         style={{ width: "100%", marginBottom }}
         onClick={() =>
-          sendWhatsAppMessage({ id, name, price, phoneNumber, isLightingDeal })
+          sendWhatsAppMessage({ id, name, price, phoneNumber, commercialName })
         }
       >
         Gostei desse
