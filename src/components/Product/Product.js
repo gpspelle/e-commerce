@@ -61,7 +61,7 @@ export default function Product({
           large={images[0]}
         />
       ) : (
-        <img style={{ width: 286, height: 256 }} src={images[0]} alt={`286x256`} />
+        <img style={{ width: 286, height: 256 }} src={images[0]} />
       )}
 
       {isLightingDeal && <LightingDealWaterMark />}

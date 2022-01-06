@@ -14,20 +14,9 @@ export default function OnClickImageZoom({
   allowScroll,
   blockScroll,
 }) {
-  const x = document.getElementsByClassName("card")
   if (isFullScreen) {
-    if (screenWidth > 1024) {
-      x[0].style.width = "40rem"
-    } else if (screenWidth > 800) {
-      x[0].style.width = "30rem"
-    } else if (screenWidth > 568) {
-      x[0].style.width = "25rem"
-    } else {
-      x[0].style.width = "20rem"
-    }
     blockScroll()
   } else {
-    x[0].style.width = "20rem"
     allowScroll()
   }
 
@@ -52,7 +41,7 @@ export default function OnClickImageZoom({
           width="100%"
           height="90%"
           src={src}
-          alt="image"
+          alt=""
           style={{
             paddingBottom: "12vh",
             paddingTop: "2vh",
@@ -63,7 +52,7 @@ export default function OnClickImageZoom({
           width={`${imageWidth}px`}
           height={`${imageHeight}px`}
           src={src}
-          alt="image"
+          alt=""
           style={imageStyle}
         />
       )}

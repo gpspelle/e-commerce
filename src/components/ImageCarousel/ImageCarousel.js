@@ -29,8 +29,8 @@ export default function ImageCarousel({
         <ImageZoom
           key={i}
           src={item}
-          imageHeight={256}
-          imageWidth={319}
+          imageHeight={screenHeight * 0.55}
+          imageWidth={screenWidth}
           screenWidth={screenWidth}
           screenHeight={screenHeight}
           isFullScreen={isFullScreen}
@@ -62,7 +62,7 @@ export default function ImageCarousel({
   }, [images])
 
   const getBase64ImageDimensions = (base64Image) => {
-    return new Promise((resolved, rejected) => {
+    return new Promise((resolved) => {
       var i = new Image()
       i.onload = () => {
         resolved({ w: i.width, h: i.height })
