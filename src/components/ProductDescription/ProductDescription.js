@@ -131,7 +131,7 @@ export default function ProductDescription() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
-      <Container style={{ paddingTop: width < 1024 ? "82px" : "40px" }}>
+      <Container style={{ paddingTop: "40px" }}>
         <Card style={{ width: "20rem", margin: "0 auto" }}>
           {imagesIsDefined && (
             <ImageCarousel
@@ -194,11 +194,7 @@ export default function ProductDescription() {
           isLightingDeal={isLightingDeal}
         />
       </Container>
-      {width < 1024 ? (
-        <SimilarProductsMobile id={id} screenWidth={width} tags={tags} />
-      ) : (
-        <SimilarProducts id={id} screenWidth={width} tags={tags} />
-      )}
+      <SimilarProducts id={id} screenWidth={width} tags={tags} />
     </div>
   )
 }

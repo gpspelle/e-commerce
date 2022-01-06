@@ -26,10 +26,10 @@ export default function useScrollBlock() {
      */
     html.style.position = "relative" /* [1] */
     html.style.overflow = "hidden" /* [2] */
-    html.style.height = "100%"
+    html.style.height = "100vh"
     body.style.position = "relative" /* [1] */
     body.style.overflow = "hidden" /* [2] */
-    body.style.height = "100%"
+    body.style.height = "100vh"
     body.style.paddingRight = `${bodyPaddingRight + scrollBarWidth}px`
 
     scrollBlocked.current = true

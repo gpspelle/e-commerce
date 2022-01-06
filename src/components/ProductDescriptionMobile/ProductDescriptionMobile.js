@@ -10,7 +10,6 @@ import {
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
 import SimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
-import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
@@ -131,7 +130,7 @@ export default function ProductDescriptionMobile() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
-      <Container style={{ paddingTop: width < 1024 ? "82px" : "40px" }}>
+      <Container style={{ paddingTop: "82px" }}>
         {imagesIsDefined && (
           <ImageCarousel
             isFullScreen={isFullScreen}
@@ -146,7 +145,7 @@ export default function ProductDescriptionMobile() {
         {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
         {<h2>{name}</h2>}
         {isDeal ? (
-          <div style={{ display: "flex" }}>
+          <div className="notranslate" style={{ display: "flex" }}>
             Preço:&nbsp;
             <div style={{ textDecoration: "line-through", color: "lightgray" }}>
               &nbsp;R$ {price}
@@ -154,7 +153,7 @@ export default function ProductDescriptionMobile() {
             &nbsp;R$ {dealPrice}
           </div>
         ) : (
-          <div>Preço: R$ {price}</div>
+          <div className="notranslate">Preço: R$ {price}</div>
         )}
         <SendMessageWhatsAppButton
           style={{
@@ -191,9 +190,17 @@ export default function ProductDescriptionMobile() {
           }}
         >
           <div style={{ width: "30%" }}>Descrição</div>
-          <div style={{ width: "70%", wordWrap: "break-word" }}>{description}</div>
+          <div
+            className="notranslate"
+            style={{ width: "70%", wordWrap: "break-word" }}
+          >
+            {description}
+          </div>
           <div style={{ width: "30%" }}>Vendido por</div>
-          <div style={{ width: "70%", wordWrap: "break-word" }}>
+          <div
+            className="notranslate"
+            style={{ width: "70%", wordWrap: "break-word" }}
+          >
             {commercialName}
           </div>
         </div>
@@ -205,11 +212,7 @@ export default function ProductDescriptionMobile() {
           }}
         />
       </Container>
-      {width < 1024 ? (
-        <SimilarProductsMobile id={id} screenWidth={width} tags={tags} />
-      ) : (
-        <SimilarProducts id={id} screenWidth={width} tags={tags} />
-      )}
+      <SimilarProductsMobile id={id} screenWidth={width} tags={tags} />
     </div>
   )
 }

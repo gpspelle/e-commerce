@@ -29,8 +29,8 @@ export default function ImageCarousel({
         <ImageZoom
           key={i}
           src={item}
-          imageHeight={screenHeight * 0.55}
-          imageWidth={screenWidth}
+          imageHeight={screenWidth < 1024 ? screenHeight * 0.55 : 256}
+          imageWidth={screenWidth < 1024 ? screenWidth : 319}
           screenWidth={screenWidth}
           screenHeight={screenHeight}
           isFullScreen={isFullScreen}
