@@ -57,6 +57,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
           similarProductsData.products.length > 0
             ? similarProductsData.products.concat(productsFlat)
             : productsFlat
+
         setSimilarProductsData({
           ...similarProductsData,
           products: concatProducts,
@@ -211,7 +212,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               onClick={nextPagination}
               style={{ position: "relative", margin: "auto" }}
               disabled={
-                end === products.length - 1 ||
+                end === products.length ||
                 products.length < numberOfVisibleSimilarProducts
               }
             />

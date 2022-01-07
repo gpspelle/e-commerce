@@ -237,7 +237,7 @@ export default function ProductDescriptionMobile() {
           }}
         />
       </Container>
-      <SimilarProductsMobile id={id} screenWidth={width} tags={tags} />
+      <SimilarProductsMobile id={id} tags={tags} />
     </div>
   )
 }

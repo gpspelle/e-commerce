@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProductsMobile.css"
 
-export default function SimilarProductsMobile({ id, screenWidth, tags }) {
+export default function SimilarProductsMobile({ id, tags }) {
   const history = useHistory()
   const [items, setItems] = useState()
   const [similarProductsData, setSimilarProductsData] = useState({
