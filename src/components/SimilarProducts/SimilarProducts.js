@@ -8,20 +8,22 @@ import {
   PRODUCT_DESCRIPTION,
 } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProducts.css"
 
 export default function SimilarProducts({ id, screenWidth, tags }) {
   const history = useHistory()
   const [numberOfVisibleSimilarProducts, setNumberOfVisibleSimilarProducts] =
     useState()
-  const [similarProductIds, setSimilarProductsIds] = useState()
-  const [similarProducts, setSimilarProducts] = useState()
+  const [similarProductsData, setSimilarProductsData] = useState({
+    productsIds: [],
+    products: [],
+    pagination: { key: undefined, fetch: true },
+  })
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
     end: 0,
   })
-  const [paginationToken, setPaginationToken] = useState(undefined)
-  const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
 
   useEffect(() => {
     if (numberOfVisibleSimilarProducts) {
@@ -31,9 +33,9 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
-      if (similarProductIds) {
+      if (similarProductsData.productsIds.length > 0) {
         const body = {
-          key: paginationToken,
+          key: similarProductsData.pagination.key,
         }
 
         const config = {
@@ -47,24 +49,30 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
         const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
         const products = data.filter((product) =>
-          similarProductIds.includes(product.id)
+          similarProductsData.productsIds.includes(product.id)
         )
 
         const productsFlat = products.flat(1)
-        setSimilarProducts(productsFlat)
-        setPaginationToken(key)
-        setHasMoreDataToFetch(key ? true : false)
+        const concatProducts =
+          similarProductsData.products.length > 0
+            ? similarProductsData.products.concat(productsFlat)
+            : productsFlat
+        setSimilarProductsData({
+          ...similarProductsData,
+          products: concatProducts,
+          pagination: { key, fetch: key ? true : false },
+        })
       }
     }
 
-    if (hasMoreDataToFetch) {
+    if (similarProductsData.pagination.fetch) {
       fetchProductsByIds()
     }
-  }, [similarProductIds, paginationToken, hasMoreDataToFetch])
+  }, [similarProductsData.productsIds, similarProductsData.pagination.fetch])
 
   useEffect(() => {
     const fetchProductIdsByTags = async () => {
-      if (tags) {
+      if (tags.length > 0) {
         const response = await axios.get(`${API}/${TAGS_ENDPOINT}`)
 
         const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
@@ -77,12 +85,16 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
 
         const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
         sameTagProductIdsSet.delete(id)
-        setSimilarProductsIds([...sameTagProductIdsSet])
+        setSimilarProductsData({
+          products: [],
+          productsIds: [...sameTagProductIdsSet],
+          pagination: { key: undefined, fetch: true },
+        })
       }
     }
 
     fetchProductIdsByTags()
-  }, [tags])
+  }, [tags, id])
 
   useEffect(() => {
     if (screenWidth) {
@@ -108,7 +120,10 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
   const nextPagination = () => {
     var { start, end } = positionSimilarProducts
 
-    if (start < similarProducts.length - numberOfVisibleSimilarProducts) {
+    if (
+      start <
+      similarProductsData.products.length - numberOfVisibleSimilarProducts
+    ) {
       start = start + 1
       end = end + 1
     }
@@ -127,7 +142,9 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
     setPositionSimilarProducts({ start, end })
   }
 
-  if (!similarProducts || similarProducts.length === 0) {
+  const { products, productsIds, pagination } = similarProductsData
+
+  if (productsIds.length === 0) {
     return <></>
   }
 
@@ -144,7 +161,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
           }}
         />
         <div className="my-4 mx-2">Produtos relacionados</div>
-        {!numberOfVisibleSimilarProducts ? (
+        {typeof numberOfVisibleSimilarProducts === undefined || pagination.fetch ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"
@@ -156,47 +173,46 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               style={{ position: "relative", margin: "auto" }}
               disabled={start === 0}
             />
-            {similarProducts &&
-              similarProducts
-                .slice(positionSimilarProducts.start, positionSimilarProducts.end)
-                .map((similarProduct, i) => {
-                  const coverImage = similarProduct.PRODUCT_COVER_IMAGE
-                  const image = similarProduct.PRODUCT_IMAGES[0]
-                  return (
-                    <Pagination.Item
-                      style={{ position: "relative", margin: "auto" }}
-                      key={i}
-                      onClick={() =>
-                        openDetailPage({
-                          id: similarProduct.id,
-                          name: similarProduct.PRODUCT_NAME,
-                          description: similarProduct.PRODUCT_DESCRIPTION,
-                          price: similarProduct.PRODUCT_PRICE,
-                          images: similarProduct.PRODUCT_IMAGES,
-                          tags: similarProduct.PRODUCT_TAGS,
-                          productOwnerId: similarProduct.PRODUCT_OWNER_ID,
-                        })
-                      }
-                    >
-                      {coverImage ? (
-                        <ProgressiveBlurryImageLoad
-                          width={128}
-                          height={128}
-                          small={`data:image/jpeg;base64,${coverImage}`}
-                          large={image}
-                        />
-                      ) : (
-                        <img style={{ width: 128, height: 128 }} src={image} />
-                      )}
-                    </Pagination.Item>
-                  )
-                })}
+            {products.slice(start, end).map((similarProduct, i) => {
+              const coverImage = similarProduct.PRODUCT_COVER_IMAGE
+              const image = similarProduct.PRODUCT_IMAGES[0]
+              return (
+                <Pagination.Item
+                  style={{ position: "relative", margin: "auto" }}
+                  key={i}
+                  onClick={() =>
+                    openDetailPage({
+                      id: similarProduct.id,
+                      name: similarProduct.PRODUCT_NAME,
+                      description: similarProduct.PRODUCT_DESCRIPTION,
+                      price: similarProduct.PRODUCT_PRICE,
+                      images: similarProduct.PRODUCT_IMAGES,
+                      tags: similarProduct.PRODUCT_TAGS
+                        ? similarProduct.PRODUCT_TAGS
+                        : [],
+                      productOwnerId: similarProduct.PRODUCT_OWNER_ID,
+                    })
+                  }
+                >
+                  {coverImage ? (
+                    <ProgressiveBlurryImageLoad
+                      width={128}
+                      height={128}
+                      small={`data:image/jpeg;base64,${coverImage}`}
+                      large={image}
+                    />
+                  ) : (
+                    <img style={{ width: 128, height: 128 }} src={image} />
+                  )}
+                </Pagination.Item>
+              )
+            })}
             <Pagination.Next
               onClick={nextPagination}
               style={{ position: "relative", margin: "auto" }}
               disabled={
-                end === similarProducts.length - 1 ||
-                similarProducts.length < numberOfVisibleSimilarProducts
+                end === products.length - 1 ||
+                products.length < numberOfVisibleSimilarProducts
               }
             />
           </Pagination>

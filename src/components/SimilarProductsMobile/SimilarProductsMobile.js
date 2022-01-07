@@ -16,10 +16,11 @@ import "./SimilarProductsMobile.css"
 export default function SimilarProductsMobile({ id, screenWidth, tags }) {
   const history = useHistory()
   const [items, setItems] = useState()
-  const [similarProductIds, setSimilarProductsIds] = useState()
-  const [similarProducts, setSimilarProducts] = useState()
-  const [paginationToken, setPaginationToken] = useState(undefined)
-  const [hasMoreDataToFetch, setHasMoreDataToFetch] = useState(true)
+  const [similarProductsData, setSimilarProductsData] = useState({
+    productsIds: [],
+    products: [],
+    pagination: { key: undefined, fetch: true },
+  })
 
   const responsive = {
     0: { items: 2 },
@@ -27,8 +28,11 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
   }
 
   useEffect(() => {
-    if (similarProducts && !hasMoreDataToFetch) {
-      const components = similarProducts?.map((similarProduct, i) => {
+    if (
+      similarProductsData.products.length > 0 &&
+      !similarProductsData.pagination.fetch
+    ) {
+      const components = similarProductsData.products.map((similarProduct, i) => {
         const coverImage = similarProduct.PRODUCT_COVER_IMAGE
         const image = similarProduct.PRODUCT_IMAGES[0]
         return coverImage ? (
@@ -37,6 +41,22 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
             height={128}
             small={`data:image/jpeg;base64,${coverImage}`}
             large={image}
+            onClick={() =>
+              openDetailPage({
+                id: similarProduct.id,
+                name: similarProduct.PRODUCT_NAME,
+                description: similarProduct.PRODUCT_DESCRIPTION,
+                price: similarProduct.PRODUCT_PRICE,
+                images: similarProduct.PRODUCT_IMAGES,
+                tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS : [],
+                productOwnerId: similarProduct.PRODUCT_OWNER_ID,
+              })
+            }
+            style={{
+              cursor: "pointer",
+              paddingRight:
+                i === similarProductsData.products.lenght - 1 ? "0px" : "8px",
+            }}
           />
         ) : (
           <img
@@ -44,7 +64,8 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
               width: 128,
               height: 128,
               cursor: "pointer",
-              paddingRight: i === similarProducts.lenght - 1 ? "0px" : "8px",
+              paddingRight:
+                i === similarProductsData.products.lenght - 1 ? "0px" : "8px",
             }}
             src={image}
             onClick={() =>
@@ -54,7 +75,7 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
                 description: similarProduct.PRODUCT_DESCRIPTION,
                 price: similarProduct.PRODUCT_PRICE,
                 images: similarProduct.PRODUCT_IMAGES,
-                tags: similarProduct.PRODUCT_TAGS,
+                tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS : [],
                 productOwnerId: similarProduct.PRODUCT_OWNER_ID,
               })
             }
@@ -63,13 +84,13 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
       })
       setItems(components)
     }
-  }, [similarProducts, hasMoreDataToFetch])
+  }, [similarProductsData.products, similarProductsData.pagination.fetch])
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
-      if (similarProductIds) {
+      if (similarProductsData.productsIds) {
         const body = {
-          key: paginationToken,
+          key: similarProductsData.pagination.key,
         }
 
         const config = {
@@ -83,24 +104,30 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
         const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
         const products = data.filter((product) =>
-          similarProductIds.includes(product.id)
+          similarProductsData.productsIds.includes(product.id)
         )
 
         const productsFlat = products.flat(1)
-        setSimilarProducts(productsFlat)
-        setPaginationToken(key)
-        setHasMoreDataToFetch(key ? true : false)
+        const concatProducts =
+          similarProductsData.products.length > 0
+            ? similarProductsData.products.concat(productsFlat)
+            : productsFlat
+        setSimilarProductsData({
+          ...similarProductsData,
+          products: concatProducts,
+          pagination: { key, fetch: key ? true : false },
+        })
       }
     }
 
-    if (hasMoreDataToFetch) {
+    if (similarProductsData.pagination.fetch) {
       fetchProductsByIds()
     }
-  }, [similarProductIds, paginationToken, hasMoreDataToFetch])
+  }, [similarProductsData.productsIds, similarProductsData.pagination.fetch])
 
   useEffect(() => {
     const fetchProductIdsByTags = async () => {
-      if (tags) {
+      if (tags.length > 0) {
         const response = await axios.get(`${API}/${TAGS_ENDPOINT}`)
 
         const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
@@ -113,12 +140,16 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
 
         const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
         sameTagProductIdsSet.delete(id)
-        setSimilarProductsIds([...sameTagProductIdsSet])
+        setSimilarProductsData({
+          products: [],
+          productsIds: [...sameTagProductIdsSet],
+          pagination: { key: undefined, fetch: true },
+        })
       }
     }
 
     fetchProductIdsByTags()
-  }, [tags])
+  }, [tags, id])
 
   const openDetailPage = ({
     id,
@@ -135,7 +166,7 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
     })
   }
 
-  if (!items || items.length === 0) {
+  if (similarProductsData.productsIds.length === 0) {
     return <></>
   }
 
@@ -157,7 +188,7 @@ export default function SimilarProductsMobile({ id, screenWidth, tags }) {
           />
         ) : (
           <AliceCarousel
-            mouseTracking={screenWidth < 1024 ? true : false}
+            mouseTracking={true}
             items={items}
             responsive={responsive}
             controlsStrategy="responsive"

@@ -20,18 +20,20 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
-  const [name, setName] = useState()
-  const [price, setPrice] = useState()
-  const [images, setImages] = useState()
-  const [description, setDescription] = useState()
-  const [phoneNumber, setPhoneNumber] = useState()
-  const [productOwnerId, setProductOwnerId] = useState()
-  const [commercialName, setCommercialName] = useState()
-  const [tags, setTags] = useState()
-  const [productType, setProductType] = useState()
-  const [dealPrice, setDealPrice] = useState()
-  const [lightingDealDuration, setLightingDealDuration] = useState()
-  const [lightingDealStartTime, setLightingDealStartTime] = useState()
+  const [productData, setProductData] = useState({
+    name: undefined,
+    price: undefined,
+    images: [],
+    description: undefined,
+    phoneNumber: undefined,
+    productOwnerId: undefined,
+    commercialName: undefined,
+    tags: [],
+    productType: undefined,
+    dealPrice: undefined,
+    lightingDealDuration: undefined,
+    lightingDealStartTime: undefined,
+  })
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { id } = useParams()
   const { width, height } = useWindowDimensions()
@@ -46,22 +48,26 @@ export default function ProductDescriptionMobile() {
 
   useEffect(() => {
     const fetchAccount = async () => {
-      if (productOwnerId) {
+      if (productData.productOwnerId) {
         const body = {
-          productOwnerIds: [productOwnerId],
+          productOwnerIds: [productData.productOwnerId],
         }
 
         const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
           params: body,
         })
 
-        setCommercialName(response.data[0].commercial_name)
-        setPhoneNumber(response.data[0].phone_number)
+        const { commercial_name, phone_number } = response.data[0]
+        setProductData({
+          ...productData,
+          commercialName: commercial_name,
+          phoneNumber: phone_number,
+        })
       }
     }
 
     fetchAccount()
-  }, [productOwnerId])
+  }, [productData.productOwnerId])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,56 +80,75 @@ export default function ProductDescriptionMobile() {
           params: body,
         })
 
-        setProductOwnerId(response.data.Item.PRODUCT_OWNER_ID.S)
-        setName(response.data.Item.PRODUCT_NAME.S)
-        setDescription(response.data.Item.PRODUCT_DESCRIPTION.S)
-        setPrice(response.data.Item.PRODUCT_PRICE.N)
-        setImages(response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S))
-        setTags(response.data.Item?.PRODUCT_TAGS?.SS)
-
-        const productType = response.data.Item?.PRODUCT_TYPE?.S
-        setProductType(productType)
+        const data = {}
+        data.name = response.data.Item.PRODUCT_NAME.S
+        data.description = response.data.Item.PRODUCT_DESCRIPTION.S
+        data.price = response.data.Item.PRODUCT_PRICE.N
+        data.images = response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S)
+        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID.S
+        data.tags = response.data.Item?.PRODUCT_TAGS?.SS
+        data.productType = response.data.Item?.PRODUCT_TYPE?.S
 
         if (productType === PRODUCT_TYPES.DEAL) {
-          setDealPrice(response.data.Item.DEAL_PRICE.N)
+          data.dealPrice = response.data.Item.DEAL_PRICE.N
         } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {
-          setDealPrice(response.data.Item.DEAL_PRICE.N)
-          setLightingDealDuration(response.data.Item.LIGHTING_DEAL_DURATION.S)
-          setLightingDealStartTime(response.data.Item.LIGHTING_DEAL_START_TIME.S)
+          data.dealPrice = response.data.Item.DEAL_PRICE.N
+          data.lightingDealDuration = response.data.Item.LIGHTING_DEAL_DURATION.S
+          data.lightingDealStartTime = response.data.Item.LIGHTING_DEAL_START_TIME.S
         }
+
+        setProductData({ ...productData, ...data })
       } catch (e) {
         console.error(e)
       }
     }
 
     if (location.state) {
-      setName(location.state.name)
-      setDescription(location.state.description)
-      setPrice(location.state.price)
-      setImages(location.state.images)
-      setProductOwnerId(location.state.productOwnerId)
-      if (location.state.phoneNumber) setPhoneNumber(location.state.phoneNumber)
-      setTags(location.state.tags)
-      if (location.state.commercialName)
-        setCommercialName(location.state.commercialName)
+      const data = {}
+      data.name = location.state.name
+      data.description = location.state.description
+      data.price = location.state.price
+      data.images = location.state.images
+      data.productOwnerId = location.state.productOwnerId
 
-      setProductType(location.state.productType)
+      data.tags = location.state.tags
+      data.productType = location.state.productType
+
+      if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
+      if (location.state.commercialName)
+        data.commercialName = location.state.commercialName
+
       if (location.state.productType === PRODUCT_TYPES.DEAL) {
-        setDealPrice(location.state.dealPrice)
+        data.dealPrice = location.state.dealPrice
       } else if (location.state.productType === PRODUCT_TYPES.LIGHTING_DEAL) {
-        setDealPrice(location.state.dealPrice)
-        setLightingDealDuration(location.state.lightingDealDuration)
-        setLightingDealStartTime(location.state.lightingDealStartTime)
+        data.dealPrice = location.state.dealPrice
+        data.lightingDealDuration = location.state.lightingDealDuration
+        data.lightingDealStartTime = location.state.lightingDealStartTime
       }
+
+      setProductData({ ...productData, ...data })
     } else {
       fetchData()
     }
   }, [id])
 
+  const {
+    name,
+    price,
+    images,
+    description,
+    phoneNumber,
+    commercialName,
+    tags,
+    productType,
+    dealPrice,
+    lightingDealStartTime,
+    lightingDealDuration,
+  } = productData
+
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
-  const imagesIsDefined = images && images.length > 0
-
+  const imagesIsDefined = images.length > 0
   return (
     <div
       style={{
