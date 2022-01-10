@@ -4,7 +4,7 @@ import "react-alice-carousel/lib/alice-carousel.css"
 import { Spinner, Container } from "react-bootstrap"
 import axios from "axios"
 import {
-  API,
+  REST_API,
   PRODUCTS_ENDPOINT,
   TAGS_ENDPOINT,
   PRODUCT_DESCRIPTION,
@@ -101,7 +101,7 @@ export default function SimilarProductsMobile({ id, tags }) {
             "Content-Type": "application/json",
           },
         }
-        const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
+        const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
         const products = data.filter((product) =>
           similarProductsData.productsIds.includes(product.id)
@@ -128,7 +128,7 @@ export default function SimilarProductsMobile({ id, tags }) {
   useEffect(() => {
     const fetchProductIdsByTags = async () => {
       if (tags.length > 0) {
-        const response = await axios.get(`${API}/${TAGS_ENDPOINT}`)
+        const response = await axios.get(`${REST_API}/${TAGS_ENDPOINT}`)
 
         const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
           tags.includes(productsByTag.TAG_NAME)

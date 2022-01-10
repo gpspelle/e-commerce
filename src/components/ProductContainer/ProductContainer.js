@@ -3,7 +3,7 @@ import axios from "axios"
 import { Container, Row, Col } from "react-bootstrap"
 import {
   ACCOUNTS_ENDPOINT,
-  API,
+  REST_API,
   DEALS,
   PRODUCTS_ENDPOINT,
   PRODUCT_TYPES,
@@ -80,7 +80,7 @@ export default function ProductContainer() {
         return
       }
 
-      const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
+      const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
         params: body,
       })
 
@@ -101,7 +101,7 @@ export default function ProductContainer() {
         },
       }
 
-      const res = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
+      const res = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
       const { data, key } = res.data
       const concatProducts = products.length > 0 ? products.concat(data) : data
 

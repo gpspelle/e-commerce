@@ -5,7 +5,7 @@ import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
   ACCOUNTS_ENDPOINT,
-  API,
+  REST_API,
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
@@ -53,7 +53,7 @@ export default function ProductDescriptionMobile() {
           productOwnerIds: [productData.productOwnerId],
         }
 
-        const response = await axios.get(`${API}/${ACCOUNTS_ENDPOINT}`, {
+        const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
           params: body,
         })
 
@@ -76,7 +76,7 @@ export default function ProductDescriptionMobile() {
           id,
         }
 
-        const response = await axios.get(`${API}/${PRODUCT_ENDPOINT}`, {
+        const response = await axios.get(`${REST_API}/${PRODUCT_ENDPOINT}`, {
           params: body,
         })
 

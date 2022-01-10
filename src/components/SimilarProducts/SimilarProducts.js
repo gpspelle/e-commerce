@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { Pagination, Container, Spinner } from "react-bootstrap"
 import {
-  API,
+  REST_API,
   PRODUCTS_ENDPOINT,
   TAGS_ENDPOINT,
   PRODUCT_DESCRIPTION,
@@ -46,7 +46,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
             "Content-Type": "application/json",
           },
         }
-        const response = await axios.get(`${API}/${PRODUCTS_ENDPOINT}`, config)
+        const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
         const products = data.filter((product) =>
           similarProductsData.productsIds.includes(product.id)
@@ -74,7 +74,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
   useEffect(() => {
     const fetchProductIdsByTags = async () => {
       if (tags.length > 0) {
-        const response = await axios.get(`${API}/${TAGS_ENDPOINT}`)
+        const response = await axios.get(`${REST_API}/${TAGS_ENDPOINT}`)
 
         const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
           tags.includes(productsByTag.TAG_NAME)
