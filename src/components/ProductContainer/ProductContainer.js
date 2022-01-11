@@ -28,7 +28,6 @@ export default function ProductContainer({ isDeals }) {
 
   const { products, allProducts, accounts, pagination } = productData
   const searchBarValue = query.get("q")
-  console.log(isDeals)
   useEffect(() => {
     if (searchBarValue && allProducts.length > 0) {
       const filteredProducts = allProducts.filter((product) => {
