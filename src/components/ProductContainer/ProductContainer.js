@@ -139,6 +139,7 @@ export default function ProductContainer() {
   }
 
   var displayProducts
+  console.log(location)
   if (location.pathname === `/${DEALS}` && products && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
