@@ -4,12 +4,10 @@ import { Container, Row, Col } from "react-bootstrap"
 import {
   ACCOUNTS_ENDPOINT,
   REST_API,
-  DEALS,
   PRODUCTS_ENDPOINT,
   PRODUCT_TYPES,
 } from "../../constants/constants"
 import Product from "../Product/Product"
-import { useLocation } from "react-router-dom"
 import {
   isLightingDealValid,
   processLightingDealInformation,
@@ -18,13 +16,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 
-export const pageStates = {
-  HOME: { name: "HOME", pathname: "/" },
-  DEALS: { name: "DEALS", pathname: `/${DEALS}` },
-}
-
-export default function ProductContainer() {
-  const location = useLocation()
+export default function ProductContainer({ isDeals }) {
   const query = useQuery()
   const [productData, setProductData] = useState({
     products: [],
@@ -36,7 +28,7 @@ export default function ProductContainer() {
 
   const { products, allProducts, accounts, pagination } = productData
   const searchBarValue = query.get("q")
-
+  console.log(isDeals)
   useEffect(() => {
     if (searchBarValue && allProducts.length > 0) {
       const filteredProducts = allProducts.filter((product) => {
@@ -139,7 +131,7 @@ export default function ProductContainer() {
   }
 
   var displayProducts
-  if (location.pathname === `/${DEALS}` && products && products.length > 0) {
+  if (isDeals && products && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
         product.PRODUCT_TYPE === PRODUCT_TYPES.DEAL ||

@@ -35,11 +35,14 @@ function App() {
           <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
             {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
           </Route>
-          <Route path="/">
-            <ProductContainer setSearchBarValue={setSearchBarValue} />
-          </Route>
           <Route path={`/${DEALS}`}>
-            <ProductContainer setSearchBarValue={setSearchBarValue} />
+            <ProductContainer isDeals={true} setSearchBarValue={setSearchBarValue} />
+          </Route>
+          <Route path="/">
+            <ProductContainer
+              isDeals={false}
+              setSearchBarValue={setSearchBarValue}
+            />
           </Route>
         </Switch>
       </Router>
