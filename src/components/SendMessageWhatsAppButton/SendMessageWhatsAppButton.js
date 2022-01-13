@@ -26,7 +26,7 @@ export default function SendMessageWhatsAppButton({
   commercialName,
 }) {
   return (
-    <div style={style}>
+    <div style={style} className="notranslate">
       <Button
         disabled={phoneNumber && commercialName ? false : true}
         variant="success"
