@@ -15,6 +15,7 @@ import {
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
+import ProductPagination from "../ProductPagination/ProductPagination"
 
 export default function ProductContainer({ isDeals }) {
   const query = useQuery()
@@ -154,54 +155,54 @@ export default function ProductContainer({ isDeals }) {
     displayProducts = products
   }
 
+  const items =
+    displayProducts &&
+    displayProducts.map((item, i) => {
+      return (
+        <Col
+          key={i}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: "20px",
+          }}
+        >
+          <Product
+            id={item.id}
+            name={item.PRODUCT_NAME}
+            description={item.PRODUCT_DESCRIPTION}
+            price={item.PRODUCT_PRICE}
+            images={item.PRODUCT_IMAGES}
+            coverImage={item.PRODUCT_COVER_IMAGE}
+            phoneNumber={
+              Object.keys(productOwnerIdToOwnerData).length !== 0
+                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]["phoneNumber"]
+                : false
+            }
+            commercialName={
+              Object.keys(productOwnerIdToOwnerData).length !== 0
+                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]["commercialName"]
+                : false
+            }
+            productOwnerId={item.PRODUCT_OWNER_ID}
+            tags={item.PRODUCT_TAGS}
+            productType={item.PRODUCT_TYPE}
+            dealPrice={item.DEAL_PRICE}
+            lightingDealDuration={item.LIGHTING_DEAL_DURATION}
+            lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
+            hasMoreDataToFetch={pagination.fetch}
+          />
+        </Col>
+      )
+    })
+
   return (
     <div>
       <Container>
         <Row style={{ paddingTop: width < 1024 ? "64px" : "12px" }}>
-          {displayProducts && displayProducts.length > 0 ? (
-            displayProducts.map((item, i) => {
-              return (
-                <Col
-                  key={i}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    paddingTop: "20px",
-                  }}
-                >
-                  <Product
-                    id={item.id}
-                    name={item.PRODUCT_NAME}
-                    description={item.PRODUCT_DESCRIPTION}
-                    price={item.PRODUCT_PRICE}
-                    images={item.PRODUCT_IMAGES}
-                    coverImage={item.PRODUCT_COVER_IMAGE}
-                    phoneNumber={
-                      Object.keys(productOwnerIdToOwnerData).length !== 0
-                        ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
-                            "phoneNumber"
-                          ]
-                        : false
-                    }
-                    commercialName={
-                      Object.keys(productOwnerIdToOwnerData).length !== 0
-                        ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID][
-                            "commercialName"
-                          ]
-                        : false
-                    }
-                    productOwnerId={item.PRODUCT_OWNER_ID}
-                    tags={item.PRODUCT_TAGS}
-                    productType={item.PRODUCT_TYPE}
-                    dealPrice={item.DEAL_PRICE}
-                    lightingDealDuration={item.LIGHTING_DEAL_DURATION}
-                    lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
-                    hasMoreDataToFetch={pagination.fetch}
-                  />
-                </Col>
-              )
-            })
+          {items && items.length > 0 ? (
+            <ProductPagination products={items} screenWidth={width} />
           ) : (
             <NoProductFoundMessage
               screenWidth={width}
