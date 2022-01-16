@@ -17,6 +17,7 @@ import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
+import "./ProductDescriptionMobile.css"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -168,17 +169,20 @@ export default function ProductDescriptionMobile() {
           />
         )}
         {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
-        {<h2>{name}</h2>}
+        <h2>{name}</h2>
         {isDeal ? (
           <div className="notranslate" style={{ display: "flex" }}>
-            Preço:&nbsp;
+            &nbsp;
             <div style={{ textDecoration: "line-through", color: "lightgray" }}>
               &nbsp;R$ {price}
             </div>{" "}
-            &nbsp;R$ {dealPrice}
+            &nbsp;R$ <div className="display-price">{dealPrice}</div>
           </div>
         ) : (
-          <div className="notranslate">Preço: R$ {price}</div>
+          <div className="notranslate" style={{ display: "flex" }}>
+            R$&nbsp;
+            <div className="display-price">{price}</div>
+          </div>
         )}
         <SendMessageWhatsAppButton
           style={{
