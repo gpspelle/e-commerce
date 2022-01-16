@@ -6,6 +6,7 @@ export default function NoProductFoundMessage({
   screenWidth,
   hasMoreDataToFetch,
   searchBarValue,
+  isDeals,
 }) {
   const history = useHistory()
 
@@ -44,13 +45,19 @@ export default function NoProductFoundMessage({
           <Card.Body>
             <div style={{ textAlign: "center" }}>
               <Card.Text>
-                {`Não encontramos nenhum produto relacionado à sua busca`}{" "}
+                {isDeals
+                  ? "Não existem ofertas disponíveis"
+                  : "Não encontramos nenhum produto relacionado à sua busca"}{" "}
               </Card.Text>
-              <div style={{ margin: "10px auto", fontWeight: "bold" }}>
-                {searchBarValue}
-              </div>
+              {!isDeals && (
+                <div style={{ margin: "10px auto", fontWeight: "bold" }}>
+                  {searchBarValue}
+                </div>
+              )}
               <Card.Text>
-                {`Tente buscar com outras palavras ou clique em voltar.`}
+                {isDeals
+                  ? "Para ver todos os produtos clique em voltar"
+                  : "Tente buscar com outras palavras ou clique em voltar."}
               </Card.Text>
             </div>
             <Button

@@ -208,6 +208,7 @@ export default function ProductContainer({ isDeals }) {
               screenWidth={width}
               hasMoreDataToFetch={pagination.fetch}
               searchBarValue={searchBarValue}
+              isDeals={isDeals}
             />
           )}
         </Row>
