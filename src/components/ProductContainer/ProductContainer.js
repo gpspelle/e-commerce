@@ -169,7 +169,7 @@ const ProductContainer = ({ isDeals }) => {
     displayProducts.map((item, i) => {
       return (
         <Col
-          key={i}
+          key={item.id}
           style={{
             display: "flex",
             justifyContent: "center",

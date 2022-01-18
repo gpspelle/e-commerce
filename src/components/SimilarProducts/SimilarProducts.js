@@ -180,7 +180,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               return (
                 <Pagination.Item
                   style={{ position: "relative", margin: "auto" }}
-                  key={i}
+                  key={similarProduct.id}
                   onClick={() =>
                     openDetailPage({
                       id: similarProduct.id,
