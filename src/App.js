@@ -12,7 +12,6 @@ import useWindowDimensions from "./hooks/useWindowDimensions"
 import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
 import ProductDescription from "./components/ProductDescription/ProductDescription"
 import ProductDescriptionMobile from "./components/ProductDescriptionMobile/ProductDescriptionMobile"
-import Loadable from "react-loadable"
 import "./react-bootstrap.min.css"
 
 const meta = {
@@ -31,60 +30,19 @@ function App() {
     whyDidYouUpdate(React)
   }*/
 
-  const LoadableProductDescriptionMobile = Loadable({
-    loader: () =>
-      import("./components/ProductDescriptionMobile/ProductDescriptionMobile"),
-    render(loaded) {
-      let Component = loaded.default
-      return <Component />
-    },
-    loading: ProductDescriptionMobile,
-  })
-
-  const LoadableProductDescription = Loadable({
-    loader: () => import("./components/ProductDescription/ProductDescription"),
-    render(loaded) {
-      let Component = loaded.default
-      return <Component />
-    },
-    loading: ProductDescription,
-  })
-
-  const LoadableProductContainerDeals = Loadable({
-    loader: () => import("./components/ProductContainer/ProductContainer"),
-    render(loaded) {
-      let Component = loaded.default
-      return <Component isDeals={true} />
-    },
-    loading: MemoizedProductContainer,
-  })
-
-  const LoadableProductContainer = Loadable({
-    loader: () => import("./components/ProductContainer/ProductContainer"),
-    render(loaded) {
-      let Component = loaded.default
-      return <Component isDeals={false} />
-    },
-    loading: MemoizedProductContainer,
-  })
-
   return (
     <div style={{ paddingTop: "30px" }}>
       <Router>
         <NavigationBar />
         <Switch>
           <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
-            {width < 1024 ? (
-              <LoadableProductDescriptionMobile />
-            ) : (
-              <LoadableProductDescription />
-            )}
+            {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
           </Route>
           <Route path={`/${DEALS}`}>
-            <LoadableProductContainerDeals />
+            <MemoizedProductContainer isDeals={true} />
           </Route>
           <Route path="/">
-            <LoadableProductContainer />
+            <MemoizedProductContainer isDeals={false} />
           </Route>
         </Switch>
       </Router>

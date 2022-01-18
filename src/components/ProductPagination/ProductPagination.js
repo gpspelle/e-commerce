@@ -6,7 +6,7 @@ import "./ProductPagination.css"
 function PaginatedItems({ products, itemsPerPage, screenWidth }) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null)
-  const [pageCount, setPageCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0)
