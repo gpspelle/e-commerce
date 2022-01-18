@@ -14,14 +14,6 @@ import ProductDescription from "./components/ProductDescription/ProductDescripti
 import ProductDescriptionMobile from "./components/ProductDescriptionMobile/ProductDescriptionMobile"
 import "./react-bootstrap.min.css"
 
-const meta = {
-  title: PAGE_TITLE,
-  description: PAGE_DESCRIPTION,
-  meta: {
-    charset: "utf-8",
-  },
-}
-
 function App() {
   const { width } = useWindowDimensions()
 
@@ -46,7 +38,13 @@ function App() {
           </Route>
         </Switch>
       </Router>
-      <DocumentMeta {...meta} />
+      <DocumentMeta
+        title={PAGE_TITLE}
+        description={PAGE_DESCRIPTION}
+        meta={{
+          charset: "utf-8",
+        }}
+      />
     </div>
   )
 }

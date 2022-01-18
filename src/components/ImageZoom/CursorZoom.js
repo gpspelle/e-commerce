@@ -87,7 +87,19 @@ export default function CursorZoom({
         src={image.src}
         style={image.style}
       />
-      <Magnifier {...magnifierProps} />
+      <Magnifier
+        size={size}
+        smallImage={image}
+        zoomImage={zoomImage}
+        cursorOffset={cursorOffset}
+        borderSize={borderSize}
+        borderColor={borderColor}
+        pointerStyle={pointerStyle}
+        x={coordinates.x}
+        y={coordinates.y}
+        offsetX={coordinates.offsetX}
+        offsetY={coordinates.offsetY}
+      />
     </div>
   )
 }

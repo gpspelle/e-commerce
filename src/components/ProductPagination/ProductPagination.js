@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
+import { areArraysEqual, isEqual } from "../../utils/isEqual"
 import scrollToTop from "../../utils/scrollToTop"
 import "./ProductPagination.css"
 
@@ -26,17 +27,6 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
     scrollToTop()
   }
 
-  const responsiveConfiguration =
-    screenWidth > 1024
-      ? {
-          marginPagesDisplayed: 2,
-          pageRangeDisplayed: 3,
-        }
-      : {
-          marginPagesDisplayed: 0,
-          pageRangeDisplayed: 0,
-        }
-
   return (
     <>
       {screenWidth < 1024 && (
@@ -57,7 +47,8 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
           containerClassName="pagination"
           activeClassName="active"
           renderOnZeroPageCount={null}
-          {...responsiveConfiguration}
+          marginPagesDisplayed={0}
+          pageRangeDisplayed={0}
           forcePage={currentPage}
           className="first-pagination-mobile pagination"
         />
@@ -81,7 +72,8 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
         activeClassName="active"
         renderOnZeroPageCount={null}
         forcePage={currentPage}
-        {...responsiveConfiguration}
+        marginPagesDisplayed={screenWidth > 1024 ? 2 : 0}
+        pageRangeDisplayed={screenWidth > 1024 ? 3 : 0}
       />
     </>
   )
@@ -97,5 +89,11 @@ const ProductPagination = ({ products, screenWidth }) => {
   )
 }
 
-const MemoizedProductPagination = memo(ProductPagination)
+function areEqual(prevProps, nextProps) {
+  if (prevProps.screenWidth !== nextProps.screenWidth) return false
+
+  return isEqual(prevProps.products, nextProps.products)
+}
+
+const MemoizedProductPagination = memo(ProductPagination, areEqual)
 export default MemoizedProductPagination
