@@ -92,7 +92,10 @@ const ProductPagination = ({ products, screenWidth }) => {
 function areEqual(prevProps, nextProps) {
   if (prevProps.screenWidth !== nextProps.screenWidth) return false
 
-  return isEqual(prevProps.products, nextProps.products)
+  return isEqual(
+    prevProps.products.map((product) => product.key),
+    nextProps.products.map((product) => product.key)
+  )
 }
 
 const MemoizedProductPagination = memo(ProductPagination, areEqual)
