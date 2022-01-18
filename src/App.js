@@ -9,7 +9,7 @@ import {
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
 import useWindowDimensions from "./hooks/useWindowDimensions"
-import ProductContainer from "./components/ProductContainer/ProductContainer"
+import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
 import ProductDescription from "./components/ProductDescription/ProductDescription"
 import ProductDescriptionMobile from "./components/ProductDescriptionMobile/ProductDescriptionMobile"
 import Loadable from "react-loadable"
@@ -25,6 +25,11 @@ const meta = {
 
 function App() {
   const { width } = useWindowDimensions()
+
+  /*if (process.env.NODE_ENV !== "production") {
+    const { whyDidYouUpdate } = require("why-did-you-update")
+    whyDidYouUpdate(React)
+  }*/
 
   const LoadableProductDescriptionMobile = Loadable({
     loader: () =>
@@ -51,7 +56,7 @@ function App() {
       let Component = loaded.default
       return <Component isDeals={true} />
     },
-    loading: ProductContainer,
+    loading: MemoizedProductContainer,
   })
 
   const LoadableProductContainer = Loadable({
@@ -60,7 +65,7 @@ function App() {
       let Component = loaded.default
       return <Component isDeals={false} />
     },
-    loading: ProductContainer,
+    loading: MemoizedProductContainer,
   })
 
   return (

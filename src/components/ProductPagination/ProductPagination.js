@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
 import scrollToTop from "../../utils/scrollToTop"
 import "./ProductPagination.css"
@@ -87,7 +87,7 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
   )
 }
 
-export default function ProductPagination({ products, screenWidth }) {
+const ProductPagination = ({ products, screenWidth }) => {
   return (
     <PaginatedItems
       products={products}
@@ -96,3 +96,6 @@ export default function ProductPagination({ products, screenWidth }) {
     />
   )
 }
+
+const MemoizedProductPagination = memo(ProductPagination)
+export default MemoizedProductPagination

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
 import axios from "axios"
 import { Container, Row, Col } from "react-bootstrap"
 import {
@@ -15,9 +15,9 @@ import {
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
-import ProductPagination from "../ProductPagination/ProductPagination"
+import MemoizedProductPagination from "../ProductPagination/ProductPagination"
 
-export default function ProductContainer({ isDeals }) {
+const ProductContainer = ({ isDeals }) => {
   const query = useQuery()
   const [productData, setProductData] = useState({
     products: [],
@@ -58,7 +58,7 @@ export default function ProductContainer({ isDeals }) {
       })
 
       setProductData({ ...productData, products: filteredProducts })
-    } else {
+    } else if (productData.products.length !== allProducts.length) {
       setProductData({ ...productData, products: allProducts })
     }
   }, [searchBarValue, allProducts])
@@ -198,12 +198,14 @@ export default function ProductContainer({ isDeals }) {
       )
     })
 
+  console.log(items, new Date())
+
   return (
     <div>
       <Container>
         <Row style={{ paddingTop: width < 1024 ? "64px" : "12px" }}>
           {items && items.length > 0 ? (
-            <ProductPagination products={items} screenWidth={width} />
+            <MemoizedProductPagination products={items} screenWidth={width} />
           ) : (
             <NoProductFoundMessage
               screenWidth={width}
@@ -217,3 +219,6 @@ export default function ProductContainer({ isDeals }) {
     </div>
   )
 }
+
+const MemoizedProductContainer = memo(ProductContainer)
+export default MemoizedProductContainer
