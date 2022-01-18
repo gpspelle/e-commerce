@@ -4,16 +4,15 @@ import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { useHistory } from "react-router-dom"
 import "./SearchBar.css"
 
-export default function SearchBar({
-  screenWidth,
-  searchBarValue,
-  setSearchBarValue,
-}) {
+export default function SearchBar({ screenWidth }) {
   const history = useHistory()
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [searchBarValue, setSearchBarValue] = useState("")
 
   useEffect(() => {
-    setIsSubmitted(false)
+    if (isSubmitted) {
+      setIsSubmitted(false)
+    }
   }, [searchBarValue])
 
   const applySearchOnProducts = (event) => {

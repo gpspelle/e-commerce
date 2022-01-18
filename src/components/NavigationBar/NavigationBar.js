@@ -6,7 +6,7 @@ import { AiFillThunderbolt } from "react-icons/ai"
 import SearchBar from "../SearchBar/SearchBar"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 
-export default function NavigationBar({ searchBarValue, setSearchBarValue }) {
+export default function NavigationBar() {
   const { width } = useWindowDimensions()
 
   return (
@@ -39,11 +39,7 @@ export default function NavigationBar({ searchBarValue, setSearchBarValue }) {
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
-        <SearchBar
-          screenWidth={width}
-          searchBarValue={searchBarValue}
-          setSearchBarValue={setSearchBarValue}
-        />
+        <SearchBar screenWidth={width} />
         <Navbar.Brand href="/">Loja das Artes</Navbar.Brand>
       </Container>
     </Navbar>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
@@ -24,7 +24,6 @@ const meta = {
 }
 
 function App() {
-  const [searchBarValue, setSearchBarValue] = useState("")
   const { width } = useWindowDimensions()
 
   const LoadableProductDescriptionMobile = Loadable({
@@ -50,7 +49,7 @@ function App() {
     loader: () => import("./components/ProductContainer/ProductContainer"),
     render(loaded) {
       let Component = loaded.default
-      return <Component isDeals={true} setSearchBarValue={setSearchBarValue} />
+      return <Component isDeals={true} />
     },
     loading: ProductContainer,
   })
@@ -59,7 +58,7 @@ function App() {
     loader: () => import("./components/ProductContainer/ProductContainer"),
     render(loaded) {
       let Component = loaded.default
-      return <Component isDeals={false} setSearchBarValue={setSearchBarValue} />
+      return <Component isDeals={false} />
     },
     loading: ProductContainer,
   })
@@ -67,10 +66,7 @@ function App() {
   return (
     <div style={{ paddingTop: "30px" }}>
       <Router>
-        <NavigationBar
-          searchBarValue={searchBarValue}
-          setSearchBarValue={setSearchBarValue}
-        />
+        <NavigationBar />
         <Switch>
           <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
             {width < 1024 ? (
