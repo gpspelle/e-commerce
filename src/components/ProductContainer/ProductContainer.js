@@ -169,7 +169,9 @@ const ProductContainer = ({ isDeals }) => {
     displayProducts.map((item, i) => {
       return (
         <Col
-          key={item.id}
+          key={
+            item.id + productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]?.phoneNumber
+          }
           style={{
             display: "flex",
             justifyContent: "center",
