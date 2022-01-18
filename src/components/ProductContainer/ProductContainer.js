@@ -16,18 +16,21 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
+import useIsMounted from "../../hooks/useIsMounted"
 
 const ProductContainer = ({ isDeals }) => {
   const query = useQuery()
   const [productData, setProductData] = useState({
     products: [],
     allProducts: [],
-    accounts: [],
     pagination: { key: undefined, fetch: true },
   })
+  const [productOwnerIds, setProductOwnerIds] = useState([])
+  const [accounts, setAccounts] = useState([])
   const { width } = useWindowDimensions()
+  const isMounted = useIsMounted()
 
-  const { products, allProducts, accounts, pagination } = productData
+  const { products, allProducts, pagination } = productData
   const searchBarValue = query.get("q")
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const ProductContainer = ({ isDeals }) => {
   }, [searchBarValue, allProducts])
 
   useEffect(() => {
-    async function getAccountsFromDatabase(productOwnerIds) {
+    const getAccountsFromDatabase = async (productOwnerIds) => {
       const body = {
         productOwnerIds,
       }
@@ -77,9 +80,17 @@ const ProductContainer = ({ isDeals }) => {
         params: body,
       })
 
-      return response.data
+      setAccounts(response.data)
     }
 
+    if (productOwnerIds.length > 0) {
+      if (isMounted.current) {
+        getAccountsFromDatabase(productOwnerIds)
+      }
+    }
+  }, [productOwnerIds])
+
+  useEffect(() => {
     async function getProductsFromDatabase() {
       const body = {
         key: pagination.key,
@@ -104,14 +115,11 @@ const ProductContainer = ({ isDeals }) => {
         concatProducts.map((product) => product.PRODUCT_OWNER_ID)
       )
 
-      // notice that since productOwnerIdsSet is using concatProduct we are fetching multiple
-      // times the accounts based on the whole list. this happens when pagination is used
-      const newAccounts = await getAccountsFromDatabase([...productOwnerIdsSet])
+      setProductOwnerIds([...productOwnerIdsSet])
 
       setProductData({
         products: concatProducts,
         allProducts: concatProducts,
-        accounts: newAccounts,
         pagination: { key, fetch: key ? true : false },
       })
     }
@@ -122,7 +130,7 @@ const ProductContainer = ({ isDeals }) => {
   }, [pagination.key])
 
   var productOwnerIdToOwnerData = {}
-  if (accounts) {
+  if (accounts.length > 0) {
     accounts.forEach((account) => {
       productOwnerIdToOwnerData[account.id] = {
         phoneNumber: account.phone_number,
@@ -132,7 +140,7 @@ const ProductContainer = ({ isDeals }) => {
   }
 
   var displayProducts
-  if (isDeals && products && products.length > 0) {
+  if (isDeals && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
         product.PRODUCT_TYPE === PRODUCT_TYPES.DEAL ||
@@ -152,7 +160,7 @@ const ProductContainer = ({ isDeals }) => {
 
       return true
     })
-  } else if (products && products.length > 0) {
+  } else if (products.length > 0) {
     displayProducts = products
   }
 
