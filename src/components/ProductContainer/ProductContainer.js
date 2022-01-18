@@ -198,8 +198,6 @@ const ProductContainer = ({ isDeals }) => {
       )
     })
 
-  console.log(items, new Date())
-
   return (
     <div>
       <Container>
