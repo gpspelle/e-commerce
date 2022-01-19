@@ -174,7 +174,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               style={{ position: "relative", margin: "auto" }}
               disabled={start === 0}
             />
-            {products.slice(start, end).map((similarProduct, i) => {
+            {products.slice(start, end).map((similarProduct) => {
               const coverImage = similarProduct.PRODUCT_COVER_IMAGE
               const image = similarProduct.PRODUCT_IMAGES[0]
               return (

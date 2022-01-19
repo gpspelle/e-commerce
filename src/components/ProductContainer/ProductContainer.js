@@ -202,7 +202,7 @@ const ProductContainer = ({ isDeals }) => {
                 : false
             }
             productOwnerId={item.PRODUCT_OWNER_ID.S}
-            tags={item.PRODUCT_TAGS?.SS}
+            tags={item.PRODUCT_TAGS?.SS || []}
             productType={item.PRODUCT_TYPE?.S}
             dealPrice={item.DEAL_PRICE?.N}
             lightingDealDuration={item.LIGHTING_DEAL_DURATION?.S}
