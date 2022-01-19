@@ -10,7 +10,6 @@ import {
 } from "./constants/constants"
 import useWindowDimensions from "./hooks/useWindowDimensions"
 import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
-import "./react-bootstrap.min.css"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
