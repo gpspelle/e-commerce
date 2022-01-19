@@ -37,17 +37,19 @@ const ProductContainer = ({ isDeals }) => {
     if (searchBarValue && allProducts.length > 0) {
       const filteredProducts = allProducts.filter((product) => {
         const lowerCaseSearchBarValue = searchBarValue.toLowerCase()
-        if (product.PRODUCT_NAME.toLowerCase().includes(lowerCaseSearchBarValue)) {
+        if (product.PRODUCT_NAME.S.toLowerCase().includes(lowerCaseSearchBarValue)) {
           return true
         }
 
         if (
-          product.PRODUCT_DESCRIPTION.toLowerCase().includes(lowerCaseSearchBarValue)
+          product.PRODUCT_DESCRIPTION.S.toLowerCase().includes(
+            lowerCaseSearchBarValue
+          )
         ) {
           return true
         }
 
-        const match = product?.PRODUCT_TAGS?.find((element) => {
+        const match = product.PRODUCT_TAGS?.SS.find((element) => {
           if (element.includes(lowerCaseSearchBarValue)) {
             return true
           }
@@ -109,10 +111,10 @@ const ProductContainer = ({ isDeals }) => {
       const { data, key } = res.data
       const concatProducts = products.length > 0 ? products.concat(data) : data
 
-      concatProducts.sort((a, b) => (a.PRODUCT_NAME > b.PRODUCT_NAME ? 1 : -1))
+      concatProducts.sort((a, b) => (a.PRODUCT_NAME.S > b.PRODUCT_NAME.S ? 1 : -1))
 
       const productOwnerIdsSet = new Set(
-        concatProducts.map((product) => product.PRODUCT_OWNER_ID)
+        concatProducts.map((product) => product.PRODUCT_OWNER_ID.S)
       )
 
       setProductOwnerIds([...productOwnerIdsSet])
@@ -143,17 +145,17 @@ const ProductContainer = ({ isDeals }) => {
   if (isDeals && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
-        product.PRODUCT_TYPE === PRODUCT_TYPES.DEAL ||
-        product.PRODUCT_TYPE === PRODUCT_TYPES.LIGHTING_DEAL
+        product.PRODUCT_TYPE.S === PRODUCT_TYPES.DEAL ||
+        product.PRODUCT_TYPE.S === PRODUCT_TYPES.LIGHTING_DEAL
     )
 
     displayProducts = displayProducts.filter((product) => {
-      const isLightingDeal = product.PRODUCT_TYPE === PRODUCT_TYPES.LIGHTING_DEAL
+      const isLightingDeal = product.PRODUCT_TYPE.S === PRODUCT_TYPES.LIGHTING_DEAL
       if (isLightingDeal) {
         const { miliseconds } = processLightingDealInformation({
           now: new Date(),
-          lightingDealDuration: product.LIGHTING_DEAL_DURATION,
-          lightingDealStartTime: product.LIGHTING_DEAL_START_TIME,
+          lightingDealDuration: product.LIGHTING_DEAL_DURATION.S,
+          lightingDealStartTime: product.LIGHTING_DEAL_START_TIME.S,
         })
         return isLightingDealValid(miliseconds)
       }
@@ -166,11 +168,12 @@ const ProductContainer = ({ isDeals }) => {
 
   const items =
     displayProducts &&
-    displayProducts.map((item, i) => {
+    displayProducts.map((item) => {
       return (
         <Col
           key={
-            item.id + productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]?.phoneNumber
+            item.id.S +
+            productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]?.phoneNumber
           }
           style={{
             display: "flex",
@@ -180,28 +183,30 @@ const ProductContainer = ({ isDeals }) => {
           }}
         >
           <Product
-            id={item.id}
-            name={item.PRODUCT_NAME}
-            description={item.PRODUCT_DESCRIPTION}
-            price={item.PRODUCT_PRICE}
-            images={item.PRODUCT_IMAGES}
-            coverImage={item.PRODUCT_COVER_IMAGE}
+            id={item.id.S}
+            name={item.PRODUCT_NAME.S}
+            description={item.PRODUCT_DESCRIPTION.S}
+            price={item.PRODUCT_PRICE.N}
+            images={item.PRODUCT_IMAGES.L.map((image) => image.S)}
+            coverImage={item.PRODUCT_COVER_IMAGE?.S}
             phoneNumber={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]["phoneNumber"]
+                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]["phoneNumber"]
                 : false
             }
             commercialName={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID]["commercialName"]
+                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S][
+                    "commercialName"
+                  ]
                 : false
             }
-            productOwnerId={item.PRODUCT_OWNER_ID}
-            tags={item.PRODUCT_TAGS}
-            productType={item.PRODUCT_TYPE}
-            dealPrice={item.DEAL_PRICE}
-            lightingDealDuration={item.LIGHTING_DEAL_DURATION}
-            lightingDealStartTime={item.LIGHTING_DEAL_START_TIME}
+            productOwnerId={item.PRODUCT_OWNER_ID.S}
+            tags={item.PRODUCT_TAGS?.SS}
+            productType={item.PRODUCT_TYPE?.S}
+            dealPrice={item.DEAL_PRICE?.N}
+            lightingDealDuration={item.LIGHTING_DEAL_DURATION?.S}
+            lightingDealStartTime={item.LIGHTING_DEAL_START_TIME?.S}
             hasMoreDataToFetch={pagination.fetch}
           />
         </Col>
