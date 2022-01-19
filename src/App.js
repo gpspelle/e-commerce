@@ -9,11 +9,9 @@ import {
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
 import useWindowDimensions from "./hooks/useWindowDimensions"
+import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
 import "./react-bootstrap.min.css"
 
-const ProductContainer = lazy(() =>
-  import("./components/ProductContainer/ProductContainer")
-)
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
 )
@@ -39,10 +37,10 @@ function App() {
               {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
             </Route>
             <Route path={`/${DEALS}`}>
-              <ProductContainer isDeals={true} />
+              <MemoizedProductContainer isDeals={true} />
             </Route>
             <Route path="/">
-              <ProductContainer isDeals={false} />
+              <MemoizedProductContainer isDeals={false} />
             </Route>
           </Switch>
         </Suspense>
