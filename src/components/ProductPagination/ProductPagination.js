@@ -81,7 +81,7 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
 
 const ProductPagination = ({ products, screenWidth }) => {
   return (
-    <PaginatedItems products={products} itemsPerPage={3} screenWidth={screenWidth} />
+    <PaginatedItems products={products} itemsPerPage={8} screenWidth={screenWidth} />
   )
 }
 
