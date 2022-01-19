@@ -1,6 +1,6 @@
 import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
-import { areArraysEqual, isEqual } from "../../utils/isEqual"
+import { isEqual } from "../../utils/isEqual"
 import scrollToTop from "../../utils/scrollToTop"
 import "./ProductPagination.css"
 
@@ -81,11 +81,7 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
 
 const ProductPagination = ({ products, screenWidth }) => {
   return (
-    <PaginatedItems
-      products={products}
-      itemsPerPage={12}
-      screenWidth={screenWidth}
-    />
+    <PaginatedItems products={products} itemsPerPage={3} screenWidth={screenWidth} />
   )
 }
 

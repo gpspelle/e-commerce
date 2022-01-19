@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react"
+import React, { useState, useEffect, memo, lazy, Suspense } from "react"
 import axios from "axios"
 import { Container, Row, Col } from "react-bootstrap"
 import {
