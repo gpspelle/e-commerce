@@ -34,15 +34,15 @@
 @media only screen 
 and (min-width : 1024px) {
     .pagination {
-        padding-left: 30% !important;
-        padding-right: 30% !important;
+        padding-left: 35% !important;
+        padding-right: 35% !important;
     }}
 
 /* Large screens ----------- */
 @media only screen 
 and (min-width : 1824px) {
     .pagination {
-        padding-left: 35% !important;
-        padding-right: 35% !important;
+        padding-left: 40% !important;
+        padding-right: 40% !important;
     }
 }
