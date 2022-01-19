@@ -13,8 +13,7 @@ import "./SimilarProducts.css"
 
 export default function SimilarProducts({ id, screenWidth, tags }) {
   const history = useHistory()
-  const [numberOfVisibleSimilarProducts, setNumberOfVisibleSimilarProducts] =
-    useState()
+  const numberOfVisibleSimilarProducts = parseInt(screenWidth / 150)
   const [similarProductsData, setSimilarProductsData] = useState({
     productsIds: [],
     products: [],
@@ -22,14 +21,17 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
   })
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
-    end: 0,
+    end: numberOfVisibleSimilarProducts,
   })
 
   useEffect(() => {
-    if (numberOfVisibleSimilarProducts) {
+    if (
+      screenWidth &&
+      positionSimilarProducts.end !== numberOfVisibleSimilarProducts
+    ) {
       setPositionSimilarProducts({ start: 0, end: numberOfVisibleSimilarProducts })
     }
-  }, [numberOfVisibleSimilarProducts])
+  }, [screenWidth])
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
@@ -49,7 +51,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
         const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
         const products = data.filter((product) =>
-          similarProductsData.productsIds.includes(product.id)
+          similarProductsData.productsIds.includes(product.id.S)
         )
 
         const productsFlat = products.flat(1)
@@ -96,12 +98,6 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
 
     fetchProductIdsByTags()
   }, [tags, id])
-
-  useEffect(() => {
-    if (screenWidth) {
-      setNumberOfVisibleSimilarProducts(parseInt(screenWidth / 150))
-    }
-  }, [screenWidth])
 
   const openDetailPage = ({
     id,
@@ -175,23 +171,25 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               disabled={start === 0}
             />
             {products.slice(start, end).map((similarProduct) => {
-              const coverImage = similarProduct.PRODUCT_COVER_IMAGE
-              const image = similarProduct.PRODUCT_IMAGES[0]
+              const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
+              const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
               return (
                 <Pagination.Item
                   style={{ position: "relative", margin: "auto" }}
                   key={similarProduct.id}
                   onClick={() =>
                     openDetailPage({
-                      id: similarProduct.id,
-                      name: similarProduct.PRODUCT_NAME,
-                      description: similarProduct.PRODUCT_DESCRIPTION,
-                      price: similarProduct.PRODUCT_PRICE,
-                      images: similarProduct.PRODUCT_IMAGES,
+                      id: similarProduct.id.S,
+                      name: similarProduct.PRODUCT_NAME.S,
+                      description: similarProduct.PRODUCT_DESCRIPTION.S,
+                      price: similarProduct.PRODUCT_PRICE.N,
+                      images: similarProduct.PRODUCT_IMAGES.L.map(
+                        (image) => image.S
+                      ),
                       tags: similarProduct.PRODUCT_TAGS
-                        ? similarProduct.PRODUCT_TAGS
+                        ? similarProduct.PRODUCT_TAGS.SS
                         : [],
-                      productOwnerId: similarProduct.PRODUCT_OWNER_ID,
+                      productOwnerId: similarProduct.PRODUCT_OWNER_ID.S,
                     })
                   }
                 >
@@ -200,10 +198,10 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
                       width={128}
                       height={128}
                       small={`data:image/jpeg;base64,${coverImage}`}
-                      large={image}
+                      large={firstImage}
                     />
                   ) : (
-                    <img style={{ width: 128, height: 128 }} src={image} />
+                    <img style={{ width: 128, height: 128 }} src={firstImage} />
                   )}
                 </Pagination.Item>
               )

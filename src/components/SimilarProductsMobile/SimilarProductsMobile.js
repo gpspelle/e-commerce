@@ -33,25 +33,26 @@ export default function SimilarProductsMobile({ id, tags }) {
       !similarProductsData.pagination.fetch
     ) {
       const components = similarProductsData.products.map((similarProduct, i) => {
-        const coverImage = similarProduct.PRODUCT_COVER_IMAGE
-        const image = similarProduct.PRODUCT_IMAGES[0]
+        const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
+        const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
+
+        const similarProductJsonData = {
+          id: similarProduct.id.S,
+          name: similarProduct.PRODUCT_NAME.S,
+          description: similarProduct.PRODUCT_DESCRIPTION.S,
+          price: similarProduct.PRODUCT_PRICE.N,
+          images: similarProduct.PRODUCT_IMAGES.L.map((image) => image.S),
+          tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS.SS : [],
+          productOwnerId: similarProduct.PRODUCT_OWNER_ID.S,
+        }
+
         return coverImage ? (
           <ProgressiveBlurryImageLoad
             width={128}
             height={128}
             small={`data:image/jpeg;base64,${coverImage}`}
-            large={image}
-            onClick={() =>
-              openDetailPage({
-                id: similarProduct.id,
-                name: similarProduct.PRODUCT_NAME,
-                description: similarProduct.PRODUCT_DESCRIPTION,
-                price: similarProduct.PRODUCT_PRICE,
-                images: similarProduct.PRODUCT_IMAGES,
-                tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS : [],
-                productOwnerId: similarProduct.PRODUCT_OWNER_ID,
-              })
-            }
+            large={firstImage}
+            onClick={() => openDetailPage(similarProductJsonData)}
             style={{
               cursor: "pointer",
               paddingRight:
@@ -67,18 +68,8 @@ export default function SimilarProductsMobile({ id, tags }) {
               paddingRight:
                 i === similarProductsData.products.lenght - 1 ? "0px" : "8px",
             }}
-            src={image}
-            onClick={() =>
-              openDetailPage({
-                id: similarProduct.id,
-                name: similarProduct.PRODUCT_NAME,
-                description: similarProduct.PRODUCT_DESCRIPTION,
-                price: similarProduct.PRODUCT_PRICE,
-                images: similarProduct.PRODUCT_IMAGES,
-                tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS : [],
-                productOwnerId: similarProduct.PRODUCT_OWNER_ID,
-              })
-            }
+            src={firstImage}
+            onClick={() => openDetailPage(similarProductJsonData)}
           />
         )
       })
@@ -88,7 +79,7 @@ export default function SimilarProductsMobile({ id, tags }) {
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
-      if (similarProductsData.productsIds) {
+      if (similarProductsData.productsIds.length > 0) {
         const body = {
           key: similarProductsData.pagination.key,
         }
@@ -101,10 +92,12 @@ export default function SimilarProductsMobile({ id, tags }) {
             "Content-Type": "application/json",
           },
         }
+
         const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
+
         const products = data.filter((product) =>
-          similarProductsData.productsIds.includes(product.id)
+          similarProductsData.productsIds.includes(product.id.S)
         )
 
         const productsFlat = products.flat(1)
