@@ -9,7 +9,6 @@ import {
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
-import SimilarProducts from "../SimilarProducts/SimilarProducts"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
@@ -17,9 +16,11 @@ import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
+import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 
 export default function ProductDescription() {
   const location = useLocation()
+  const { id } = useParams()
   const [productData, setProductData] = useState({
     name: undefined,
     price: undefined,
@@ -35,7 +36,6 @@ export default function ProductDescription() {
     lightingDealStartTime: undefined,
   })
   const [isFullScreen, setIsFullScreen] = useState(false)
-  const { id } = useParams()
   const { width, height } = useWindowDimensions()
   const [blockScroll, allowScroll] = useScrollBlock()
 
@@ -81,6 +81,7 @@ export default function ProductDescription() {
         })
 
         const data = {}
+        data.id = response.data.Item.id.S
         data.name = response.data.Item.PRODUCT_NAME.S
         data.description = response.data.Item.PRODUCT_DESCRIPTION.S
         data.price = response.data.Item.PRODUCT_PRICE.N
@@ -105,6 +106,7 @@ export default function ProductDescription() {
 
     if (location.state) {
       const data = {}
+      data.id = location.state.id
       data.name = location.state.name
       data.description = location.state.description
       data.price = location.state.price
@@ -219,7 +221,7 @@ export default function ProductDescription() {
           commercialName={commercialName}
         />
       </Container>
-      <SimilarProducts id={id} screenWidth={width} tags={tags} />
+      <MemoizedSimilarProducts id={id} screenWidth={width} tags={tags} />
     </div>
   )
 }

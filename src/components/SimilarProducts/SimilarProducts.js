@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
 import axios from "axios"
 import { Pagination, Container, Spinner } from "react-bootstrap"
 import {
@@ -10,8 +10,9 @@ import {
 import { useHistory } from "react-router-dom"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProducts.css"
+import scrollToTop from "../../utils/scrollToTop"
 
-export default function SimilarProducts({ id, screenWidth, tags }) {
+const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()
   const numberOfVisibleSimilarProducts = parseInt(screenWidth / 150)
   const [similarProductsData, setSimilarProductsData] = useState({
@@ -50,6 +51,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
         }
         const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
         const { data, key } = response.data
+
         const products = data.filter((product) =>
           similarProductsData.productsIds.includes(product.id.S)
         )
@@ -82,9 +84,12 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
           tags.includes(productsByTag.TAG_NAME)
         )
 
-        const sameTagProductIds = sameTagProductIdsByTag.map(
-          (sameTagProductIdByTag) => sameTagProductIdByTag.products
-        )
+        const sameTagProductIds = []
+        sameTagProductIdsByTag.forEach((sameTagProductIdByTag) => {
+          if (sameTagProductIdByTag.products) {
+            sameTagProductIds.push(sameTagProductIdByTag.products)
+          }
+        })
 
         const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
         sameTagProductIdsSet.delete(id)
@@ -108,9 +113,10 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
     tags,
     productOwnerId,
   }) => {
+    scrollToTop()
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images, tags, productOwnerId },
+      state: { id, name, description, price, images, tags, productOwnerId },
     })
   }
 
@@ -176,7 +182,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
               return (
                 <Pagination.Item
                   style={{ position: "relative", margin: "auto" }}
-                  key={similarProduct.id}
+                  key={similarProduct.id.S}
                   onClick={() =>
                     openDetailPage({
                       id: similarProduct.id.S,
@@ -190,6 +196,7 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
                         ? similarProduct.PRODUCT_TAGS.SS
                         : [],
                       productOwnerId: similarProduct.PRODUCT_OWNER_ID.S,
+                      productType: similarProduct.PRODUCT_TYPE.S,
                     })
                   }
                 >
@@ -220,3 +227,6 @@ export default function SimilarProducts({ id, screenWidth, tags }) {
     </div>
   )
 }
+
+const MemoizedSimilarProducts = memo(SimilarProducts)
+export default MemoizedSimilarProducts

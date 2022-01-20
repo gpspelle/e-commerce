@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 import { Spinner, Container } from "react-bootstrap"
@@ -12,8 +12,9 @@ import {
 import { useHistory } from "react-router-dom"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProductsMobile.css"
+import scrollToTop from "../../utils/scrollToTop"
 
-export default function SimilarProductsMobile({ id, tags }) {
+const SimilarProductsMobile = ({ id, tags }) => {
   const history = useHistory()
   const [items, setItems] = useState()
   const [similarProductsData, setSimilarProductsData] = useState({
@@ -127,9 +128,12 @@ export default function SimilarProductsMobile({ id, tags }) {
           tags.includes(productsByTag.TAG_NAME)
         )
 
-        const sameTagProductIds = sameTagProductIdsByTag.map(
-          (sameTagProductIdByTag) => sameTagProductIdByTag.products
-        )
+        const sameTagProductIds = []
+        sameTagProductIdsByTag.forEach((sameTagProductIdByTag) => {
+          if (sameTagProductIdByTag.products) {
+            sameTagProductIds.push(sameTagProductIdByTag.products)
+          }
+        })
 
         const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
         sameTagProductIdsSet.delete(id)
@@ -153,9 +157,10 @@ export default function SimilarProductsMobile({ id, tags }) {
     tags,
     productOwnerId,
   }) => {
+    scrollToTop()
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { name, description, price, images, tags, productOwnerId },
+      state: { id, name, description, price, images, tags, productOwnerId },
     })
   }
 
@@ -194,3 +199,6 @@ export default function SimilarProductsMobile({ id, tags }) {
     </div>
   )
 }
+
+const MemoizedSimilarProductsMobile = memo(SimilarProductsMobile)
+export default MemoizedSimilarProductsMobile

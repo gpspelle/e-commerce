@@ -34,6 +34,7 @@ export default function Product({
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
       state: {
+        id,
         name,
         description,
         price,

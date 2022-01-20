@@ -9,7 +9,6 @@ import {
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
-import SimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
@@ -18,6 +17,7 @@ import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import "./ProductDescriptionMobile.css"
+import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -82,6 +82,7 @@ export default function ProductDescriptionMobile() {
         })
 
         const data = {}
+        data.id = response.data.Item.id.S
         data.name = response.data.Item.PRODUCT_NAME.S
         data.description = response.data.Item.PRODUCT_DESCRIPTION.S
         data.price = response.data.Item.PRODUCT_PRICE.N
@@ -106,6 +107,7 @@ export default function ProductDescriptionMobile() {
 
     if (location.state) {
       const data = {}
+      data.id = location.state.id
       data.name = location.state.name
       data.description = location.state.description
       data.price = location.state.price
@@ -150,6 +152,7 @@ export default function ProductDescriptionMobile() {
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
   const imagesIsDefined = images.length > 0
+
   return (
     <div
       style={{
@@ -241,7 +244,7 @@ export default function ProductDescriptionMobile() {
           }}
         />
       </Container>
-      <SimilarProductsMobile id={id} tags={tags} />
+      <MemoizedSimilarProductsMobile id={id} tags={tags} />
     </div>
   )
 }
