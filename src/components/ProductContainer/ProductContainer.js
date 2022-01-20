@@ -145,12 +145,12 @@ const ProductContainer = ({ isDeals }) => {
   if (isDeals && products.length > 0) {
     displayProducts = products.filter(
       (product) =>
-        product.PRODUCT_TYPE.S === PRODUCT_TYPES.DEAL ||
-        product.PRODUCT_TYPE.S === PRODUCT_TYPES.LIGHTING_DEAL
+        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.DEAL ||
+        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTING_DEAL
     )
 
     displayProducts = displayProducts.filter((product) => {
-      const isLightingDeal = product.PRODUCT_TYPE.S === PRODUCT_TYPES.LIGHTING_DEAL
+      const isLightingDeal = product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTING_DEAL
       if (isLightingDeal) {
         const { miliseconds } = processLightingDealInformation({
           now: new Date(),
