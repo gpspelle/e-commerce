@@ -73,6 +73,7 @@ export default function Product({
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
+            backgroundColor: "#F4F4F4",
           }}
           src={images[0]}
         />
