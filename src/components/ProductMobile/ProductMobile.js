@@ -1,6 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { Card, Container, Row, Col } from "react-bootstrap"
+import { Card } from "react-bootstrap"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
@@ -8,7 +8,8 @@ import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 
-export default function Product({
+// this is not used for now, waiting for the designer's work
+export default function ProductMobile({
   id,
   name,
   description,
@@ -23,6 +24,7 @@ export default function Product({
   dealPrice,
   lightingDealStartTime,
   lightingDealDuration,
+  screenWidth,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
@@ -51,11 +53,20 @@ export default function Product({
     })
   }
 
-  var productImageSize = "260px"
+  var productImageSize
+
+  if (screenWidth > 512) {
+    productImageSize = "20rem"
+  } else if (screenWidth > 374) {
+    productImageSize = "10rem"
+  } else {
+    productImageSize = "9rem"
+  }
+
   return (
     <Card
       style={{
-        maxWidth: productImageSize,
+        width: productImageSize + "!important",
         cursor: "pointer",
       }}
       onClick={openDetailPage}
@@ -73,59 +84,52 @@ export default function Product({
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
+            backgroundColor: "#F4F4F4",
           }}
           src={images[0]}
         />
       )}
       {isLightingDeal && <LightingDealWaterMark />}
-      <Card.Body>
-        <div>
-          <Row>
-            <Col style={{ display: "flex" }}>
-              <Card.Title
-                className="notranslate"
-                style={{
-                  textDecoration: isDeal ? "line-through" : "none",
-                  color: isDeal ? "lightgray" : "inherit",
-                  marginBottom: "0",
-                }}
-              >
-                R$ {price}
-              </Card.Title>
-              {isDeal && (
-                <Card.Title className="notranslate">&nbsp;R$ {dealPrice}</Card.Title>
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card.Text
-                style={{
-                  fontSize: "15px",
-                  marginBottom: "0.25rem",
-                  overflowX: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="notranslate"
-              >
-                {name}
-              </Card.Text>
-            </Col>
-          </Row>
-          <Row>
-            <Card.Text
-              style={{
-                fontSize: "12px",
-                overflowX: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-              className="notranslate"
-            >
-              {`Vendido por ${commercialName ? commercialName : "..."}`}
-            </Card.Text>
-          </Row>
+      <Card.Body
+        style={{
+          paddingTop: "0.2rem",
+          paddingBottom: "0.2rem",
+          paddingRight: "0.2rem",
+          paddingLeft: "0.2rem",
+        }}
+      >
+        <Card.Text
+          style={{ fontSize: "12px", margin: "0px" }}
+          className="notranslate"
+        >
+          {name}
+        </Card.Text>
+        <Card.Text
+          style={{ fontSize: "12px", margin: "0px" }}
+          className="notranslate"
+        >
+          {`Vendido por ${commercialName}`}
+        </Card.Text>
+        <div
+          style={{
+            justifyContent: "center",
+            display: "flex",
+            paddingBottom: "0.2rem",
+          }}
+        >
+          <Card.Text
+            className="notranslate"
+            style={{
+              textDecoration: isDeal ? "line-through" : "none",
+              color: isDeal ? "lightgray" : "inherit",
+              marginBottom: isDeal ? "0" : "",
+            }}
+          >
+            R$ {price}
+          </Card.Text>
+          {isDeal && (
+            <Card.Text className="notranslate">&nbsp;R$ {dealPrice}</Card.Text>
+          )}
         </div>
         <LightingDealDuration
           lightingDealDuration={lightingDealDuration}

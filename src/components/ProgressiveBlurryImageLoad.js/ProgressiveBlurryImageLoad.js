@@ -19,6 +19,8 @@ export default function ProgressiveBlurryImageLoad({
         height,
         width,
         filter: blur ? "blur(5px)" : "none",
+        objectFit: "contain",
+        backgroundColor: "#F4F4F4",
       }}
       alt=""
       onClick={onClick}

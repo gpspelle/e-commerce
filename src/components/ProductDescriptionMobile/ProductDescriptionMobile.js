@@ -194,6 +194,7 @@ export default function ProductDescriptionMobile() {
             width: "20rem",
             margin: "0 auto",
           }}
+          isDeal={isDeal}
           id={id}
           name={name}
           price={isDeal ? dealPrice : price}
