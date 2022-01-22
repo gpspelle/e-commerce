@@ -51,11 +51,12 @@ export default function Product({
     })
   }
 
-  var productImageSize = "260px"
+  var productImageSize = "258px"
+  var productCardSize = "260px"
   return (
     <Card
       style={{
-        maxWidth: productImageSize,
+        maxWidth: productCardSize,
         cursor: "pointer",
       }}
       onClick={openDetailPage}
