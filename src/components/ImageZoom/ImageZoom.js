@@ -17,6 +17,7 @@ export default function ImageZoom({
   shouldBeDisplayed,
   allowScroll,
   blockScroll,
+  actualShowingImageNumber,
 }) {
   if (isFullScreen) {
     document.body.style.overflow = "hidden"
@@ -37,6 +38,7 @@ export default function ImageZoom({
     return (
       <OnClickImageZoom
         src={src}
+        actualShowingImageNumber={actualShowingImageNumber}
         screenHeight={screenHeight}
         screenWidth={screenWidth}
         imageWidth={imageWidth}

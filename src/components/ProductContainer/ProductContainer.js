@@ -188,6 +188,9 @@ const ProductContainer = ({ isDeals }) => {
             description={item.PRODUCT_DESCRIPTION.S}
             price={item.PRODUCT_PRICE.N}
             images={item.PRODUCT_IMAGES.L.map((image) => image.S)}
+            productImagesResized={item.PRODUCT_IMAGES_RESIZED?.L.map(
+              (image) => image.S
+            )}
             coverImage={item.PRODUCT_COVER_IMAGE?.S}
             phoneNumber={
               Object.keys(productOwnerIdToOwnerData).length !== 0

@@ -43,6 +43,9 @@ const SimilarProductsMobile = ({ id, tags }) => {
           description: similarProduct.PRODUCT_DESCRIPTION.S,
           price: similarProduct.PRODUCT_PRICE.N,
           images: similarProduct.PRODUCT_IMAGES.L.map((image) => image.S),
+          productImagesResized: similarProduct.PRODUCT_IMAGES_RESIZED?.L.map(
+            (image) => image.S
+          ),
           tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS.SS : [],
           productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
         }

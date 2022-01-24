@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 import ImageZoom from "../ImageZoom/ImageZoom"
+import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"
 import "./ImageCarousel.css"
 
 const responsive = {
@@ -18,6 +19,7 @@ export default function ImageCarousel({
   setIsFullScreen,
   allowScroll,
   blockScroll,
+  productImagesResized,
 }) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
@@ -28,6 +30,7 @@ export default function ImageCarousel({
       return (
         <ImageZoom
           key={i}
+          actualShowingImageNumber={i}
           src={item}
           imageHeight={screenWidth < 1024 ? screenHeight * 0.55 : 256}
           imageWidth={screenWidth < 1024 ? screenWidth : 319}
@@ -86,11 +89,30 @@ export default function ImageCarousel({
         disableButtonsControls={true}
         onSlideChanged={(e) => setActualShowingImageNumber(e.item)}
       />
+      {isFullScreen && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "8px",
+            visibility: "visible",
+            width: "100%",
+            left: "12px",
+          }}
+        >
+          <OtherImagesZoom
+            productImages={images}
+            productImagesResized={productImagesResized}
+            actualShowingImageNumber={actualShowingImageNumber}
+            setActualShowingImageNumber={setActualShowingImageNumber}
+          />
+        </div>
+      )}
       {screenWidth > 1024 && (
         <ImageZoom
           style={{ height: "0px" }}
           imageStyle={{ marginTop: "-332px" }}
           key={actualShowingImageNumber}
+          actualShowingImageNumber={actualShowingImageNumber}
           src={images[actualShowingImageNumber]}
           imageHeight={256}
           imageWidth={319}

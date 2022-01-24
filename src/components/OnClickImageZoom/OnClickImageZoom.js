@@ -25,11 +25,9 @@ export default function OnClickImageZoom({
       style={{
         ...style,
         cursor: isFullScreen ? "" : "pointer",
-        height: isFullScreen ? screenHeight : "",
+        height: isFullScreen ? screenHeight - 120 : "",
         width: screenWidth > 1024 ? "100%" : "",
         visibility: "visible",
-        position: "relative",
-        display: "flex",
       }}
       onClick={(e) => {
         if (e.target.type === "button") return
@@ -38,13 +36,13 @@ export default function OnClickImageZoom({
     >
       {isFullScreen ? (
         <img
-          width="100%"
-          height="90%"
           src={src}
           alt=""
           style={{
-            paddingBottom: "12vh",
-            paddingTop: "2vh",
+            objectFit: "contain",
+            width: "100%",
+            height: screenHeight - 230,
+            backgroundColor: "#F4F4F4",
           }}
         />
       ) : (

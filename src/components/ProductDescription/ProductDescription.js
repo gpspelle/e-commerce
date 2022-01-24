@@ -86,6 +86,9 @@ export default function ProductDescription() {
         data.description = response.data.Item.PRODUCT_DESCRIPTION.S
         data.price = response.data.Item.PRODUCT_PRICE.N
         data.images = response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S)
+        data.productImagesResized = response.data.Item.PRODUCT_IMAGES_RESIZED?.L.map(
+          (item) => item.S
+        )
         data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID.S
         data.tags = response.data.Item?.PRODUCT_TAGS?.SS
         data.productType = response.data.Item?.PRODUCT_TYPE?.S
@@ -111,6 +114,7 @@ export default function ProductDescription() {
       data.description = location.state.description
       data.price = location.state.price
       data.images = location.state.images
+      data.productImagesResized = location.state.productImagesResized
       data.productOwnerId = location.state.productOwnerId
 
       data.tags = location.state.tags
@@ -138,6 +142,7 @@ export default function ProductDescription() {
     name,
     price,
     images,
+    productImagesResized,
     description,
     phoneNumber,
     commercialName,
@@ -169,6 +174,7 @@ export default function ProductDescription() {
               screenHeight={height}
               allowScroll={allowScroll}
               blockScroll={blockScroll}
+              productImagesResized={productImagesResized}
             />
           )}
           {isLightingDeal && <LightingDealWaterMark />}
