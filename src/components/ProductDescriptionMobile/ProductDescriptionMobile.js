@@ -183,8 +183,8 @@ export default function ProductDescriptionMobile() {
           </div>
         ) : (
           <div className="notranslate" style={{ display: "flex" }}>
-            R$&nbsp;
-            <div className="display-price">{price}</div>
+            <span> R$&nbsp;</span>
+            <span className="display-price">{price}</span>
           </div>
         )}
         <SendMessageWhatsAppButton

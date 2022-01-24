@@ -40,7 +40,7 @@ export default function SendMessageWhatsAppButton({
       <Button
         disabled={phoneNumber && commercialName ? false : true}
         variant="success"
-        style={{ width: "100%", marginBottom }}
+        style={{ width: "100%", marginBottom, height: "38px" }}
         onClick={() =>
           sendWhatsAppMessage({
             isDeal,

@@ -1,6 +1,5 @@
 .display-price {
     font-weight: bold;
     font-size: 32px;
-    position: relative;
-    top: -7px;
+    margin-top: -7px;
 }
