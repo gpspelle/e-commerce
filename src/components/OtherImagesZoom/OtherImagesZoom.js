@@ -46,7 +46,7 @@ const OtherImagesZoom = ({
           cursor: "pointer",
           border:
             productImages[actualShowingImageNumber] === productImage
-              ? "1px solid orange"
+              ? "2.5px solid orange"
               : "",
         }}
         src={firstImage}
