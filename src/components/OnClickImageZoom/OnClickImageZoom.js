@@ -5,7 +5,6 @@ export default function OnClickImageZoom({
   src,
   screenHeight,
   screenWidth,
-  imageWidth,
   imageHeight,
   style,
   imageStyle,
@@ -28,6 +27,8 @@ export default function OnClickImageZoom({
         height: isFullScreen ? screenHeight - 120 : "",
         width: screenWidth > 1024 ? "100%" : "",
         visibility: "visible",
+        display: "flex",
+        justifyContent: "center",
       }}
       onClick={(e) => {
         if (e.target.type === "button") return
@@ -47,7 +48,7 @@ export default function OnClickImageZoom({
         />
       ) : (
         <img
-          width={`${imageWidth}px`}
+          width={"100%"}
           height={`${imageHeight}px`}
           src={src}
           alt=""

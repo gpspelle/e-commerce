@@ -41,7 +41,6 @@ export default function ImageZoom({
         actualShowingImageNumber={actualShowingImageNumber}
         screenHeight={screenHeight}
         screenWidth={screenWidth}
-        imageWidth={imageWidth}
         imageHeight={imageHeight}
         style={style}
         imageStyle={imageStyle}
