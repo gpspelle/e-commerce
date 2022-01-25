@@ -6,7 +6,7 @@ export default function ProductStockInfo({ productStock }) {
   if (productStock === undefined) {
     return (
       <div>
-        <GiHandTruck /> Em Estoque
+        <GiHandTruck /> Em estoque
       </div>
     )
   }
@@ -14,14 +14,14 @@ export default function ProductStockInfo({ productStock }) {
   if (productStock > 0) {
     return (
       <div>
-        <GiHandTruck /> Em Estoque
+        <GiHandTruck /> Em estoque
       </div>
     )
   }
 
   return (
     <div>
-      <MdOutlineEditNote /> Sob Encomenda
+      <MdOutlineEditNote /> Sob encomenda
     </div>
   )
 }
