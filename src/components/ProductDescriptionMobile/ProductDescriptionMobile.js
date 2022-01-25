@@ -18,6 +18,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import "./ProductDescriptionMobile.css"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
+import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -25,6 +26,7 @@ export default function ProductDescriptionMobile() {
     name: undefined,
     price: undefined,
     images: [],
+    productStock: undefined,
     description: undefined,
     phoneNumber: undefined,
     productOwnerId: undefined,
@@ -90,10 +92,10 @@ export default function ProductDescriptionMobile() {
         data.productImagesResized = response.data.Item.PRODUCT_IMAGES_RESIZED?.L.map(
           (item) => item.S
         )
-        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID.S
-        data.tags = response.data.Item?.PRODUCT_TAGS?.SS
-        data.productType = response.data.Item?.PRODUCT_TYPE?.S
-
+        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
+        data.tags = response.data.Item.PRODUCT_TAGS?.SS
+        data.productType = response.data.Item.PRODUCT_TYPE?.S
+        data.productStock = parseInt(response.data.Item.PRODUCT_STOCK?.N)
         if (productType === PRODUCT_TYPES.DEAL) {
           data.dealPrice = response.data.Item.DEAL_PRICE.N
         } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {
@@ -120,7 +122,7 @@ export default function ProductDescriptionMobile() {
 
       data.tags = location.state.tags
       data.productType = location.state.productType
-
+      data.productStock = location.state.productStock
       if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
       if (location.state.commercialName)
         data.commercialName = location.state.commercialName
@@ -152,6 +154,7 @@ export default function ProductDescriptionMobile() {
     dealPrice,
     lightingDealStartTime,
     lightingDealDuration,
+    productStock,
   } = productData
 
   const isDeal = getIsDeal(productType)
@@ -207,6 +210,7 @@ export default function ProductDescriptionMobile() {
           phoneNumber={phoneNumber}
           commercialName={commercialName}
         />
+        <ProductStockInfo productStock={productStock} />
         {isLightingDeal && (
           <LightingDealDuration
             lightingDealDuration={lightingDealDuration}
@@ -241,6 +245,17 @@ export default function ProductDescriptionMobile() {
             style={{ width: "70%", wordWrap: "break-word" }}
           >
             {commercialName}
+          </div>
+          <div style={{ width: "30%" }}>Estoque</div>
+          <div
+            className="notranslate"
+            style={{ width: "70%", wordWrap: "break-word" }}
+          >
+            {productStock !== undefined &&
+              productStock > 1 &&
+              `${productStock} unidades`}
+            {(productStock === undefined || productStock === 1) && "1 unidade"}
+            {productStock === 0 && "Sob encomenda"}
           </div>
         </div>
         <hr

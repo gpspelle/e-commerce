@@ -89,7 +89,7 @@ export default function ProductDescription() {
         data.productImagesResized = response.data.Item.PRODUCT_IMAGES_RESIZED?.L.map(
           (item) => item.S
         )
-        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID.S
+        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
         data.tags = response.data.Item?.PRODUCT_TAGS?.SS
         data.productType = response.data.Item?.PRODUCT_TYPE?.S
 

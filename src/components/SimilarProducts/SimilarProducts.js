@@ -199,7 +199,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
                       tags: similarProduct.PRODUCT_TAGS
                         ? similarProduct.PRODUCT_TAGS.SS
                         : [],
-                      productOwnerId: similarProduct.PRODUCT_OWNER_ID.S,
+                      productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
                       productType: similarProduct.PRODUCT_TYPE?.S,
                     })
                   }

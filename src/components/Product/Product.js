@@ -24,6 +24,7 @@ export default function Product({
   dealPrice,
   lightingDealStartTime,
   lightingDealDuration,
+  productStock,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
@@ -49,6 +50,7 @@ export default function Product({
         lightingDealStartTime,
         lightingDealDuration,
         productOwnerId,
+        productStock,
       },
     })
   }

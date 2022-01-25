@@ -204,12 +204,13 @@ const ProductContainer = ({ isDeals }) => {
                   ]
                 : false
             }
-            productOwnerId={item.PRODUCT_OWNER_ID.S}
+            productOwnerId={item.PRODUCT_OWNER_ID?.S}
             tags={item.PRODUCT_TAGS?.SS || []}
             productType={item.PRODUCT_TYPE?.S}
             dealPrice={item.DEAL_PRICE?.N}
             lightingDealDuration={item.LIGHTING_DEAL_DURATION?.S}
             lightingDealStartTime={item.LIGHTING_DEAL_START_TIME?.S}
+            productStock={parseInt(item.PRODUCT_STOCK?.N)}
             hasMoreDataToFetch={pagination.fetch}
           />
         </Col>
