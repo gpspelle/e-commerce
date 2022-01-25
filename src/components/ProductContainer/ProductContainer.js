@@ -210,7 +210,7 @@ const ProductContainer = ({ isDeals }) => {
             dealPrice={item.DEAL_PRICE?.N}
             lightingDealDuration={item.LIGHTING_DEAL_DURATION?.S}
             lightingDealStartTime={item.LIGHTING_DEAL_START_TIME?.S}
-            productStock={parseInt(item.PRODUCT_STOCK?.N)}
+            productStock={item.PRODUCT_STOCK?.N ? parseInt(item.PRODUCT_STOCK.N) : 1}
             hasMoreDataToFetch={pagination.fetch}
           />
         </Col>

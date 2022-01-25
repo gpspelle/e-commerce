@@ -36,7 +36,6 @@ const SimilarProductsMobile = ({ id, tags }) => {
       const components = similarProductsData.products.map((similarProduct, i) => {
         const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
         const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
-
         const similarProductJsonData = {
           id: similarProduct.id.S,
           name: similarProduct.PRODUCT_NAME.S,
@@ -46,6 +45,9 @@ const SimilarProductsMobile = ({ id, tags }) => {
           productImagesResized: similarProduct.PRODUCT_IMAGES_RESIZED?.L.map(
             (image) => image.S
           ),
+          productStock: similarProduct.PRODUCT_STOCK?.N
+            ? parseInt(similarProduct.PRODUCT_STOCK.N)
+            : 1,
           tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS.SS : [],
           productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
         }
@@ -151,19 +153,11 @@ const SimilarProductsMobile = ({ id, tags }) => {
     fetchProductIdsByTags()
   }, [tags, id])
 
-  const openDetailPage = ({
-    id,
-    name,
-    description,
-    price,
-    images,
-    tags,
-    productOwnerId,
-  }) => {
+  const openDetailPage = (state) => {
     scrollToTop()
     history.push({
-      pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { id, name, description, price, images, tags, productOwnerId },
+      pathname: `/${state.id}/${PRODUCT_DESCRIPTION}`,
+      state,
     })
   }
 

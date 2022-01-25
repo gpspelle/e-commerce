@@ -95,7 +95,9 @@ export default function ProductDescriptionMobile() {
         data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
         data.tags = response.data.Item.PRODUCT_TAGS?.SS
         data.productType = response.data.Item.PRODUCT_TYPE?.S
-        data.productStock = parseInt(response.data.Item.PRODUCT_STOCK?.N)
+        data.productStock = response.data.Item.PRODUCT_STOCK?.N
+          ? parseInt(response.data.Item.PRODUCT_STOCK.N)
+          : 1
         if (productType === PRODUCT_TYPES.DEAL) {
           data.dealPrice = response.data.Item.DEAL_PRICE.N
         } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {

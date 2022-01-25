@@ -104,19 +104,11 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
     fetchProductIdsByTags()
   }, [tags, id])
 
-  const openDetailPage = ({
-    id,
-    name,
-    description,
-    price,
-    images,
-    tags,
-    productOwnerId,
-  }) => {
+  const openDetailPage = (state) => {
     scrollToTop()
     history.push({
-      pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: { id, name, description, price, images, tags, productOwnerId },
+      pathname: `/${state.id}/${PRODUCT_DESCRIPTION}`,
+      state,
     })
   }
 
@@ -199,6 +191,9 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
                       tags: similarProduct.PRODUCT_TAGS
                         ? similarProduct.PRODUCT_TAGS.SS
                         : [],
+                      productStock: similarProduct.PRODUCT_STOCK?.N
+                        ? parseInt(similarProduct.PRODUCT_STOCK.N)
+                        : 1,
                       productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
                       productType: similarProduct.PRODUCT_TYPE?.S,
                     })
