@@ -1,7 +1,7 @@
 import React from "react"
 import "./NavigationBar.css"
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap"
-import { DEALS } from "../../constants/constants"
+import { APP_NAME, DEALS } from "../../constants/constants"
 import { AiFillThunderbolt } from "react-icons/ai"
 import SearchBar from "../SearchBar/SearchBar"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -40,7 +40,7 @@ export default function NavigationBar() {
           </Offcanvas.Body>
         </Navbar.Offcanvas>
         <SearchBar screenWidth={width} />
-        <Navbar.Brand href="/">Loja das Artes</Navbar.Brand>
+        <Navbar.Brand href="/">{APP_NAME}</Navbar.Brand>
       </Container>
     </Navbar>
   )
