@@ -19,6 +19,7 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 import "./ProductDescriptionMobile.css"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
+import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -41,6 +42,7 @@ export default function ProductDescriptionMobile() {
   const { id } = useParams()
   const { width, height } = useWindowDimensions()
   const [blockScroll, allowScroll] = useScrollBlock()
+  const [failedToFetchProduct, setFailedToFetchProduct] = useState(false)
 
   useEffect(() => {
     return () => {
@@ -83,6 +85,7 @@ export default function ProductDescriptionMobile() {
           params: body,
         })
 
+        setFailedToFetchProduct(false)
         const data = {}
         data.id = response.data.Item.id.S
         data.name = response.data.Item.PRODUCT_NAME.S
@@ -108,7 +111,7 @@ export default function ProductDescriptionMobile() {
 
         setProductData({ ...productData, ...data })
       } catch (e) {
-        console.error(e)
+        setFailedToFetchProduct(true)
       }
     }
 
@@ -142,6 +145,10 @@ export default function ProductDescriptionMobile() {
       fetchData()
     }
   }, [id])
+
+  if (failedToFetchProduct) {
+    return <NoProductFoundMessage screenWidth={width} />
+  }
 
   const {
     name,

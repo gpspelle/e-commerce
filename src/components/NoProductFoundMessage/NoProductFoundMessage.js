@@ -23,6 +23,7 @@ export default function NoProductFoundMessage({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        paddingTop: "32px",
       }}
     >
       {hasMoreDataToFetch ? (
@@ -39,8 +40,8 @@ export default function NoProductFoundMessage({
         >
           <Card.Img
             variant="top"
-            src="not-found-dog.png"
-            style={{ height: "35vh" }}
+            src="/not-found-dog.png"
+            style={{ height: "50vh", objectFit: "contain" }}
           />
           <Card.Body>
             <div style={{ textAlign: "center" }}>
@@ -57,10 +58,11 @@ export default function NoProductFoundMessage({
               <Card.Text>
                 {isDeals
                   ? "Para ver todos os produtos clique em voltar"
-                  : "Tente buscar com outras palavras ou clique em voltar."}
+                  : "Tente buscar com outras palavras ou clique em voltar"}
               </Card.Text>
             </div>
             <Button
+              className="my-2"
               onClick={handleClick}
               style={{ width: "100%" }}
               variant="primary"

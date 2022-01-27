@@ -17,6 +17,7 @@ import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
+import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -38,6 +39,7 @@ export default function ProductDescription() {
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { width, height } = useWindowDimensions()
   const [blockScroll, allowScroll] = useScrollBlock()
+  const [failedToFetchProduct, setFailedToFetchProduct] = useState(false)
 
   useEffect(() => {
     return () => {
@@ -80,6 +82,7 @@ export default function ProductDescription() {
           params: body,
         })
 
+        setFailedToFetchProduct(false)
         const data = {}
         data.id = response.data.Item.id.S
         data.name = response.data.Item.PRODUCT_NAME.S
@@ -103,7 +106,7 @@ export default function ProductDescription() {
 
         setProductData({ ...productData, ...data })
       } catch (e) {
-        console.error(e)
+        setFailedToFetchProduct(true)
       }
     }
 
@@ -137,6 +140,10 @@ export default function ProductDescription() {
       fetchData()
     }
   }, [id])
+
+  if (failedToFetchProduct) {
+    return <NoProductFoundMessage screenWidth={width} />
+  }
 
   const {
     name,
