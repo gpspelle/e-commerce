@@ -212,7 +212,10 @@ export default function ProductDescription() {
                 )}
               </Col>
               <Col style={{ maxWidth: "40%" }}>
-                <h2 className="notranslate" style={{ marginBottom: "0px" }}>
+                <h2
+                  className="notranslate"
+                  style={{ marginBottom: isLightingDeal ? "0px" : "1rem" }}
+                >
                   {name}
                 </h2>
                 {isLightingDeal && (
