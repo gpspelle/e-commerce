@@ -134,6 +134,7 @@ export default function ProductMobile({
           )}
         </div>
         <LightingDealDuration
+          isProductDescription={false}
           lightingDealDuration={lightingDealDuration}
           lightingDealStartTime={lightingDealStartTime}
         />

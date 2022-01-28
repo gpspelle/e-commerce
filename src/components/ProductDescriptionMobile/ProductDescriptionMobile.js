@@ -9,7 +9,6 @@ import {
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
-import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
@@ -187,9 +186,9 @@ export default function ProductDescriptionMobile() {
             allowScroll={allowScroll}
             blockScroll={blockScroll}
             productImagesResized={productImagesResized}
+            isLightingDeal={isLightingDeal}
           />
         )}
-        {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
         <h2>{name}</h2>
         {isDeal ? (
           <div className="notranslate" style={{ display: "flex" }}>
@@ -222,6 +221,7 @@ export default function ProductDescriptionMobile() {
         <ProductStockInfo productStock={productStock} />
         {isLightingDeal && (
           <LightingDealDuration
+            isProductDescription={true}
             lightingDealDuration={lightingDealDuration}
             lightingDealStartTime={lightingDealStartTime}
           />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
-import { Card, Container, ListGroup } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
@@ -9,7 +9,6 @@ import {
   PRODUCT_TYPES,
   PRODUCT_ENDPOINT,
 } from "../../constants/constants"
-import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
@@ -18,6 +17,8 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
+import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
+import "./ProductDescription.css"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -26,6 +27,7 @@ export default function ProductDescription() {
     name: undefined,
     price: undefined,
     images: [],
+    productStock: undefined,
     description: undefined,
     phoneNumber: undefined,
     productOwnerId: undefined,
@@ -95,7 +97,9 @@ export default function ProductDescription() {
         data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
         data.tags = response.data.Item?.PRODUCT_TAGS?.SS
         data.productType = response.data.Item?.PRODUCT_TYPE?.S
-
+        data.productStock = response.data.Item.PRODUCT_STOCK?.N
+          ? parseInt(response.data.Item.PRODUCT_STOCK.N)
+          : 1
         if (productType === PRODUCT_TYPES.DEAL) {
           data.dealPrice = response.data.Item.DEAL_PRICE.N
         } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {
@@ -122,6 +126,7 @@ export default function ProductDescription() {
 
       data.tags = location.state.tags
       data.productType = location.state.productType
+      data.productStock = location.state.productStock
 
       if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
       if (location.state.commercialName)
@@ -149,6 +154,7 @@ export default function ProductDescription() {
     name,
     price,
     images,
+    productStock,
     productImagesResized,
     description,
     phoneNumber,
@@ -171,69 +177,102 @@ export default function ProductDescription() {
       }}
     >
       <Container style={{ paddingTop: "40px" }}>
-        <Card style={{ width: "20rem", margin: "0 auto" }}>
-          {imagesIsDefined && (
-            <ImageCarousel
-              isFullScreen={isFullScreen}
-              setIsFullScreen={setIsFullScreen}
-              images={images}
-              screenWidth={width}
-              screenHeight={height}
-              allowScroll={allowScroll}
-              blockScroll={blockScroll}
-              productImagesResized={productImagesResized}
-            />
-          )}
-          {isLightingDeal && <LightingDealWaterMark />}
-          <Card.Header as="h4">Detalhes do produto</Card.Header>
-          <ListGroup variant="flush">
-            <ListGroup.Item className="notranslate">Nome: {name}</ListGroup.Item>
-            <ListGroup.Item className="notranslate">
-              Descrição: {description}
-            </ListGroup.Item>
-            <ListGroup.Item className="notranslate">
-              {isDeal ? (
-                <div style={{ display: "flex" }}>
-                  Preço:&nbsp;
-                  <div
-                    style={{ textDecoration: "line-through", color: "lightgray" }}
-                  >
-                    &nbsp;R$ {price}
-                  </div>{" "}
-                  &nbsp;R$ {dealPrice}
-                </div>
-              ) : (
-                <div>Preço: R$ {price}</div>
+        <Row>
+          {isFullScreen ? (
+            <Col>
+              {imagesIsDefined && (
+                <ImageCarousel
+                  isFullScreen={isFullScreen}
+                  setIsFullScreen={setIsFullScreen}
+                  images={images}
+                  screenWidth={width}
+                  screenHeight={height}
+                  allowScroll={allowScroll}
+                  blockScroll={blockScroll}
+                  productImagesResized={productImagesResized}
+                  isLightingDeal={isLightingDeal}
+                />
               )}
-            </ListGroup.Item>
-            <ListGroup.Item className="notranslate">
-              Vendido por: {commercialName}
-            </ListGroup.Item>
-            {isLightingDeal && (
-              <ListGroup.Item className="notranslate">
-                <div>Tempo restante da promoção:</div>
-                <LightingDealDuration
-                  lightingDealDuration={lightingDealDuration}
-                  lightingDealStartTime={lightingDealStartTime}
-                />{" "}
-              </ListGroup.Item>
-            )}
-          </ListGroup>
-        </Card>
-        <SendMessageWhatsAppButton
-          style={{
-            paddingTop: "12px",
-            paddingBottom: "12px",
-            width: "20rem",
-            margin: "0 auto",
-          }}
-          isDeal={isDeal}
-          id={id}
-          name={name}
-          price={isDeal ? dealPrice : price}
-          phoneNumber={phoneNumber}
-          commercialName={commercialName}
-        />
+            </Col>
+          ) : (
+            <>
+              <Col style={{ maxWidth: "60%" }}>
+                {imagesIsDefined && (
+                  <ImageCarousel
+                    isFullScreen={isFullScreen}
+                    setIsFullScreen={setIsFullScreen}
+                    images={images}
+                    screenWidth={width}
+                    screenHeight={height}
+                    allowScroll={allowScroll}
+                    blockScroll={blockScroll}
+                    productImagesResized={productImagesResized}
+                    isLightingDeal={isLightingDeal}
+                  />
+                )}
+              </Col>
+              <Col style={{ maxWidth: "40%" }}>
+                <h2 className="notranslate" style={{ marginBottom: "0px" }}>
+                  {name}
+                </h2>
+                {isLightingDeal && (
+                  <LightingDealDuration
+                    isProductDescription={true}
+                    lightingDealDuration={lightingDealDuration}
+                    lightingDealStartTime={lightingDealStartTime}
+                  />
+                )}
+                {isDeal ? (
+                  <div className="notranslate my-4" style={{ display: "flex" }}>
+                    <h5
+                      style={{ textDecoration: "line-through", color: "lightgray" }}
+                    >
+                      &nbsp;R$ {price}
+                    </h5>{" "}
+                    &nbsp;
+                    <div style={{ display: "flex" }}>
+                      <h5>R$ </h5>
+                      <h1 className="display-price">{dealPrice}</h1>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="notranslate" style={{ display: "flex" }}>
+                    <h5> R$&nbsp;</h5>
+                    <h1 className="display-price">{price}</h1>
+                  </div>
+                )}
+                <h5 className="notranslate my-4">{description}</h5>
+                <h6
+                  className="notranslate"
+                  style={{ marginTop: "1rem", marginBottom: "0" }}
+                >
+                  Vendido por
+                </h6>
+                <h6 className="notranslate">{commercialName}</h6>
+                <h6
+                  style={{ marginTop: "1rem", marginBottom: "0" }}
+                  className="notranslate"
+                >
+                  <ProductStockInfo productStock={productStock} />
+                </h6>
+                <SendMessageWhatsAppButton
+                  style={{
+                    paddingTop: "12px",
+                    paddingBottom: "12px",
+                    width: "20rem",
+                    margin: "0 auto",
+                  }}
+                  isDeal={isDeal}
+                  id={id}
+                  name={name}
+                  price={isDeal ? dealPrice : price}
+                  phoneNumber={phoneNumber}
+                  commercialName={commercialName}
+                />
+              </Col>
+            </>
+          )}
+        </Row>
       </Container>
       <MemoizedSimilarProducts id={id} screenWidth={width} tags={tags} />
     </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
-import ImageZoom from "../ImageZoom/ImageZoom"
+import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
+import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
 import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"
 import "./ImageCarousel.css"
 
@@ -20,32 +21,59 @@ export default function ImageCarousel({
   allowScroll,
   blockScroll,
   productImagesResized,
+  isLightingDeal,
 }) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
   const [items, setItems] = useState()
 
+  if (isFullScreen) {
+    document.body.style.overflow = "hidden"
+  } else {
+    document.body.style.overflow = ""
+  }
+
   useEffect(() => {
     const components = images?.map((item, i) => {
+      if (screenWidth > 1024) {
+        return (
+          <div>
+            <OnClickImageZoom
+              src={item}
+              actualShowingImageNumber={i}
+              screenHeight={screenHeight}
+              screenWidth={screenWidth}
+              imageHeight={screenWidth * 0.3}
+              isFullScreen={isFullScreen}
+              setIsFullScreen={setIsFullScreen}
+              allowScroll={allowScroll}
+              blockScroll={blockScroll}
+            />
+            {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
+          </div>
+        )
+      }
+
       return (
-        <ImageZoom
-          key={i}
-          actualShowingImageNumber={i}
-          src={item}
-          imageHeight={screenWidth < 1024 ? screenHeight * 0.55 : 256}
-          imageWidth={screenWidth < 1024 ? screenWidth : 319}
-          screenWidth={screenWidth}
-          screenHeight={screenHeight}
-          isFullScreen={isFullScreen}
-          setIsFullScreen={setIsFullScreen}
-          allowScroll={allowScroll}
-          blockScroll={blockScroll}
-        />
+        <div>
+          <OnClickImageZoom
+            src={item}
+            actualShowingImageNumber={i}
+            screenHeight={screenHeight}
+            screenWidth={screenWidth}
+            imageHeight={screenHeight * 0.55}
+            isFullScreen={isFullScreen}
+            setIsFullScreen={setIsFullScreen}
+            allowScroll={allowScroll}
+            blockScroll={blockScroll}
+          />
+          {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
+        </div>
       )
     })
 
     setItems(components)
-  }, [isFullScreen, images])
+  }, [isFullScreen, images, originalImagesDimensions])
 
   useEffect(() => {
     const asyncGetBase64ImageDimensions = async () => {
@@ -106,33 +134,6 @@ export default function ImageCarousel({
             setActualShowingImageNumber={setActualShowingImageNumber}
           />
         </div>
-      )}
-      {screenWidth > 1024 && (
-        <ImageZoom
-          style={{ height: "0px" }}
-          imageStyle={{ marginTop: "-332px" }}
-          key={actualShowingImageNumber}
-          actualShowingImageNumber={actualShowingImageNumber}
-          src={images[actualShowingImageNumber]}
-          imageHeight={256}
-          imageWidth={319}
-          originalWidth={
-            originalImagesDimensions
-              ? originalImagesDimensions[actualShowingImageNumber].w
-              : undefined
-          }
-          originalHeight={
-            originalImagesDimensions
-              ? originalImagesDimensions[actualShowingImageNumber].h
-              : undefined
-          }
-          screenWidth={screenWidth}
-          screenHeight={screenHeight}
-          isFullScreen={isFullScreen}
-          setIsFullScreen={setIsFullScreen}
-          allowScroll={allowScroll}
-          blockScroll={blockScroll}
-        />
       )}
     </div>
   )

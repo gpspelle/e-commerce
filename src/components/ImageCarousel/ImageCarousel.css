@@ -2,9 +2,7 @@
     margin: 0 !important;
 }
 
-/* Mobile phones and tablets ----------- */
-@media only screen
-and (max-width : 1024px) {
-    .alice-carousel__stage-item img {
-        object-fit: contain;
-    }}
+
+.alice-carousel__stage-item img {
+    object-fit: contain;
+}

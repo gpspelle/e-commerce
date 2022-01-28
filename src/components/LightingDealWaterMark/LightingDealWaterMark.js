@@ -2,7 +2,7 @@ import React from "react"
 import { AiFillThunderbolt } from "react-icons/ai"
 
 export default function LightingDealWaterMark({ isProductDescription }) {
-  const top = isProductDescription ? "115px" : ""
+  const top = isProductDescription ? "0px" : ""
   return (
     <>
       <AiFillThunderbolt
@@ -13,6 +13,7 @@ export default function LightingDealWaterMark({ isProductDescription }) {
           zIndex: "1",
           color: "green",
           top,
+          visibility: "visible",
         }}
       />
       <svg
@@ -25,6 +26,7 @@ export default function LightingDealWaterMark({ isProductDescription }) {
           top,
           border: "1.25px solid green",
           borderRadius: "10px",
+          visibility: "visible",
         }}
       >
         <rect width="44" height="44" fill="white" rx="10" />

@@ -6,8 +6,6 @@ export default function OnClickImageZoom({
   screenHeight,
   screenWidth,
   imageHeight,
-  style,
-  imageStyle,
   isFullScreen,
   setIsFullScreen,
   allowScroll,
@@ -22,7 +20,6 @@ export default function OnClickImageZoom({
   return (
     <div
       style={{
-        ...style,
         cursor: isFullScreen ? "" : "pointer",
         height: isFullScreen ? screenHeight - 120 : "",
         width: screenWidth > 1024 ? "100%" : "",
@@ -52,7 +49,7 @@ export default function OnClickImageZoom({
           height={`${imageHeight}px`}
           src={src}
           alt=""
-          style={imageStyle}
+          style={{ backgroundColor: "#F4F4F4" }}
         />
       )}
       <CloseButton

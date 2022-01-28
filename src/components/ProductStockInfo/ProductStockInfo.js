@@ -6,22 +6,32 @@ export default function ProductStockInfo({ productStock }) {
   if (productStock === undefined) {
     return (
       <div>
-        <GiHandTruck /> Em estoque
+        <p style={{ marginBottom: "0px" }}>
+          <GiHandTruck /> Em estoque
+        </p>
+        <p style={{ marginLeft: "1.25rem" }}>Quantidade: {productStock} unidade</p>
       </div>
     )
   }
 
+  const isPlural = productStock > 1
+
   if (productStock > 0) {
     return (
       <div>
-        <GiHandTruck /> Em estoque
+        <p style={{ marginBottom: "0px" }}>
+          <GiHandTruck /> Em estoque
+        </p>
+        <p style={{ marginLeft: "1.25rem" }}>
+          Quantidade: {productStock} unidade{isPlural ? "s" : ""}
+        </p>
       </div>
     )
   }
 
   return (
-    <div>
+    <p>
       <MdOutlineEditNote /> Sob encomenda
-    </div>
+    </p>
   )
 }

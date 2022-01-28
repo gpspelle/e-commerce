@@ -134,6 +134,7 @@ export default function Product({
           </Row>
         </div>
         <LightingDealDuration
+          isProductDescription={false}
           lightingDealDuration={lightingDealDuration}
           lightingDealStartTime={lightingDealStartTime}
         />

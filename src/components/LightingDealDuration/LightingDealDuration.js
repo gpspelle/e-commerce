@@ -6,20 +6,11 @@ import {
 import { AiOutlineClockCircle } from "react-icons/ai"
 
 export default function LightingDealDuration({
+  isProductDescription,
   lightingDealDuration,
   lightingDealStartTime,
 }) {
   const [now, setNow] = useState(new Date())
-
-  const getProgressBarVariant = (val) => {
-    if (val > 0.4) {
-      return "success"
-    } else if (val > 0.2) {
-      return "warning"
-    }
-
-    return "danger"
-  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,8 +30,18 @@ export default function LightingDealDuration({
   })
   const displayLeftDuration = msToTime(miliseconds)
 
+  if (isProductDescription) {
+    return (
+      <p style={{ textAlign: "left", color: "#BE464C" }}>
+        <AiOutlineClockCircle />
+        &nbsp;Oferta acaba em&nbsp;
+        {displayLeftDuration}
+      </p>
+    )
+  }
+
   return (
-    <div style={{ textAlign: "left", fontSize: "12px", color: "green" }}>
+    <div style={{ textAlign: "left", fontSize: "12px", color: "#BE464C" }}>
       <AiOutlineClockCircle />
       &nbsp;Oferta acaba em&nbsp;
       {displayLeftDuration}
