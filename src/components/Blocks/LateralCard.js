@@ -1,15 +1,25 @@
 import React from "react"
 import { Col, Row } from "react-bootstrap"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 
-export const LateralCard = ({ src, title, text, imagePosition, imageSize }) => {
+export const LateralCard = ({
+  smallSrc,
+  src,
+  title,
+  text,
+  imagePosition,
+  imageSize,
+}) => {
   return imagePosition === "left" ? (
     <Row style={{ marginBottom: "16px", width: "100%" }}>
       <Col style={{ minWidth: src === undefined ? "100%" : "30%" }}>
         {src !== undefined && (
-          <img
-            src={src}
-            style={{ width: imageSize, height: imageSize, objectFit: "contain" }}
-          ></img>
+          <ProgressiveBlurryImageLoad
+            small={smallSrc}
+            large={src}
+            height={imageSize}
+            width={imageSize}
+          />
         )}
       </Col>
       <Col style={{ minWidth: "60%", margin: "auto" }}>
@@ -25,10 +35,12 @@ export const LateralCard = ({ src, title, text, imagePosition, imageSize }) => {
       </Col>
       <Col style={{ minWidth: src === undefined ? "100%" : "30%" }}>
         {src !== undefined && (
-          <img
-            src={src}
-            style={{ width: imageSize, height: imageSize, objectFit: "contain" }}
-          ></img>
+          <ProgressiveBlurryImageLoad
+            small={smallSrc}
+            large={src}
+            height={imageSize}
+            width={imageSize}
+          />
         )}
       </Col>
     </Row>

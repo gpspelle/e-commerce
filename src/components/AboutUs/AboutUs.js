@@ -32,6 +32,7 @@ export default function AboutUs() {
       <LateralCard
         imageSize={120}
         imagePosition="left"
+        smallSrc="/small-about-us.png"
         src="/about-us.png"
         text={`A ${APP_NAME} surgiu como uma ideia para reunir artesãos de Araras e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada`}
       />

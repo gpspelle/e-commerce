@@ -375,6 +375,7 @@ export default function HomeMobile() {
         <LateralCard
           imageSize={120}
           imagePosition="left"
+          smallSrc="/small-advantage-1.png"
           src="/advantage-1.png"
           title="Feito para você"
           text="Comercializamos apenas produtos artesanais, pensados e sob medida para você"
@@ -384,6 +385,7 @@ export default function HomeMobile() {
         <LateralCard
           imageSize={120}
           imagePosition="left"
+          smallSrc="/small-advantage-2.png"
           src="/advantage-2.png"
           title="Qualidade sem igual"
           text="Nossos produtos são feitos somente com materiais de primeira linha"
@@ -393,6 +395,7 @@ export default function HomeMobile() {
         <LateralCard
           imageSize={120}
           imagePosition="left"
+          smallSrc="/small-advantage-2.png"
           src="/advantage-3.png"
           title="Toque de carinho"
           text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
