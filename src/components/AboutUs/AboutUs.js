@@ -33,12 +33,12 @@ export default function AboutUs() {
         imageSize={120}
         imagePosition="left"
         src="/about-us.png"
-        text={`A ${APP_NAME} surgiu como uma ideia para reunir arteãos de Araras e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada.`}
+        text={`A ${APP_NAME} surgiu como uma ideia para reunir artesãos de Araras e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada`}
       />
       <LateralCard
         imageSize={120}
         imagePosition="right"
-        text="Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega ou sob encomenda."
+        text="Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega ou sob encomenda"
       />
       <Row ref={adminsRef} style={{ paddingTop: "16px" }}>
         <Col>
