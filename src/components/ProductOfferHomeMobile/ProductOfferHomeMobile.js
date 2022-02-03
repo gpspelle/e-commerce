@@ -8,7 +8,7 @@ import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 
-export default function Product({
+export default function ProductOfferHomeMobile({
   id,
   name,
   description,
@@ -25,6 +25,8 @@ export default function Product({
   lightingDealStartTime,
   lightingDealDuration,
   productStock,
+  productImageSize,
+  productCardSize,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
@@ -55,8 +57,6 @@ export default function Product({
     })
   }
 
-  var productImageSize = "258px"
-  var productCardSize = "260px"
   return (
     <Card
       style={{
@@ -67,6 +67,7 @@ export default function Product({
     >
       {coverImage ? (
         <ProgressiveBlurryImageLoad
+          style={{ marginLeft: "0.5px" }}
           width={productImageSize}
           height={productImageSize}
           small={`data:image/jpeg;base64,${coverImage}`}
@@ -75,6 +76,7 @@ export default function Product({
       ) : (
         <img
           style={{
+            marginLeft: "0.5px",
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
@@ -85,59 +87,43 @@ export default function Product({
       )}
       {isLightingDeal && <LightingDealWaterMark />}
       <Card.Body>
-        <div>
-          <Row>
-            <Col style={{ display: "flex" }}>
-              <Card.Title
-                className="notranslate"
-                style={{
-                  textDecoration: isDeal ? "line-through" : "none",
-                  color: isDeal ? "lightgray" : "inherit",
-                  marginBottom: "0",
-                }}
-              >
-                R$ {price}
-              </Card.Title>
-              {isDeal && (
-                <Card.Title className="notranslate">&nbsp;R$ {dealPrice}</Card.Title>
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Card.Text
-                style={{
-                  fontSize: "15px",
-                  marginBottom: "0.25rem",
-                  overflowX: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="notranslate"
-              >
-                {name}
-              </Card.Text>
-            </Col>
-          </Row>
-          <Row>
+        <Row>
+          <Col style={{ display: "flex" }}>
+            <Card.Title
+              className="notranslate"
+              style={{
+                fontSize: "15px",
+                textDecoration: "line-through",
+                color: "lightgray",
+              }}
+            >
+              R$ {price}
+            </Card.Title>
+            <Card.Title
+              style={{
+                fontSize: "15px",
+              }}
+              className="notranslate"
+            >
+              &nbsp;R$ {dealPrice}
+            </Card.Title>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <Card.Text
               style={{
-                fontSize: "12px",
+                fontSize: "15px",
                 overflowX: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
               }}
               className="notranslate"
             >
-              {`Vendido por ${commercialName ? commercialName : "..."}`}
+              {name}
             </Card.Text>
-          </Row>
-        </div>
-        <LightingDealDuration
-          isProductDescription={false}
-          lightingDealDuration={lightingDealDuration}
-          lightingDealStartTime={lightingDealStartTime}
-        />
+          </Col>
+        </Row>
       </Card.Body>
     </Card>
   )

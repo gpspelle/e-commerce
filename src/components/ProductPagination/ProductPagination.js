@@ -1,10 +1,9 @@
 import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
 import { isEqual } from "../../utils/isEqual"
-import scrollToTop from "../../utils/scrollToTop"
 import "./ProductPagination.css"
 
-function PaginatedItems({ products, itemsPerPage, screenWidth }) {
+function PaginatedItems({ products, itemsPerPage, screenWidth, scrollFunction }) {
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null)
   const [pageCount, setPageCount] = useState(1)
@@ -24,7 +23,7 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % products.length
     setItemOffset(newOffset)
-    scrollToTop()
+    scrollFunction()
   }
 
   return (
@@ -79,9 +78,14 @@ function PaginatedItems({ products, itemsPerPage, screenWidth }) {
   )
 }
 
-const ProductPagination = ({ products, screenWidth }) => {
+const ProductPagination = ({ products, screenWidth, scrollFunction }) => {
   return (
-    <PaginatedItems products={products} itemsPerPage={8} screenWidth={screenWidth} />
+    <PaginatedItems
+      scrollFunction={scrollFunction}
+      products={products}
+      itemsPerPage={8}
+      screenWidth={screenWidth}
+    />
   )
 }
 

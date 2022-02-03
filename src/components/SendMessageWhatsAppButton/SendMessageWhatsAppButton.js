@@ -1,8 +1,8 @@
 import React from "react"
 import { Button } from "react-bootstrap"
-import { PRODUCT_DESCRIPTION } from "../../constants/constants"
+import { buyMessage, helloMessage } from "../../utils/WhatsAppMessages"
 
-const sendWhatsAppMessage = ({
+export const sendBuyWhatsAppMessage = ({
   isDeal,
   id,
   name,
@@ -10,49 +10,31 @@ const sendWhatsAppMessage = ({
   phoneNumber,
   commercialName,
 }) => {
-  const pathArray = window.location.href.split("/")
-  const protocol = pathArray[0]
-  const host = pathArray[2]
-  const pageBase = protocol + "//" + host
-  const message = `Link do produto: ${pageBase}/${id}/${PRODUCT_DESCRIPTION}\n\nOlá, ${commercialName}!\nTenho interesse no produto ${name}, preço ${
-    isDeal ? "promocional" : ""
-  } R$ ${price}.`
-  const url =
-    "https://api.whatsapp.com/send?phone=" +
-    phoneNumber +
-    "&text=" +
-    encodeURIComponent(message)
+  const url = buyMessage({ isDeal, id, name, price, phoneNumber, commercialName })
+  window.open(url, "_blank")
+}
+
+export const sendHelloWhatsAppMessage = ({ phoneNumber, commercialName }) => {
+  const url = helloMessage({ phoneNumber, commercialName })
   window.open(url, "_blank")
 }
 
 export default function SendMessageWhatsAppButton({
-  isDeal,
   style,
-  id,
-  name,
-  price,
   phoneNumber,
-  marginBottom,
   commercialName,
+  text,
+  messageFunction,
 }) {
   return (
     <div style={style} className="notranslate">
       <Button
         disabled={phoneNumber && commercialName ? false : true}
         variant="success"
-        style={{ width: "100%", marginBottom, height: "38px" }}
-        onClick={() =>
-          sendWhatsAppMessage({
-            isDeal,
-            id,
-            name,
-            price,
-            phoneNumber,
-            commercialName,
-          })
-        }
+        style={{ width: "100%", height: "38px" }}
+        onClick={messageFunction}
       >
-        Gostei desse
+        {text}
       </Button>
     </div>
   )

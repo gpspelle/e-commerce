@@ -3,6 +3,7 @@ import { Container, Form } from "react-bootstrap"
 import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { useHistory } from "react-router-dom"
 import "./SearchBar.css"
+import { PRODUCTS } from "../../constants/constants"
 
 export default function SearchBar({ screenWidth }) {
   const history = useHistory()
@@ -19,13 +20,13 @@ export default function SearchBar({ screenWidth }) {
     event.preventDefault()
     if (searchBarValue && searchBarValue.length > 0) {
       history.push({
-        pathname: "/",
+        pathname: screenWidth < 1024 ? `/${PRODUCTS}` : "/",
         search: `?q=${searchBarValue}`,
       })
     } else {
       setSearchBarValue("")
       history.push({
-        pathname: "/",
+        pathname: screenWidth < 1024 ? `/${PRODUCTS}` : "/",
       })
     }
     setIsSubmitted(true)
@@ -51,7 +52,7 @@ export default function SearchBar({ screenWidth }) {
             value={searchBarValue}
             onChange={(e) => setSearchBarValue(e.target.value)}
             type="text"
-            placeholder="Pesquisar..."
+            placeholder="O que você está buscando?"
           />
         </Form.Group>
         <SearchBarButton />

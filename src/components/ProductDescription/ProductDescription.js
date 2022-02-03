@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { Container, Row, Col } from "react-bootstrap"
 import axios from "axios"
-import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
+import SendMessageWhatsAppButton, {
+  sendBuyWhatsAppMessage,
+} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
   ACCOUNTS_ENDPOINT,
   REST_API,
@@ -19,6 +21,8 @@ import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import "./ProductDescription.css"
+import scrollToTop from "../../utils/scrollToTop"
+import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -44,6 +48,7 @@ export default function ProductDescription() {
   const [failedToFetchProduct, setFailedToFetchProduct] = useState(false)
 
   useEffect(() => {
+    scrollToTop()
     return () => {
       setIsFullScreen(false)
       allowScroll()
@@ -61,9 +66,22 @@ export default function ProductDescription() {
           params: body,
         })
 
-        const { commercial_name, phone_number } = response.data[0]
+        const {
+          email,
+          name,
+          about_me,
+          about_products,
+          crop_profile_photo,
+          commercial_name,
+          phone_number,
+        } = response.data[0]
         setProductData({
           ...productData,
+          aboutMe: about_me,
+          email: email,
+          aboutProducts: about_products,
+          cropProfilePhoto: crop_profile_photo,
+          productOwnerName: name,
           commercialName: commercial_name,
           phoneNumber: phone_number,
         })
@@ -154,17 +172,25 @@ export default function ProductDescription() {
     name,
     price,
     images,
-    productStock,
     productImagesResized,
     description,
     phoneNumber,
     commercialName,
+    productOwnerName,
+    cropProfilePhoto,
+    productOwnerId,
+    aboutMe,
+    aboutProducts,
+    email,
     tags,
     productType,
     dealPrice,
     lightingDealStartTime,
     lightingDealDuration,
+    productStock,
   } = productData
+
+  console.log(productData)
 
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
@@ -265,14 +291,32 @@ export default function ProductDescription() {
                     width: "20rem",
                     margin: "0 auto",
                   }}
-                  isDeal={isDeal}
-                  id={id}
-                  name={name}
-                  price={isDeal ? dealPrice : price}
+                  messageFunction={() =>
+                    sendBuyWhatsAppMessage({
+                      isDeal,
+                      id,
+                      name,
+                      price: isDeal ? dealPrice : price,
+                      phoneNumber,
+                      commercialName,
+                    })
+                  }
                   phoneNumber={phoneNumber}
                   commercialName={commercialName}
+                  text={"Gostei desse"}
                 />
               </Col>
+              <h5 style={{ marginBottom: "22px" }}>Sobre o artesão</h5>
+              <AboutAdmin
+                isComplete={true}
+                productOwnerName={productOwnerName}
+                commercialName={commercialName}
+                productOwnerId={productOwnerId}
+                cropProfilePhoto={cropProfilePhoto}
+                aboutMe={aboutMe}
+                screenWidth={width}
+                aboutProducts={aboutProducts}
+              />
             </>
           )}
         </Row>

@@ -20,7 +20,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
   const [similarProductsData, setSimilarProductsData] = useState({
     productsIds: [],
     products: [],
-    pagination: { key: undefined, fetch: true },
+    pagination: { key: undefined, fetch: false, isLoading: true },
   })
 
   const responsive = {
@@ -29,10 +29,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
   }
 
   useEffect(() => {
-    if (
-      similarProductsData.products.length > 0 &&
-      !similarProductsData.pagination.fetch
-    ) {
+    if (!similarProductsData.pagination.fetch) {
       const components = similarProductsData.products.map((similarProduct, i) => {
         const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
         const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
@@ -85,38 +82,40 @@ const SimilarProductsMobile = ({ id, tags }) => {
 
   useEffect(() => {
     const fetchProductsByIds = async () => {
-      if (similarProductsData.productsIds.length > 0) {
-        const body = {
-          key: similarProductsData.pagination.key,
-        }
-
-        const config = {
-          params: {
-            body,
-          },
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-
-        const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
-        const { data, key } = response.data
-
-        const products = data.filter((product) =>
-          similarProductsData.productsIds.includes(product.id.S)
-        )
-
-        const productsFlat = products.flat(1)
-        const concatProducts =
-          similarProductsData.products.length > 0
-            ? similarProductsData.products.concat(productsFlat)
-            : productsFlat
-        setSimilarProductsData({
-          ...similarProductsData,
-          products: concatProducts,
-          pagination: { key, fetch: key ? true : false },
-        })
+      const body = {
+        key: similarProductsData.pagination.key,
       }
+
+      const config = {
+        params: {
+          body,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+
+      const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
+      const { data, key } = response.data
+
+      const products = data.filter((product) =>
+        similarProductsData.productsIds.includes(product.id.S)
+      )
+
+      const productsFlat = products.flat(1)
+      const concatProducts =
+        similarProductsData.products.length > 0
+          ? similarProductsData.products.concat(productsFlat)
+          : productsFlat
+      setSimilarProductsData({
+        ...similarProductsData,
+        products: concatProducts,
+        pagination: {
+          key,
+          fetch: key ? true : false,
+          isLoading: key ? true : false,
+        },
+      })
     }
 
     if (similarProductsData.pagination.fetch) {
@@ -145,7 +144,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
         setSimilarProductsData({
           products: [],
           productsIds: [...sameTagProductIdsSet],
-          pagination: { key: undefined, fetch: true },
+          pagination: { key: undefined, fetch: true, isLoading: true },
         })
       }
     }
@@ -161,10 +160,6 @@ const SimilarProductsMobile = ({ id, tags }) => {
     })
   }
 
-  if (similarProductsData.productsIds.length === 0) {
-    return <></>
-  }
-
   return (
     <div className="similar-products" style={{ minHeight: "220px" }}>
       <Container>
@@ -175,22 +170,28 @@ const SimilarProductsMobile = ({ id, tags }) => {
             height: 1,
           }}
         />
-        <div className="my-4 mx-2">Produtos relacionados</div>
-        {!items ? (
+        <h4>Produtos relacionados</h4>
+        {similarProductsData.pagination.isLoading ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"
           />
         ) : (
-          <AliceCarousel
-            mouseTracking={true}
-            items={items}
-            responsive={responsive}
-            controlsStrategy="responsive"
-            disableButtonsControls={true}
-            disableDotsControls={true}
-            autoWidth
-          />
+          <>
+            {items.length > 0 ? (
+              <AliceCarousel
+                mouseTracking={true}
+                items={items}
+                responsive={responsive}
+                controlsStrategy="responsive"
+                disableButtonsControls={true}
+                disableDotsControls={true}
+                autoWidth
+              />
+            ) : (
+              <p>Não foram encontrados produtos relacionados</p>
+            )}
+          </>
         )}
       </Container>
     </div>

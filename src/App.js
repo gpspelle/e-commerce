@@ -3,13 +3,20 @@ import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
 import {
+  ABOUT_US,
+  ADMIN_DESCRIPTION,
   DEALS,
   PAGE_DESCRIPTION,
   PAGE_TITLE,
+  PRODUCTS,
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
 import useWindowDimensions from "./hooks/useWindowDimensions"
 import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
+import HomeMobile from "./components/HomeMobile/HomeMobile"
+import AdminDescriptionMobile from "./components/AdminDescriptionMobile/AdminDescriptionMobile"
+import Footer from "./components/Footer/Footer"
+import AboutUs from "./components/AboutUs/AboutUs"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
@@ -19,7 +26,7 @@ const ProductDescriptionMobile = lazy(() =>
 )
 
 function App() {
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
 
   /*if (process.env.NODE_ENV !== "production") {
     const { whyDidYouUpdate } = require("why-did-you-update")
@@ -35,14 +42,24 @@ function App() {
             <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
               {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
             </Route>
+            <Route path={`/:id/${ADMIN_DESCRIPTION}`}>
+              <AdminDescriptionMobile />
+            </Route>
             <Route path={`/${DEALS}`}>
-              <MemoizedProductContainer isDeals={true} />
+              <MemoizedProductContainer isDeals={true} paddingTop={"62px"} />
+            </Route>
+            <Route path={`/${PRODUCTS}`}>
+              <MemoizedProductContainer isDeals={false} paddingTop={"62px"} />
+            </Route>
+            <Route path={`/${ABOUT_US}`}>
+              <AboutUs />
             </Route>
             <Route path="/">
-              <MemoizedProductContainer isDeals={false} />
+              <HomeMobile screenWidth={width} screenHeight={height} />
             </Route>
           </Switch>
         </Suspense>
+        <Footer />
       </Router>
       <DocumentMeta
         title={PAGE_TITLE}

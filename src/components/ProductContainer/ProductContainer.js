@@ -1,8 +1,7 @@
-import React, { useState, useEffect, memo } from "react"
+import React, { useState, useEffect, memo, useRef } from "react"
 import axios from "axios"
 import { Container, Row, Col } from "react-bootstrap"
 import {
-  ACCOUNTS_ENDPOINT,
   REST_API,
   PRODUCTS_ENDPOINT,
   PRODUCT_TYPES,
@@ -17,9 +16,12 @@ import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
 import useIsMounted from "../../hooks/useIsMounted"
+import { getAccountsFromDatabase } from "../../actions/database"
+import scrollToTop from "../../utils/scrollToTop"
 
-const ProductContainer = ({ isDeals }) => {
+const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
   const query = useQuery()
+  const productContainerRef = useRef()
   const [productData, setProductData] = useState({
     products: [],
     allProducts: [],
@@ -27,11 +29,15 @@ const ProductContainer = ({ isDeals }) => {
   })
   const [productOwnerIds, setProductOwnerIds] = useState([])
   const [accounts, setAccounts] = useState([])
-  const { width } = useWindowDimensions()
+  const { width, height } = useWindowDimensions()
   const isMounted = useIsMounted()
 
   const { products, allProducts, pagination } = productData
   const searchBarValue = query.get("q")
+
+  useEffect(() => {
+    scrollToTop()
+  }, [])
 
   useEffect(() => {
     if (searchBarValue && allProducts.length > 0) {
@@ -69,25 +75,9 @@ const ProductContainer = ({ isDeals }) => {
   }, [searchBarValue, allProducts])
 
   useEffect(() => {
-    const getAccountsFromDatabase = async (productOwnerIds) => {
-      const body = {
-        productOwnerIds,
-      }
-
-      if (productOwnerIds.length === 0) {
-        return
-      }
-
-      const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
-        params: body,
-      })
-
-      setAccounts(response.data)
-    }
-
     if (productOwnerIds.length > 0) {
       if (isMounted.current) {
-        getAccountsFromDatabase(productOwnerIds)
+        getAccountsFromDatabase({ setAccounts, productOwnerIds })
       }
     }
   }, [productOwnerIds])
@@ -166,6 +156,14 @@ const ProductContainer = ({ isDeals }) => {
     displayProducts = products
   }
 
+  if (filterByAdmin !== undefined) {
+    displayProducts =
+      displayProducts &&
+      displayProducts.filter(
+        (product) => product.PRODUCT_OWNER_ID?.S === filterByAdmin
+      )
+  }
+
   const items =
     displayProducts &&
     displayProducts.map((item) => {
@@ -217,23 +215,35 @@ const ProductContainer = ({ isDeals }) => {
       )
     })
 
+  var containerHeight
+
+  if (items && items.length > 0) {
+    containerHeight = Math.min(items.length * 380.5, 0.99 * height)
+  } else {
+    containerHeight = 0.99 * height
+  }
+
   return (
-    <div>
-      <Container>
-        <Row style={{ paddingTop: width < 1024 ? "64px" : "12px" }}>
-          {items && items.length > 0 ? (
-            <MemoizedProductPagination products={items} screenWidth={width} />
-          ) : (
-            <NoProductFoundMessage
-              screenWidth={width}
-              hasMoreDataToFetch={pagination.fetch}
-              searchBarValue={searchBarValue}
-              isDeals={isDeals}
-            />
-          )}
-        </Row>
-      </Container>
-    </div>
+    <Container ref={productContainerRef} style={{ minHeight: containerHeight }}>
+      <Row style={{ paddingTop: width < 1024 ? paddingTop : "12px" }}>
+        {items && items.length > 0 ? (
+          <MemoizedProductPagination
+            scrollFunction={() =>
+              window.scrollTo(0, productContainerRef.current.offsetTop)
+            }
+            products={items}
+            screenWidth={width}
+          />
+        ) : (
+          <NoProductFoundMessage
+            screenWidth={width}
+            hasMoreDataToFetch={pagination.fetch}
+            searchBarValue={searchBarValue}
+            isDeals={isDeals}
+          />
+        )}
+      </Row>
+    </Container>
   )
 }
 

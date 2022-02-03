@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, Button, Col, Spinner } from "react-bootstrap"
 import { useHistory } from "react-router"
+import { PRODUCTS } from "../../constants/constants"
 
 export default function NoProductFoundMessage({
   screenWidth,
@@ -27,13 +28,21 @@ export default function NoProductFoundMessage({
       }}
     >
       {hasMoreDataToFetch ? (
-        <Spinner
-          animation="border"
-          role="status"
-          style={{ position: "absolute", top: "50%" }}
+        <div
+          style={{
+            height: "50vh",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
+          <Spinner
+            animation="border"
+            role="status"
+            style={{ margin: "auto", display: "flex", color: "#212529" }}
+          >
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
       ) : (
         <Card
           style={{ width: screenWidth < 1024 ? "100%" : "24rem", border: "none" }}
@@ -48,7 +57,7 @@ export default function NoProductFoundMessage({
               <Card.Text>
                 {isDeals
                   ? "Não existem ofertas disponíveis"
-                  : "Não encontramos nenhum produto relacionado à sua busca"}{" "}
+                  : "Não encontramos nenhum produto"}{" "}
               </Card.Text>
               {!isDeals && (
                 <div style={{ margin: "10px auto", fontWeight: "bold" }}>
@@ -56,9 +65,7 @@ export default function NoProductFoundMessage({
                 </div>
               )}
               <Card.Text>
-                {isDeals
-                  ? "Para ver todos os produtos clique em voltar"
-                  : "Tente buscar com outras palavras ou clique em voltar"}
+                Para voltar à tela de início, clique no botão abaixo
               </Card.Text>
             </div>
             <Button

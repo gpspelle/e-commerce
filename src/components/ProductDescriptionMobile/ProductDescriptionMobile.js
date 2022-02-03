@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useHistory, useParams } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import axios from "axios"
-import SendMessageWhatsAppButton from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
+import SendMessageWhatsAppButton, {
+  sendBuyWhatsAppMessage,
+} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import {
   ACCOUNTS_ENDPOINT,
   REST_API,
@@ -19,9 +21,13 @@ import "./ProductDescriptionMobile.css"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
+import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
+import { openAdminDetailPage } from "../AdminHomeMobile/AdminHomeMobile"
+import scrollToTop from "../../utils/scrollToTop"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
+  const history = useHistory()
   const [productData, setProductData] = useState({
     name: undefined,
     price: undefined,
@@ -30,7 +36,12 @@ export default function ProductDescriptionMobile() {
     description: undefined,
     phoneNumber: undefined,
     productOwnerId: undefined,
+    productOwnerName: undefined,
     commercialName: undefined,
+    cropProfilePhoto: undefined,
+    aboutMe: undefined,
+    aboutProducts: undefined,
+    email: undefined,
     tags: [],
     productType: undefined,
     dealPrice: undefined,
@@ -44,6 +55,7 @@ export default function ProductDescriptionMobile() {
   const [failedToFetchProduct, setFailedToFetchProduct] = useState(false)
 
   useEffect(() => {
+    scrollToTop()
     return () => {
       setIsFullScreen(false)
       allowScroll()
@@ -61,9 +73,22 @@ export default function ProductDescriptionMobile() {
           params: body,
         })
 
-        const { commercial_name, phone_number } = response.data[0]
+        const {
+          email,
+          name,
+          about_me,
+          about_products,
+          crop_profile_photo,
+          commercial_name,
+          phone_number,
+        } = response.data[0]
         setProductData({
           ...productData,
+          aboutMe: about_me,
+          email: email,
+          aboutProducts: about_products,
+          cropProfilePhoto: crop_profile_photo,
+          productOwnerName: name,
           commercialName: commercial_name,
           phoneNumber: phone_number,
         })
@@ -157,6 +182,12 @@ export default function ProductDescriptionMobile() {
     description,
     phoneNumber,
     commercialName,
+    productOwnerName,
+    cropProfilePhoto,
+    productOwnerId,
+    aboutMe,
+    aboutProducts,
+    email,
     tags,
     productType,
     dealPrice,
@@ -211,12 +242,19 @@ export default function ProductDescriptionMobile() {
             width: "20rem",
             margin: "0 auto",
           }}
-          isDeal={isDeal}
-          id={id}
-          name={name}
-          price={isDeal ? dealPrice : price}
+          messageFunction={() =>
+            sendBuyWhatsAppMessage({
+              isDeal,
+              id,
+              name,
+              price: isDeal ? dealPrice : price,
+              phoneNumber,
+              commercialName,
+            })
+          }
           phoneNumber={phoneNumber}
           commercialName={commercialName}
+          text={"Gostei desse"}
         />
         <ProductStockInfo productStock={productStock} />
         {isLightingDeal && (
@@ -273,6 +311,17 @@ export default function ProductDescriptionMobile() {
             backgroundColor: "gray",
             height: 1,
           }}
+        />
+        <h5 style={{ marginBottom: "22px" }}>Sobre o artesão</h5>
+        <AboutAdmin
+          isComplete={true}
+          productOwnerName={productOwnerName}
+          commercialName={commercialName}
+          productOwnerId={productOwnerId}
+          cropProfilePhoto={cropProfilePhoto}
+          aboutMe={aboutMe}
+          screenWidth={width}
+          aboutProducts={aboutProducts}
         />
       </Container>
       <MemoizedSimilarProductsMobile id={id} tags={tags} />

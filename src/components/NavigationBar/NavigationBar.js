@@ -1,8 +1,7 @@
 import React from "react"
 import "./NavigationBar.css"
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap"
-import { APP_NAME, DEALS } from "../../constants/constants"
-import { AiFillThunderbolt } from "react-icons/ai"
+import { APP_NAME, NAVIGATION_LINKS } from "../../constants/constants"
 import SearchBar from "../SearchBar/SearchBar"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 
@@ -30,12 +29,17 @@ export default function NavigationBar() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav>
-              <Nav.Link className="navigation-link" href="/">
-                &nbsp;Todos os produtos
-              </Nav.Link>
-              <Nav.Link className="navigation-link" href={`/${DEALS}`}>
-                &nbsp;Ofertas <AiFillThunderbolt />
-              </Nav.Link>
+              {Object.keys(NAVIGATION_LINKS).map((page) => {
+                return (
+                  <Nav.Link
+                    key={page}
+                    className="navigation-link"
+                    href={NAVIGATION_LINKS[page]}
+                  >
+                    <h7>{page}</h7>
+                  </Nav.Link>
+                )
+              })}
             </Nav>
           </Offcanvas.Body>
         </Navbar.Offcanvas>
