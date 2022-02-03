@@ -24,7 +24,7 @@ export default function AdminHomeMobile({ account }) {
         cursor: "pointer",
         borderRadius: 500,
       }}
-      src={account.crop_profile_photo || "/user.jpeg"}
+      src={account.crop_profile_photo || "/user.png"}
       onClick={(e) => openAdminDetailPage(e, history, account)}
     />
   )

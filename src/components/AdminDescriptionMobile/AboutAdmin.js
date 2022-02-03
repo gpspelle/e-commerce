@@ -27,7 +27,7 @@ export default function AboutAdmin({
               backgroundColor: "#F4F4F4",
               borderRadius: 500,
             }}
-            src={cropProfilePhoto || "/user.jpeg"}
+            src={cropProfilePhoto || "/user.png"}
           />
         </Col>
         <Col style={{ maxWidth: "70%" }}>
@@ -80,7 +80,7 @@ export default function AboutAdmin({
             backgroundColor: "#F4F4F4",
             borderRadius: 500,
           }}
-          src={cropProfilePhoto || "/user.jpeg"}
+          src={cropProfilePhoto || "/user.png"}
         />
       </Col>
       <Col style={{ maxWidth: "70%" }}>
