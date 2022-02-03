@@ -18,16 +18,26 @@ import {
   isLightingDealValid,
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
-import { chooseRandom } from "../../utils/chooseRandom"
+import { chooseRandom, getRandomFromArray } from "../../utils/chooseRandom"
 import { useHistory } from "react-router"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"
 import { getAccountsFromDatabase } from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 const NUM_ELEMENTS = 12
+const range = (v) => {
+  const arr = []
+  while (v--) {
+    arr[v] = v
+  }
 
-export default function HomeMobile({ screenWidth, screenHeight }) {
+  return arr
+}
+const RANGE = range(1000)
+const randomIndexes = chooseRandom(RANGE, 1000)
+export default function HomeMobile() {
   const query = useQuery()
   const history = useHistory()
   const [productData, setProductData] = useState({
@@ -37,7 +47,7 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
   })
   const [accounts, setAccounts] = useState([])
   const isMounted = useIsMounted()
-
+  const { width, height } = useWindowDimensions()
   const { products, allProducts, pagination } = productData
   const searchBarValue = query.get("q")
   const productDealsResponsive = {
@@ -90,6 +100,7 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
 
   useEffect(() => {
     scrollToTop()
+
     if (isMounted.current) {
       getAccountsFromDatabase({ setAccounts })
     }
@@ -160,15 +171,15 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
       return true
     })
 
-    displayProducts = chooseRandom(displayProducts, NUM_ELEMENTS)
+    displayProducts = getRandomFromArray(displayProducts, randomIndexes)
   }
 
   var multiplier = 0.45
-  if (screenWidth > 574) {
+  if (width > 574) {
     multiplier = 0.21
   }
 
-  const productImageSize = screenWidth * multiplier
+  const productImageSize = width * multiplier
   const productCardSize = productImageSize + 2.5
   const items =
     displayProducts &&
@@ -219,7 +230,7 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
 
   const admins =
     accounts &&
-    chooseRandom(accounts, NUM_ELEMENTS).map((account) => {
+    getRandomFromArray(accounts, randomIndexes).map((account) => {
       return (
         <Col
           key={account.id}
@@ -239,10 +250,10 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
       )
     })
 
-  const extra = screenWidth < 1024 ? 0 : 6
+  const extra = width < 1024 ? 0 : 6
 
   return (
-    <Container style={{ minHeight: screenHeight * 0.99, paddingTop: "72px" }}>
+    <Container style={{ minHeight: height * 0.99, paddingTop: "72px" }}>
       <Row className="my-2">
         <Col style={{ maxWidth: "70%" }}>
           <h2>Nossas ofertas</h2>
@@ -288,14 +299,14 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
       ) : (
         <>
           <AliceCarousel
-            mouseTracking={screenWidth < 1024 ? true : false}
+            mouseTracking={width < 1024 ? true : false}
             items={items}
             responsive={productDealsResponsive}
-            controlsStrategy={screenWidth < 1024 ? "responsive" : "alternate"}
+            controlsStrategy={width < 1024 ? "responsive" : "alternate"}
             disableDotsControls={true}
-            disableButtonsControls={screenWidth < 1024}
+            disableButtonsControls={width < 1024}
           />
-          {screenWidth < 1024 && <SwipeToSeeMore />}
+          {width < 1024 && <SwipeToSeeMore />}
         </>
       )}
       <Row className="my-3">
@@ -345,14 +356,14 @@ export default function HomeMobile({ screenWidth, screenHeight }) {
       ) : (
         <>
           <AliceCarousel
-            mouseTracking={screenWidth < 1024 ? true : false}
+            mouseTracking={width < 1024 ? true : false}
             items={admins}
             responsive={adminsResponsive}
-            controlsStrategy={screenWidth < 1024 ? "responsive" : "alternate"}
+            controlsStrategy={width < 1024 ? "responsive" : "alternate"}
             disableDotsControls={true}
-            disableButtonsControls={screenWidth < 1024}
+            disableButtonsControls={width < 1024}
           />
-          {screenWidth < 1024 && <SwipeToSeeMore />}
+          {width < 1024 && <SwipeToSeeMore />}
         </>
       )}
       <Row className="my-3">

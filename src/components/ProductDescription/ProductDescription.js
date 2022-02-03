@@ -190,8 +190,6 @@ export default function ProductDescription() {
     productStock,
   } = productData
 
-  console.log(productData)
-
   const isDeal = getIsDeal(productType)
   const isLightingDeal = getIsLightingDeal(productType)
   const imagesIsDefined = images.length > 0
