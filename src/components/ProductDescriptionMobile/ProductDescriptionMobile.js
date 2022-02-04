@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useLocation, useHistory, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { Container } from "react-bootstrap"
 import axios from "axios"
 import SendMessageWhatsAppButton, {
@@ -21,15 +21,13 @@ import "./ProductDescriptionMobile.css"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
-import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
-import { openAdminDetailPage } from "../AdminHome/AdminHome"
+import AboutAdmin from "../AdminDescription/AboutAdmin"
 import scrollToTop from "../../utils/scrollToTop"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import Footer from "../Footer/Footer"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
-  const history = useHistory()
   const [productData, setProductData] = useState({
     name: undefined,
     price: undefined,
