@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from "react"
 import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
-import NavigationBar from "./components/NavigationBar/NavigationBar"
 import {
   ABOUT_US,
   ADMIN_DESCRIPTION,
@@ -13,10 +12,11 @@ import {
 } from "./constants/constants"
 import useWindowDimensions from "./hooks/useWindowDimensions"
 import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
-import HomeMobile from "./components/HomeMobile/HomeMobile"
-import AdminDescriptionMobile from "./components/AdminDescriptionMobile/AdminDescriptionMobile"
-import Footer from "./components/Footer/Footer"
+import Home from "./components/Home/Home"
+import AdminDescription from "./components/AdminDescription/AdminDescription"
 import AboutUs from "./components/AboutUs/AboutUs"
+import NavigationBar from "./components/NavigationBar/NavigationBar"
+import Footer from "./components/Footer/Footer"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
@@ -36,30 +36,32 @@ function App() {
   return (
     <div style={{ paddingTop: "30px" }}>
       <Router>
-        <NavigationBar />
         <Suspense fallback={<div>Carregando...</div>}>
           <Switch>
             <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
               {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
             </Route>
             <Route path={`/:id/${ADMIN_DESCRIPTION}`}>
-              <AdminDescriptionMobile />
+              <AdminDescription />
             </Route>
             <Route path={`/${DEALS}`}>
+              <NavigationBar />
               <MemoizedProductContainer isDeals={true} paddingTop={"62px"} />
+              <Footer />
             </Route>
             <Route path={`/${PRODUCTS}`}>
+              <NavigationBar />
               <MemoizedProductContainer isDeals={false} paddingTop={"62px"} />
+              <Footer />
             </Route>
             <Route path={`/${ABOUT_US}`}>
               <AboutUs />
             </Route>
             <Route path="/">
-              <HomeMobile screenWidth={width} screenHeight={height} />
+              <Home screenWidth={width} screenHeight={height} />
             </Route>
           </Switch>
         </Suspense>
-        <Footer />
       </Router>
       <DocumentMeta
         title={PAGE_TITLE}

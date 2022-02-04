@@ -23,6 +23,8 @@ import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import "./ProductDescription.css"
 import scrollToTop from "../../utils/scrollToTop"
 import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
+import Footer from "../Footer/Footer"
+import NavigationBar from "../NavigationBar/NavigationBar"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -200,6 +202,7 @@ export default function ProductDescription() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
+      <NavigationBar />
       <Container style={{ paddingTop: "40px" }}>
         <Row>
           {isFullScreen ? (
@@ -320,6 +323,7 @@ export default function ProductDescription() {
         </Row>
       </Container>
       <MemoizedSimilarProducts id={id} screenWidth={width} tags={tags} />
+      <Footer />
     </div>
   )
 }

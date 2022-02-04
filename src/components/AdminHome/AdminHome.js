@@ -11,7 +11,7 @@ export const openAdminDetailPage = (event, history, account) => {
   })
 }
 
-export default function AdminHomeMobile({ account }) {
+export default function AdminHome({ account }) {
   const history = useHistory()
 
   return (

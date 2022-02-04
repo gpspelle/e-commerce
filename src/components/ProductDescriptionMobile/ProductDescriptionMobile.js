@@ -22,8 +22,10 @@ import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProdu
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
-import { openAdminDetailPage } from "../AdminHomeMobile/AdminHomeMobile"
+import { openAdminDetailPage } from "../AdminHome/AdminHome"
 import scrollToTop from "../../utils/scrollToTop"
+import NavigationBar from "../NavigationBar/NavigationBar"
+import Footer from "../Footer/Footer"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -206,6 +208,7 @@ export default function ProductDescriptionMobile() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
+      <NavigationBar />
       <Container style={{ paddingTop: "82px" }}>
         {imagesIsDefined && (
           <ImageCarousel
@@ -325,6 +328,7 @@ export default function ProductDescriptionMobile() {
         />
       </Container>
       <MemoizedSimilarProductsMobile id={id} tags={tags} />
+      <Footer />
     </div>
   )
 }

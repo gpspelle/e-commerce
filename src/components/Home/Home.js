@@ -13,7 +13,7 @@ import useQuery from "../../hooks/useQuery"
 import axios from "axios"
 import "react-alice-carousel/lib/alice-carousel.css"
 import ProductOfferHomeMobile from "../ProductOfferHomeMobile/ProductOfferHomeMobile"
-import AdminHomeMobile from "../AdminHomeMobile/AdminHomeMobile"
+import AdminHome from "../AdminHome/AdminHome"
 import {
   isLightingDealValid,
   processLightingDealInformation,
@@ -25,6 +25,8 @@ import { LateralCard } from "../Blocks/LateralCard"
 import { getAccountsFromDatabase } from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
+import Footer from "../Footer/Footer"
+import NavigationBar from "../NavigationBar/NavigationBar"
 
 const NUM_ELEMENTS = 12
 const range = (v) => {
@@ -245,7 +247,7 @@ export default function HomeMobile() {
             paddingLeft: "0px",
           }}
         >
-          <AdminHomeMobile account={account} />
+          <AdminHome account={account} />
         </Col>
       )
     })
@@ -253,154 +255,158 @@ export default function HomeMobile() {
   const extra = width < 1024 ? 0 : 6
 
   return (
-    <Container style={{ minHeight: height * 0.99, paddingTop: "72px" }}>
-      <Row className="my-2">
-        <Col style={{ maxWidth: "70%" }}>
-          <h2>Nossas ofertas</h2>
-        </Col>
-        <Col
-          style={{
-            maxWidth: "30%",
-            justifyContent: "right",
-            display: "flex",
-          }}
-        >
-          <p
-            style={{ textDecoration: "underline", cursor: "pointer" }}
-            onClick={() =>
-              history.push({
-                pathname: `/${DEALS}`,
-              })
-            }
-          >
-            Ver todas
-          </p>
-        </Col>
-      </Row>
-      {items === undefined ? (
-        <div
-          /* TODO: crazy math to get the vertical size of the items */
-          style={{
-            minHeight: productCardSize + 76.5 + 47.5 + extra,
-            height: productCardSize + 76.5 + 47.5 + extra,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Spinner
+    <>
+      <NavigationBar />
+      <Container style={{ minHeight: height * 0.99, paddingTop: "72px" }}>
+        <Row className="my-2">
+          <Col style={{ maxWidth: "70%" }}>
+            <h2>Nossas ofertas</h2>
+          </Col>
+          <Col
             style={{
-              margin: "auto",
+              maxWidth: "30%",
+              justifyContent: "right",
               display: "flex",
-              color: "#212529",
             }}
-            animation="border"
-          />
-        </div>
-      ) : (
-        <>
-          <AliceCarousel
-            mouseTracking={width < 1024 ? true : false}
-            items={items}
-            responsive={productDealsResponsive}
-            controlsStrategy={width < 1024 ? "responsive" : "alternate"}
-            disableDotsControls={true}
-            disableButtonsControls={width < 1024}
-          />
-          {width < 1024 && <SwipeToSeeMore />}
-        </>
-      )}
-      <Row className="my-3">
-        <Col style={{ maxWidth: "70%" }}>
-          <h2>Nossos Artesãos</h2>
-        </Col>
-        <Col
-          style={{
-            maxWidth: "30%",
-            justifyContent: "right",
-            display: "flex",
-          }}
-        >
-          <p
-            style={{ textDecoration: "underline", cursor: "pointer" }}
-            onClick={() =>
-              history.push({
-                pathname: `/${ABOUT_US}`,
-                state: {
-                  accounts,
-                },
-              })
-            }
           >
-            Ver todos
-          </p>
-        </Col>
-      </Row>
-      {admins.length === 0 ? (
-        <div
-          style={{
-            minHeight: 200,
-            height: 200,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Spinner
+            <p
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() =>
+                history.push({
+                  pathname: `/${DEALS}`,
+                })
+              }
+            >
+              Ver todas
+            </p>
+          </Col>
+        </Row>
+        {items === undefined ? (
+          <div
+            /* TODO: crazy math to get the vertical size of the items */
             style={{
-              margin: "auto",
+              minHeight: productCardSize + 76.5 + 47.5 + extra,
+              height: productCardSize + 76.5 + 47.5 + extra,
               display: "flex",
-              color: "#212529",
+              justifyContent: "center",
             }}
-            animation="border"
+          >
+            <Spinner
+              style={{
+                margin: "auto",
+                display: "flex",
+                color: "#212529",
+              }}
+              animation="border"
+            />
+          </div>
+        ) : (
+          <>
+            <AliceCarousel
+              mouseTracking={width < 1024 ? true : false}
+              items={items}
+              responsive={productDealsResponsive}
+              controlsStrategy={width < 1024 ? "responsive" : "alternate"}
+              disableDotsControls={true}
+              disableButtonsControls={width < 1024}
+            />
+            {width < 1024 && <SwipeToSeeMore />}
+          </>
+        )}
+        <Row className="my-3">
+          <Col style={{ maxWidth: "70%" }}>
+            <h2>Nossos Artesãos</h2>
+          </Col>
+          <Col
+            style={{
+              maxWidth: "30%",
+              justifyContent: "right",
+              display: "flex",
+            }}
+          >
+            <p
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() =>
+                history.push({
+                  pathname: `/${ABOUT_US}`,
+                  state: {
+                    accounts,
+                  },
+                })
+              }
+            >
+              Ver todos
+            </p>
+          </Col>
+        </Row>
+        {admins.length === 0 ? (
+          <div
+            style={{
+              minHeight: 200,
+              height: 200,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Spinner
+              style={{
+                margin: "auto",
+                display: "flex",
+                color: "#212529",
+              }}
+              animation="border"
+            />
+          </div>
+        ) : (
+          <>
+            <AliceCarousel
+              mouseTracking={width < 1024 ? true : false}
+              items={admins}
+              responsive={adminsResponsive}
+              controlsStrategy={width < 1024 ? "responsive" : "alternate"}
+              disableDotsControls={true}
+              disableButtonsControls={width < 1024}
+            />
+            {width < 1024 && <SwipeToSeeMore />}
+          </>
+        )}
+        <Row className="my-3">
+          <Col style={{ maxWidth: "70%" }}>
+            <h2>Nossas vantagens</h2>
+          </Col>
+        </Row>
+        <Row>
+          <LateralCard
+            imageSize={120}
+            imagePosition="left"
+            smallSrc="/small-advantage-1.png"
+            src="/advantage-1.png"
+            title="Feito para você"
+            text="Comercializamos apenas produtos artesanais, pensados e sob medida para você"
           />
-        </div>
-      ) : (
-        <>
-          <AliceCarousel
-            mouseTracking={width < 1024 ? true : false}
-            items={admins}
-            responsive={adminsResponsive}
-            controlsStrategy={width < 1024 ? "responsive" : "alternate"}
-            disableDotsControls={true}
-            disableButtonsControls={width < 1024}
+        </Row>
+        <Row>
+          <LateralCard
+            imageSize={120}
+            imagePosition="left"
+            smallSrc="/small-advantage-2.png"
+            src="/advantage-2.png"
+            title="Qualidade sem igual"
+            text="Nossos produtos são feitos somente com materiais de primeira linha"
           />
-          {width < 1024 && <SwipeToSeeMore />}
-        </>
-      )}
-      <Row className="my-3">
-        <Col style={{ maxWidth: "70%" }}>
-          <h2>Nossas vantagens</h2>
-        </Col>
-      </Row>
-      <Row>
-        <LateralCard
-          imageSize={120}
-          imagePosition="left"
-          smallSrc="/small-advantage-1.png"
-          src="/advantage-1.png"
-          title="Feito para você"
-          text="Comercializamos apenas produtos artesanais, pensados e sob medida para você"
-        />
-      </Row>
-      <Row>
-        <LateralCard
-          imageSize={120}
-          imagePosition="left"
-          smallSrc="/small-advantage-2.png"
-          src="/advantage-2.png"
-          title="Qualidade sem igual"
-          text="Nossos produtos são feitos somente com materiais de primeira linha"
-        />
-      </Row>
-      <Row>
-        <LateralCard
-          imageSize={120}
-          imagePosition="left"
-          smallSrc="/small-advantage-2.png"
-          src="/advantage-3.png"
-          title="Toque de carinho"
-          text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
-        />
-      </Row>
-    </Container>
+        </Row>
+        <Row>
+          <LateralCard
+            imageSize={120}
+            imagePosition="left"
+            smallSrc="/small-advantage-2.png"
+            src="/advantage-3.png"
+            title="Toque de carinho"
+            text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
+          />
+        </Row>
+      </Container>
+      <Footer />
+    </>
   )
 }
