@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import { Col, Container, Row, Spinner } from "react-bootstrap"
-import {
-  ABOUT_US,
-  DEALS,
-  PRODUCTS_ENDPOINT,
-  PRODUCT_TYPES,
-  REST_API,
-} from "../../constants/constants"
+import { ABOUT_US, DEALS, PRODUCT_TYPES } from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
-import axios from "axios"
 import "react-alice-carousel/lib/alice-carousel.css"
 import ProductOfferHomeMobile from "../ProductOfferHomeMobile/ProductOfferHomeMobile"
 import AdminHome from "../AdminHome/AdminHome"
@@ -22,7 +15,10 @@ import { chooseRandom, getRandomFromArray } from "../../utils/chooseRandom"
 import { useHistory } from "react-router"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"
-import { getAccountsFromDatabase } from "../../actions/database"
+import {
+  getAccountsFromDatabase,
+  getProductsFromDatabase,
+} from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import Footer from "../Footer/Footer"
@@ -109,35 +105,8 @@ export default function HomeMobile() {
   }, [])
 
   useEffect(() => {
-    async function getProductsFromDatabase() {
-      const body = {
-        key: pagination.key,
-      }
-
-      const config = {
-        params: {
-          body,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-
-      const res = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
-      const { data, key } = res.data
-      const concatProducts = products.length > 0 ? products.concat(data) : data
-
-      concatProducts.sort((a, b) => (a.PRODUCT_NAME.S > b.PRODUCT_NAME.S ? 1 : -1))
-
-      setProductData({
-        products: concatProducts,
-        allProducts: concatProducts,
-        pagination: { key, fetch: key ? true : false },
-      })
-    }
-
     if (pagination.fetch) {
-      getProductsFromDatabase()
+      getProductsFromDatabase({ setProductData, pagination, products })
     }
   }, [pagination.key])
 

@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { Container, Row, Col } from "react-bootstrap"
-import axios from "axios"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import {
-  ACCOUNTS_ENDPOINT,
-  REST_API,
-  PRODUCT_TYPES,
-  PRODUCT_ENDPOINT,
-} from "../../constants/constants"
+import { PRODUCT_TYPES } from "../../constants/constants"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
@@ -22,9 +16,13 @@ import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessag
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import "./ProductDescription.css"
 import scrollToTop from "../../utils/scrollToTop"
-import AboutAdmin from "../AdminDescriptionMobile/AboutAdmin"
+import AboutAdmin from "../AdminDescription/AboutAdmin"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
+import {
+  getAccountFromDatabase,
+  getProductFromDatabase,
+} from "../../actions/database"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -58,82 +56,14 @@ export default function ProductDescription() {
   }, [])
 
   useEffect(() => {
-    const fetchAccount = async () => {
-      if (productData.productOwnerId) {
-        const body = {
-          productOwnerIds: [productData.productOwnerId],
-        }
-
-        const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
-          params: body,
-        })
-
-        const {
-          email,
-          name,
-          about_me,
-          about_products,
-          crop_profile_photo,
-          commercial_name,
-          phone_number,
-        } = response.data[0]
-        setProductData({
-          ...productData,
-          aboutMe: about_me,
-          email: email,
-          aboutProducts: about_products,
-          cropProfilePhoto: crop_profile_photo,
-          productOwnerName: name,
-          commercialName: commercial_name,
-          phoneNumber: phone_number,
-        })
-      }
-    }
-
-    fetchAccount()
+    getAccountFromDatabase({
+      accountId: productData.productOwnerId,
+      productData,
+      setProductData,
+    })
   }, [productData.productOwnerId])
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const body = {
-          id,
-        }
-
-        const response = await axios.get(`${REST_API}/${PRODUCT_ENDPOINT}`, {
-          params: body,
-        })
-
-        setFailedToFetchProduct(false)
-        const data = {}
-        data.id = response.data.Item.id.S
-        data.name = response.data.Item.PRODUCT_NAME.S
-        data.description = response.data.Item.PRODUCT_DESCRIPTION.S
-        data.price = response.data.Item.PRODUCT_PRICE.N
-        data.images = response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S)
-        data.productImagesResized = response.data.Item.PRODUCT_IMAGES_RESIZED?.L.map(
-          (item) => item.S
-        )
-        data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
-        data.tags = response.data.Item?.PRODUCT_TAGS?.SS
-        data.productType = response.data.Item?.PRODUCT_TYPE?.S
-        data.productStock = response.data.Item.PRODUCT_STOCK?.N
-          ? parseInt(response.data.Item.PRODUCT_STOCK.N)
-          : 1
-        if (productType === PRODUCT_TYPES.DEAL) {
-          data.dealPrice = response.data.Item.DEAL_PRICE.N
-        } else if (productType === PRODUCT_TYPES.LIGHTING_DEAL) {
-          data.dealPrice = response.data.Item.DEAL_PRICE.N
-          data.lightingDealDuration = response.data.Item.LIGHTING_DEAL_DURATION.S
-          data.lightingDealStartTime = response.data.Item.LIGHTING_DEAL_START_TIME.S
-        }
-
-        setProductData({ ...productData, ...data })
-      } catch (e) {
-        setFailedToFetchProduct(true)
-      }
-    }
-
     if (location.state) {
       const data = {}
       data.id = location.state.id
@@ -162,12 +92,23 @@ export default function ProductDescription() {
 
       setProductData({ ...productData, ...data })
     } else {
-      fetchData()
+      getProductFromDatabase({
+        productId: id,
+        setFailedToFetchProduct,
+        productData,
+        setProductData,
+      })
     }
   }, [id])
 
   if (failedToFetchProduct) {
-    return <NoProductFoundMessage screenWidth={width} />
+    return (
+      <>
+        <NavigationBar />
+        <NoProductFoundMessage screenWidth={width} />
+        <Footer />
+      </>
+    )
   }
 
   const {

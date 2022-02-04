@@ -1,11 +1,6 @@
 import React, { useState, useEffect, memo, useRef } from "react"
-import axios from "axios"
 import { Container, Row, Col } from "react-bootstrap"
-import {
-  REST_API,
-  PRODUCTS_ENDPOINT,
-  PRODUCT_TYPES,
-} from "../../constants/constants"
+import { PRODUCT_TYPES } from "../../constants/constants"
 import Product from "../Product/Product"
 import {
   isLightingDealValid,
@@ -16,7 +11,10 @@ import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
 import useIsMounted from "../../hooks/useIsMounted"
-import { getAccountsFromDatabase } from "../../actions/database"
+import {
+  getAccountsFromDatabase,
+  getProductsFromDatabase,
+} from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
 
 const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
@@ -83,41 +81,13 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
   }, [productOwnerIds])
 
   useEffect(() => {
-    async function getProductsFromDatabase() {
-      const body = {
-        key: pagination.key,
-      }
-
-      const config = {
-        params: {
-          body,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-
-      const res = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
-      const { data, key } = res.data
-      const concatProducts = products.length > 0 ? products.concat(data) : data
-
-      concatProducts.sort((a, b) => (a.PRODUCT_NAME.S > b.PRODUCT_NAME.S ? 1 : -1))
-
-      const productOwnerIdsSet = new Set(
-        concatProducts.map((product) => product.PRODUCT_OWNER_ID.S)
-      )
-
-      setProductOwnerIds([...productOwnerIdsSet])
-
-      setProductData({
-        products: concatProducts,
-        allProducts: concatProducts,
-        pagination: { key, fetch: key ? true : false },
-      })
-    }
-
     if (pagination.fetch) {
-      getProductsFromDatabase()
+      getProductsFromDatabase({
+        setProductData,
+        setProductOwnerIds,
+        pagination,
+        products,
+      })
     }
   }, [pagination.key])
 

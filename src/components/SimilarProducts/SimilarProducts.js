@@ -1,16 +1,14 @@
 import React, { useState, useEffect, memo } from "react"
-import axios from "axios"
 import { Pagination, Container, Spinner } from "react-bootstrap"
-import {
-  REST_API,
-  PRODUCTS_ENDPOINT,
-  TAGS_ENDPOINT,
-  PRODUCT_DESCRIPTION,
-} from "../../constants/constants"
+import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
 import "./SimilarProducts.css"
 import scrollToTop from "../../utils/scrollToTop"
+import {
+  getProductsIdsByTagsFromDatabase,
+  getSimilarProductsFromDatabase,
+} from "../../actions/database"
 
 const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()
@@ -35,75 +33,23 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
   }, [screenWidth])
 
   useEffect(() => {
-    const fetchProductsByIds = async () => {
-      const body = {
-        key: similarProductsData.pagination.key,
-      }
-
-      const config = {
-        params: {
-          body,
-        },
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-      const response = await axios.get(`${REST_API}/${PRODUCTS_ENDPOINT}`, config)
-      const { data, key } = response.data
-
-      const products = data.filter((product) =>
-        similarProductsData.productsIds.includes(product.id.S)
-      )
-
-      const productsFlat = products.flat(1)
-      const concatProducts =
-        similarProductsData.products.length > 0
-          ? similarProductsData.products.concat(productsFlat)
-          : productsFlat
-
-      setSimilarProductsData({
-        ...similarProductsData,
-        products: concatProducts,
-        pagination: {
-          key,
-          fetch: key ? true : false,
-          isLoading: key ? true : false,
-        },
-      })
-    }
-
     if (similarProductsData.pagination.fetch) {
-      fetchProductsByIds()
+      getSimilarProductsFromDatabase({
+        similarProductsData,
+        setSimilarProductsData,
+        products: similarProductsData.products,
+        pagination: similarProductsData.pagination,
+        productsIds: similarProductsData.productsIds,
+      })
     }
   }, [similarProductsData.productsIds, similarProductsData.pagination.fetch])
 
   useEffect(() => {
-    const fetchProductIdsByTags = async () => {
-      if (tags.length > 0) {
-        const response = await axios.get(`${REST_API}/${TAGS_ENDPOINT}`)
-
-        const sameTagProductIdsByTag = response.data.filter((productsByTag) =>
-          tags.includes(productsByTag.TAG_NAME)
-        )
-
-        const sameTagProductIds = []
-        sameTagProductIdsByTag.forEach((sameTagProductIdByTag) => {
-          if (sameTagProductIdByTag.products) {
-            sameTagProductIds.push(sameTagProductIdByTag.products)
-          }
-        })
-
-        const sameTagProductIdsSet = new Set(sameTagProductIds.flat(1))
-        sameTagProductIdsSet.delete(id)
-        setSimilarProductsData({
-          products: [],
-          productsIds: [...sameTagProductIdsSet],
-          pagination: { key: undefined, fetch: true, isLoading: true },
-        })
-      }
-    }
-
-    fetchProductIdsByTags()
+    getProductsIdsByTagsFromDatabase({
+      productId: id,
+      tags,
+      setSimilarProductsData,
+    })
   }, [tags, id])
 
   const openDetailPage = (state) => {
