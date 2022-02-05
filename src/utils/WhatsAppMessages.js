@@ -1,4 +1,17 @@
-import { PRODUCT_DESCRIPTION } from "../constants/constants"
+import {
+  ADMIN_DESCRIPTION,
+  APP_NAME,
+  PRODUCT_DESCRIPTION,
+} from "../constants/constants"
+
+const getPageBase = () => {
+  const pathArray = window.location.href.split("/")
+  const protocol = pathArray[0]
+  const host = pathArray[2]
+  const pageBase = protocol + "//" + host
+
+  return pageBase
+}
 
 export const buyMessage = ({
   id,
@@ -8,10 +21,7 @@ export const buyMessage = ({
   price,
   phoneNumber,
 }) => {
-  const pathArray = window.location.href.split("/")
-  const protocol = pathArray[0]
-  const host = pathArray[2]
-  const pageBase = protocol + "//" + host
+  const pageBase = getPageBase()
   const message = `Link do produto: ${pageBase}/${id}/${PRODUCT_DESCRIPTION}\n\nOlá, ${commercialName}!\nTenho interesse no produto ${name}, preço ${
     isDeal ? "promocional" : ""
   } R$ ${price}.`
@@ -23,8 +33,10 @@ export const buyMessage = ({
   )
 }
 
-export const helloMessage = ({ commercialName, phoneNumber }) => {
-  const message = `Olá, ${commercialName}!\nEncontrei a sua página e gostei muito dos seus produtos.`
+export const helloMessage = ({ accountId, commercialName, phoneNumber }) => {
+  const pageBase = getPageBase()
+  const pageLink = `Link da página: ${pageBase}/${accountId}/${ADMIN_DESCRIPTION}`
+  const message = `${pageLink}\n\nOlá, ${commercialName}!\nEncontrei a sua página na ${APP_NAME}.`
   return (
     "https://api.whatsapp.com/send?phone=" +
     phoneNumber +

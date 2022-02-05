@@ -7,6 +7,7 @@ import "./AboutAdmin.css"
 export default function AboutAdmin({
   productOwnerName,
   commercialName,
+  phoneNumber,
   productOwnerId,
   cropProfilePhoto,
   aboutMe,
@@ -46,6 +47,7 @@ export default function AboutAdmin({
                   pathname: `/${productOwnerId}/${ADMIN_DESCRIPTION}`,
                   state: {
                     name: productOwnerName,
+                    phone_number: phoneNumber,
                     commercial_name: commercialName,
                     crop_profile_photo: cropProfilePhoto,
                     about_me: aboutMe,

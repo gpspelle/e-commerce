@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import { Card, Col, Container, Row } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
 import { getAccountsFromDatabase } from "../../actions/database"
@@ -11,6 +11,7 @@ import SendMessageWhatsAppButton, {
   sendHelloWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import AboutAdmin from "./AboutAdmin"
+import { BsWhatsapp } from "react-icons/bs"
 
 export default function AdminDescription() {
   const location = useLocation()
@@ -19,6 +20,7 @@ export default function AdminDescription() {
   const [accounts, setAccounts] = useState([
     {
       name: undefined,
+      phone_number: undefined,
       commercial_name: undefined,
       crop_profile_photo: undefined,
       about_me: undefined,
@@ -33,6 +35,7 @@ export default function AdminDescription() {
       setAccounts([
         {
           name: location.state.name,
+          phone_number: location.state.phone_number,
           commercial_name: location.state.commercial_name,
           crop_profile_photo: location.state.crop_profile_photo,
           about_me: location.state.about_me,
@@ -44,8 +47,14 @@ export default function AdminDescription() {
     }
   }, [])
 
-  const { name, commercial_name, crop_profile_photo, about_me, about_products } =
-    accounts[0]
+  const {
+    name,
+    phone_number,
+    commercial_name,
+    crop_profile_photo,
+    about_me,
+    about_products,
+  } = accounts[0]
 
   return (
     <>
@@ -53,26 +62,38 @@ export default function AdminDescription() {
       <Container style={{ paddingTop: "82px" }}>
         <AboutAdmin
           isComplete={false}
+          phoneNumber={phone_number}
           productOwnerName={name}
           commercialName={commercial_name}
           productOwnerId={id}
           cropProfilePhoto={crop_profile_photo}
           screenWidth={width}
         />
-        {/*<Col>
-        <SendMessageWhatsAppButton
-          style={{
-            paddingTop: "12px",
-            marginBottom: "12px",
-          }}
-          messageFunction={() =>
-            sendHelloWhatsAppMessage({ phoneNumber, commercialName })
-          }
-          phoneNumber={phoneNumber}
-          commercialName={commercialName}
-          text={"WhatsApp"}
-        />
-      </Col>*/}
+        {phone_number && (
+          <Col>
+            <SendMessageWhatsAppButton
+              style={{
+                paddingTop: "8px",
+                maxWidth: "240px",
+              }}
+              messageFunction={() =>
+                sendHelloWhatsAppMessage({
+                  accountId: id,
+                  phoneNumber: phone_number,
+                  commercialName: commercial_name,
+                })
+              }
+              phoneNumber={phone_number}
+              commercialName={commercial_name}
+              text={
+                <>
+                  <BsWhatsapp />
+                  &nbsp;Conversar com artesão
+                </>
+              }
+            />
+          </Col>
+        )}
         <h4 style={{ marginBottom: "0px", marginTop: "24px" }}>Meus produtos</h4>
         <MemoizedProductContainer
           isDeals={false}

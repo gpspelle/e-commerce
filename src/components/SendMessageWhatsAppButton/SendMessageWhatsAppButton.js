@@ -14,8 +14,12 @@ export const sendBuyWhatsAppMessage = ({
   window.open(url, "_blank")
 }
 
-export const sendHelloWhatsAppMessage = ({ phoneNumber, commercialName }) => {
-  const url = helloMessage({ phoneNumber, commercialName })
+export const sendHelloWhatsAppMessage = ({
+  accountId,
+  phoneNumber,
+  commercialName,
+}) => {
+  const url = helloMessage({ accountId, phoneNumber, commercialName })
   window.open(url, "_blank")
 }
 

@@ -251,6 +251,7 @@ export default function ProductDescription() {
               <h5 style={{ marginBottom: "22px" }}>Sobre o artesão</h5>
               <AboutAdmin
                 isComplete={true}
+                phoneNumber={phoneNumber}
                 productOwnerName={productOwnerName}
                 commercialName={commercialName}
                 productOwnerId={productOwnerId}
