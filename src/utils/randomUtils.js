@@ -1,8 +1,8 @@
-export const chooseRandom = (arr, num = 1) => {
+export const getRandomFromRangeArray = (arr) => {
   const res = []
   const indexes = {}
   const arrSize = arr.length
-  for (let i = 0; i < Math.min(num, arrSize); ) {
+  for (let i = 0; i < arrSize; ) {
     const random = Math.floor(Math.random() * arrSize)
     if (indexes.hasOwnProperty(random)) {
       continue
@@ -15,10 +15,10 @@ export const chooseRandom = (arr, num = 1) => {
   return res
 }
 
-export const getRandomFromArray = (arr, indexes) => {
+export const getRandomFromArray = (arr, indexes, NUM_ELEMENTS = 12) => {
   const res = []
   const arrSize = arr.length
-  for (let i = 0, j = 0; i < Math.min(indexes.length, arrSize); j++) {
+  for (let i = 0, j = 0; i < Math.min(arrSize, NUM_ELEMENTS); j++) {
     const random = indexes[j]
     if (random >= arrSize) {
       continue

@@ -11,7 +11,7 @@ import {
   isLightingDealValid,
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
-import { chooseRandom, getRandomFromArray } from "../../utils/chooseRandom"
+import { getRandomFromArray, getRandomFromRangeArray } from "../../utils/randomUtils"
 import { useHistory } from "react-router"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"
@@ -23,19 +23,12 @@ import scrollToTop from "../../utils/scrollToTop"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
+import { range } from "../../utils/range"
 
-const NUM_ELEMENTS = 12
-const range = (v) => {
-  const arr = []
-  while (v--) {
-    arr[v] = v
-  }
-
-  return arr
-}
 const RANGE = range(1000)
-const randomIndexes = chooseRandom(RANGE, 1000)
-export default function HomeMobile() {
+const randomIndexes = getRandomFromRangeArray(RANGE)
+
+export default function Home() {
   const query = useQuery()
   const history = useHistory()
   const [productData, setProductData] = useState({

@@ -10,7 +10,6 @@ export const APP_NAME = process.env.REACT_APP_APP_NAME || "Lojinha"
 export const PRODUCTS_ENDPOINT = "customer-products"
 export const PRODUCT_ENDPOINT = "customer-product"
 export const ACCOUNTS_ENDPOINT = "accounts"
-export const ACCOUNT_ENDPOINT = "account"
 export const TAGS_ENDPOINT = "tags"
 
 export const ADMIN_DESCRIPTION = "descrição-artesão"
