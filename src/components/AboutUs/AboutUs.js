@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { Col, Container, Row } from "react-bootstrap"
-import { useLocation } from "react-router"
+import { useLocation } from "react-router-dom"
 
 import { getAccountsFromDatabase } from "../../actions/database"
 import { APP_NAME } from "../../constants/constants"
