@@ -7,9 +7,9 @@ import useIsMounted from "../../hooks/useIsMounted"
 import { PRODUCT_TYPES } from "../../constants/constants"
 import Product from "../Product/Product"
 import {
-  isLightingDealValid,
-  processLightingDealInformation,
-} from "../../utils/lightingDealUtils"
+  isLightningDealValid,
+  processLightningDealInformation,
+} from "../../utils/lightningDealUtils"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
 import {
@@ -107,18 +107,19 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
     displayProducts = products.filter(
       (product) =>
         product.PRODUCT_TYPE?.S === PRODUCT_TYPES.DEAL ||
-        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTING_DEAL
+        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTNING_DEAL
     )
 
     displayProducts = displayProducts.filter((product) => {
-      const isLightingDeal = product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTING_DEAL
-      if (isLightingDeal) {
-        const { miliseconds } = processLightingDealInformation({
+      const isLightningDeal =
+        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTNING_DEAL
+      if (isLightningDeal) {
+        const { miliseconds } = processLightningDealInformation({
           now: new Date(),
-          lightingDealDuration: product.LIGHTING_DEAL_DURATION.S,
-          lightingDealStartTime: product.LIGHTING_DEAL_START_TIME.S,
+          lightningDealDuration: product.LIGHTNING_DEAL_DURATION.S,
+          lightningDealStartTime: product.LIGHTNING_DEAL_START_TIME.S,
         })
-        return isLightingDealValid(miliseconds)
+        return isLightningDealValid(miliseconds)
       }
 
       return true
@@ -177,8 +178,8 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
             tags={item.PRODUCT_TAGS?.SS || []}
             productType={item.PRODUCT_TYPE?.S}
             dealPrice={item.DEAL_PRICE?.N}
-            lightingDealDuration={item.LIGHTING_DEAL_DURATION?.S}
-            lightingDealStartTime={item.LIGHTING_DEAL_START_TIME?.S}
+            lightningDealDuration={item.LIGHTNING_DEAL_DURATION?.S}
+            lightningDealStartTime={item.LIGHTNING_DEAL_START_TIME?.S}
             productStock={item.PRODUCT_STOCK?.N ? parseInt(item.PRODUCT_STOCK.N) : 1}
             hasMoreDataToFetch={pagination.fetch}
           />

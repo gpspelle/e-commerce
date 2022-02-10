@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
+import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
 import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
 import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"
 import "./ImageCarousel.css"
@@ -22,7 +22,7 @@ export default function ImageCarousel({
   allowScroll,
   blockScroll,
   productImagesResized,
-  isLightingDeal,
+  isLightningDeal,
 }) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
@@ -50,7 +50,9 @@ export default function ImageCarousel({
               allowScroll={allowScroll}
               blockScroll={blockScroll}
             />
-            {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
+            {isLightningDeal && (
+              <LightningDealWaterMark isProductDescription={true} />
+            )}
           </div>
         )
       }
@@ -68,7 +70,7 @@ export default function ImageCarousel({
             allowScroll={allowScroll}
             blockScroll={blockScroll}
           />
-          {isLightingDeal && <LightingDealWaterMark isProductDescription={true} />}
+          {isLightningDeal && <LightningDealWaterMark isProductDescription={true} />}
         </div>
       )
     })

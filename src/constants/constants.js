@@ -20,7 +20,7 @@ export const ABOUT_US = "sobre-nós"
 
 export const PRODUCT_TYPES = {
   DEAL: "DEAL",
-  LIGHTING_DEAL: "LIGHTING_DEAL",
+  LIGHTNING_DEAL: "LIGHTNING_DEAL",
   NORMAL: "NORMAL",
 }
 

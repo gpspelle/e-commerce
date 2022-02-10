@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom"
 import { Card, Row, Col } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
-import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
+import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
+import LightningDealDuration from "../LightningDeal/LightningDealDuration"
 import { getIsDeal } from "../../utils/dealUtils"
-import { getIsLightingDeal } from "../../utils/lightingDealUtils"
+import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function Product({
@@ -23,13 +23,13 @@ export default function Product({
   commercialName,
   productType,
   dealPrice,
-  lightingDealStartTime,
-  lightingDealDuration,
+  lightningDealStartTime,
+  lightningDealDuration,
   productStock,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
-  const isLightingDeal = getIsLightingDeal(productType)
+  const isLightningDeal = getIsLightningDeal(productType)
 
   const openDetailPage = (event) => {
     if (event.target.type === "button") return
@@ -48,8 +48,8 @@ export default function Product({
         productType,
         isDeal,
         dealPrice,
-        lightingDealStartTime,
-        lightingDealDuration,
+        lightningDealStartTime,
+        lightningDealDuration,
         productOwnerId,
         productStock,
       },
@@ -84,7 +84,7 @@ export default function Product({
           src={images[0]}
         />
       )}
-      {isLightingDeal && <LightingDealWaterMark />}
+      {isLightningDeal && <LightningDealWaterMark />}
       <Card.Body>
         <div>
           <Row>
@@ -134,10 +134,10 @@ export default function Product({
             </Card.Text>
           </Row>
         </div>
-        <LightingDealDuration
+        <LightningDealDuration
           isProductDescription={false}
-          lightingDealDuration={lightingDealDuration}
-          lightingDealStartTime={lightingDealStartTime}
+          lightningDealDuration={lightningDealDuration}
+          lightningDealStartTime={lightningDealStartTime}
         />
       </Card.Body>
     </Card>

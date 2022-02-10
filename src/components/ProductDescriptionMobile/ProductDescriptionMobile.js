@@ -8,10 +8,10 @@ import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_TYPES } from "../../constants/constants"
-import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
+import LightningDealDuration from "../LightningDeal/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
-import { getIsLightingDeal } from "../../utils/lightingDealUtils"
+import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
@@ -44,8 +44,8 @@ export default function ProductDescriptionMobile() {
     tags: [],
     productType: undefined,
     dealPrice: undefined,
-    lightingDealDuration: undefined,
-    lightingDealStartTime: undefined,
+    lightningDealDuration: undefined,
+    lightningDealStartTime: undefined,
   })
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { id } = useParams()
@@ -89,10 +89,10 @@ export default function ProductDescriptionMobile() {
 
       if (location.state.productType === PRODUCT_TYPES.DEAL) {
         data.dealPrice = location.state.dealPrice
-      } else if (location.state.productType === PRODUCT_TYPES.LIGHTING_DEAL) {
+      } else if (location.state.productType === PRODUCT_TYPES.LIGHTNING_DEAL) {
         data.dealPrice = location.state.dealPrice
-        data.lightingDealDuration = location.state.lightingDealDuration
-        data.lightingDealStartTime = location.state.lightingDealStartTime
+        data.lightningDealDuration = location.state.lightningDealDuration
+        data.lightningDealStartTime = location.state.lightningDealStartTime
       }
 
       setProductData({ ...productData, ...data })
@@ -133,13 +133,13 @@ export default function ProductDescriptionMobile() {
     tags,
     productType,
     dealPrice,
-    lightingDealStartTime,
-    lightingDealDuration,
+    lightningDealStartTime,
+    lightningDealDuration,
     productStock,
   } = productData
 
   const isDeal = getIsDeal(productType)
-  const isLightingDeal = getIsLightingDeal(productType)
+  const isLightningDeal = getIsLightningDeal(productType)
   const imagesIsDefined = images.length > 0
 
   return (
@@ -160,7 +160,7 @@ export default function ProductDescriptionMobile() {
             allowScroll={allowScroll}
             blockScroll={blockScroll}
             productImagesResized={productImagesResized}
-            isLightingDeal={isLightingDeal}
+            isLightningDeal={isLightningDeal}
           />
         )}
         <h2>{name}</h2>
@@ -200,11 +200,11 @@ export default function ProductDescriptionMobile() {
           text={"Gostei desse"}
         />
         <ProductStockInfo productStock={productStock} />
-        {isLightingDeal && (
-          <LightingDealDuration
+        {isLightningDeal && (
+          <LightningDealDuration
             isProductDescription={true}
-            lightingDealDuration={lightingDealDuration}
-            lightingDealStartTime={lightingDealStartTime}
+            lightningDealDuration={lightningDealDuration}
+            lightningDealStartTime={lightningDealStartTime}
           />
         )}
         <hr

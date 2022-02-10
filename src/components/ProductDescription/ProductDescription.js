@@ -8,10 +8,10 @@ import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_TYPES } from "../../constants/constants"
-import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
+import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
-import { getIsLightingDeal } from "../../utils/lightingDealUtils"
+import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
@@ -40,8 +40,8 @@ export default function ProductDescription() {
     tags: [],
     productType: undefined,
     dealPrice: undefined,
-    lightingDealDuration: undefined,
-    lightingDealStartTime: undefined,
+    lightningDealDuration: undefined,
+    lightningDealStartTime: undefined,
   })
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { width, height } = useWindowDimensions()
@@ -85,10 +85,10 @@ export default function ProductDescription() {
 
       if (location.state.productType === PRODUCT_TYPES.DEAL) {
         data.dealPrice = location.state.dealPrice
-      } else if (location.state.productType === PRODUCT_TYPES.LIGHTING_DEAL) {
+      } else if (location.state.productType === PRODUCT_TYPES.LIGHTNING_DEAL) {
         data.dealPrice = location.state.dealPrice
-        data.lightingDealDuration = location.state.lightingDealDuration
-        data.lightingDealStartTime = location.state.lightingDealStartTime
+        data.lightningDealDuration = location.state.lightningDealDuration
+        data.lightningDealStartTime = location.state.lightningDealStartTime
       }
 
       setProductData({ ...productData, ...data })
@@ -129,13 +129,13 @@ export default function ProductDescription() {
     tags,
     productType,
     dealPrice,
-    lightingDealStartTime,
-    lightingDealDuration,
+    lightningDealStartTime,
+    lightningDealDuration,
     productStock,
   } = productData
 
   const isDeal = getIsDeal(productType)
-  const isLightingDeal = getIsLightingDeal(productType)
+  const isLightningDeal = getIsLightningDeal(productType)
   const imagesIsDefined = images.length > 0
 
   return (
@@ -159,7 +159,7 @@ export default function ProductDescription() {
                   allowScroll={allowScroll}
                   blockScroll={blockScroll}
                   productImagesResized={productImagesResized}
-                  isLightingDeal={isLightingDeal}
+                  isLightningDeal={isLightningDeal}
                 />
               )}
             </Col>
@@ -176,22 +176,22 @@ export default function ProductDescription() {
                     allowScroll={allowScroll}
                     blockScroll={blockScroll}
                     productImagesResized={productImagesResized}
-                    isLightingDeal={isLightingDeal}
+                    isLightningDeal={isLightningDeal}
                   />
                 )}
               </Col>
               <Col style={{ maxWidth: "40%" }}>
                 <h2
                   className="notranslate"
-                  style={{ marginBottom: isLightingDeal ? "0px" : "1rem" }}
+                  style={{ marginBottom: isLightningDeal ? "0px" : "1rem" }}
                 >
                   {name}
                 </h2>
-                {isLightingDeal && (
-                  <LightingDealDuration
+                {isLightningDeal && (
+                  <LightningDealDuration
                     isProductDescription={true}
-                    lightingDealDuration={lightingDealDuration}
-                    lightingDealStartTime={lightingDealStartTime}
+                    lightningDealDuration={lightningDealDuration}
+                    lightningDealStartTime={lightningDealStartTime}
                   />
                 )}
                 {isDeal ? (

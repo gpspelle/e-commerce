@@ -3,9 +3,9 @@ import { useHistory } from "react-router-dom"
 import { Card, Row, Col } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
+import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
 import { getIsDeal } from "../../utils/dealUtils"
-import { getIsLightingDeal } from "../../utils/lightingDealUtils"
+import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function ProductOfferHomeMobile({
@@ -22,15 +22,15 @@ export default function ProductOfferHomeMobile({
   commercialName,
   productType,
   dealPrice,
-  lightingDealStartTime,
-  lightingDealDuration,
+  lightningDealStartTime,
+  lightningDealDuration,
   productStock,
   productImageSize,
   productCardSize,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
-  const isLightingDeal = getIsLightingDeal(productType)
+  const isLightningDeal = getIsLightningDeal(productType)
 
   const openDetailPage = (event) => {
     if (event.target.type === "button") return
@@ -49,8 +49,8 @@ export default function ProductOfferHomeMobile({
         productType,
         isDeal,
         dealPrice,
-        lightingDealStartTime,
-        lightingDealDuration,
+        lightningDealStartTime,
+        lightningDealDuration,
         productOwnerId,
         productStock,
       },
@@ -85,7 +85,7 @@ export default function ProductOfferHomeMobile({
           src={images[0]}
         />
       )}
-      {isLightingDeal && <LightingDealWaterMark />}
+      {isLightningDeal && <LightningDealWaterMark />}
       <Card.Body>
         <Row>
           <Col style={{ display: "flex" }}>

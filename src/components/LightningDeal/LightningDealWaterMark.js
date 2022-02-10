@@ -1,7 +1,7 @@
 import React from "react"
 import { AiFillThunderbolt } from "react-icons/ai"
 
-export default function LightingDealWaterMark({ isProductDescription }) {
+export default function LightningDealWaterMark({ isProductDescription }) {
   const top = isProductDescription ? "0px" : ""
   return (
     <>

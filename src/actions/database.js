@@ -140,10 +140,10 @@ export const getProductFromDatabase = async ({
       : 1
     if (data.productType === PRODUCT_TYPES.DEAL) {
       data.dealPrice = response.data.Item.DEAL_PRICE.N
-    } else if (data.productType === PRODUCT_TYPES.LIGHTING_DEAL) {
+    } else if (data.productType === PRODUCT_TYPES.LIGHTNING_DEAL) {
       data.dealPrice = response.data.Item.DEAL_PRICE.N
-      data.lightingDealDuration = response.data.Item.LIGHTING_DEAL_DURATION.S
-      data.lightingDealStartTime = response.data.Item.LIGHTING_DEAL_START_TIME.S
+      data.lightningDealDuration = response.data.Item.LIGHTNING_DEAL_DURATION.S
+      data.lightningDealStartTime = response.data.Item.LIGHTNING_DEAL_START_TIME.S
     }
 
     setProductData({ ...productData, ...data })

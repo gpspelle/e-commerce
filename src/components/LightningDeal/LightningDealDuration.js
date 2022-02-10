@@ -3,13 +3,13 @@ import { AiOutlineClockCircle } from "react-icons/ai"
 
 import {
   msToTime,
-  processLightingDealInformation,
-} from "../../utils/lightingDealUtils"
+  processLightningDealInformation,
+} from "../../utils/lightningDealUtils"
 
-export default function LightingDealDuration({
+export default function LightningDealDuration({
   isProductDescription,
-  lightingDealDuration,
-  lightingDealStartTime,
+  lightningDealDuration,
+  lightningDealStartTime,
 }) {
   const [now, setNow] = useState(new Date())
 
@@ -20,14 +20,14 @@ export default function LightingDealDuration({
     return () => clearInterval(interval)
   }, [])
 
-  if (!lightingDealDuration || !lightingDealStartTime) {
+  if (!lightningDealDuration || !lightningDealStartTime) {
     return <></>
   }
 
-  const { miliseconds } = processLightingDealInformation({
+  const { miliseconds } = processLightningDealInformation({
     now,
-    lightingDealDuration,
-    lightingDealStartTime,
+    lightningDealDuration,
+    lightningDealStartTime,
   })
   const displayLeftDuration = msToTime(miliseconds)
 
