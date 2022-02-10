@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "react-bootstrap"
 
-import { buyMessage, helloMessage } from "../../utils/WhatsAppMessages"
+import { buyMessage, helloMessage } from "../../utils/whatsAppMessages"
 
 export const sendBuyWhatsAppMessage = ({
   isDeal,

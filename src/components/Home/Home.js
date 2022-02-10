@@ -13,7 +13,7 @@ import AdminHome from "../AdminHome/AdminHome"
 import {
   isLightingDealValid,
   processLightingDealInformation,
-} from "../../utils/LightingDealUtils"
+} from "../../utils/lightingDealUtils"
 import { getRandomFromArray, getRandomFromRangeArray } from "../../utils/randomUtils"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"

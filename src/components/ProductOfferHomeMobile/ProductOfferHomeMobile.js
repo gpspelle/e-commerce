@@ -4,8 +4,8 @@ import { Card, Row, Col } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
-import { getIsDeal } from "../../utils/DealUtils"
-import { getIsLightingDeal } from "../../utils/LightingDealUtils"
+import { getIsDeal } from "../../utils/dealUtils"
+import { getIsLightingDeal } from "../../utils/lightingDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function ProductOfferHomeMobile({

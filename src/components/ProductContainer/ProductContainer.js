@@ -9,7 +9,7 @@ import Product from "../Product/Product"
 import {
   isLightingDealValid,
   processLightingDealInformation,
-} from "../../utils/LightingDealUtils"
+} from "../../utils/lightingDealUtils"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
 import {
