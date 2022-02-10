@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
+
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
 import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"

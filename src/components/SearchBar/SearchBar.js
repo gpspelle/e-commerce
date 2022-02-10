@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Container, Form } from "react-bootstrap"
-import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { useHistory } from "react-router-dom"
-import "./SearchBar.css"
+
+import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { PRODUCTS } from "../../constants/constants"
+import "./SearchBar.css"
 
 export default function SearchBar({ screenWidth }) {
   const history = useHistory()

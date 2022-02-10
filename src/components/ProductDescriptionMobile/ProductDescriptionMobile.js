@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { Container } from "react-bootstrap"
+
+import useWindowDimensions from "../../hooks/useWindowDimensions"
+import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
@@ -9,9 +12,6 @@ import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import useScrollBlock from "../../hooks/useScrollBlock"
-import "./ProductDescriptionMobile.css"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
@@ -23,6 +23,7 @@ import {
   getAccountFromDatabase,
   getProductFromDatabase,
 } from "../../actions/database"
+import "./ProductDescriptionMobile.css"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()

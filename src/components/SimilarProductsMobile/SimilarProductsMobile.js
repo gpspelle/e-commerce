@@ -1,16 +1,17 @@
 import React, { useState, useEffect, memo } from "react"
+import { Spinner, Container } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
-import { Spinner, Container } from "react-bootstrap"
+
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import { useHistory } from "react-router-dom"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
-import "./SimilarProductsMobile.css"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 import scrollToTop from "../../utils/scrollToTop"
 import {
   getProductsIdsByTagsFromDatabase,
   getSimilarProductsFromDatabase,
 } from "../../actions/database"
+import "./SimilarProductsMobile.css"
 
 const SimilarProductsMobile = ({ id, tags }) => {
   const history = useHistory()

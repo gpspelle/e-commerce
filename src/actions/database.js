@@ -1,4 +1,5 @@
 import axios from "axios"
+
 import {
   ACCOUNTS_ENDPOINT,
   PRODUCTS_ENDPOINT,

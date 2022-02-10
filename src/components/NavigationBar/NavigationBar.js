@@ -1,9 +1,10 @@
 import React from "react"
-import "./NavigationBar.css"
 import { Container, Nav, Navbar, Offcanvas } from "react-bootstrap"
+
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 import { APP_NAME, NAVIGATION_LINKS } from "../../constants/constants"
 import SearchBar from "../SearchBar/SearchBar"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
+import "./NavigationBar.css"
 
 export default function NavigationBar() {
   const { width } = useWindowDimensions()

@@ -1,11 +1,12 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
 import { Card, Row, Col } from "react-bootstrap"
+
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function ProductOfferHomeMobile({
   id,

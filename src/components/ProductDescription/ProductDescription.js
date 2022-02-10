@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { Container, Row, Col } from "react-bootstrap"
+
+import useWindowDimensions from "../../hooks/useWindowDimensions"
+import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
@@ -9,12 +12,9 @@ import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import useScrollBlock from "../../hooks/useScrollBlock"
 import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
-import "./ProductDescription.css"
 import scrollToTop from "../../utils/scrollToTop"
 import AboutAdmin from "../AdminDescription/AboutAdmin"
 import Footer from "../Footer/Footer"
@@ -23,6 +23,7 @@ import {
   getAccountFromDatabase,
   getProductFromDatabase,
 } from "../../actions/database"
+import "./ProductDescription.css"
 
 export default function ProductDescription() {
   const location = useLocation()

@@ -1,12 +1,13 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
 import { Card } from "react-bootstrap"
+
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightingDealWaterMark from "../LightingDealWaterMark/LightingDealWaterMark"
 import LightingDealDuration from "../LightingDealDuration/LightingDealDuration"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightingDeal } from "../../utils/LightingDealUtils"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 // this is not used for now, waiting for the designer's work
 export default function ProductMobile({

@@ -1,6 +1,7 @@
 import React from "react"
 import { Col, Row } from "react-bootstrap"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
+
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export const LateralCard = ({
   smallSrc,

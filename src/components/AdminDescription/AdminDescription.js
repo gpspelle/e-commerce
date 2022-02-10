@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { Card, Col, Container, Row } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
+import { BsWhatsapp } from "react-icons/bs"
+
 import { getAccountsFromDatabase } from "../../actions/database"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import scrollToTop from "../../utils/scrollToTop"
@@ -11,7 +13,6 @@ import SendMessageWhatsAppButton, {
   sendHelloWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import AboutAdmin from "./AboutAdmin"
-import { BsWhatsapp } from "react-icons/bs"
 
 export default function AdminDescription() {
   const location = useLocation()

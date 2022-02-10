@@ -1,6 +1,7 @@
 import React from "react"
 import { Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
 import "./AboutAdmin.css"
 

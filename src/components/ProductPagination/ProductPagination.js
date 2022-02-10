@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
+
 import { isEqual } from "../../utils/isEqual"
 import "./ProductPagination.css"
 

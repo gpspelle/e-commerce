@@ -2,13 +2,14 @@ import React, { useState, useEffect, memo } from "react"
 import { Pagination, Container, Spinner } from "react-bootstrap"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import { useHistory } from "react-router-dom"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad.js/ProgressiveBlurryImageLoad"
-import "./SimilarProducts.css"
+
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 import scrollToTop from "../../utils/scrollToTop"
 import {
   getProductsIdsByTagsFromDatabase,
   getSimilarProductsFromDatabase,
 } from "../../actions/database"
+import "./SimilarProducts.css"
 
 const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()

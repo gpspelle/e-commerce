@@ -1,16 +1,17 @@
 import React, { useState, useEffect, memo, useRef } from "react"
 import { Container, Row, Col } from "react-bootstrap"
+
+import useWindowDimensions from "../../hooks/useWindowDimensions"
+import useQuery from "../../hooks/useQuery"
+import useIsMounted from "../../hooks/useIsMounted"
 import { PRODUCT_TYPES } from "../../constants/constants"
 import Product from "../Product/Product"
 import {
   isLightingDealValid,
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import useQuery from "../../hooks/useQuery"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import MemoizedProductPagination from "../ProductPagination/ProductPagination"
-import useIsMounted from "../../hooks/useIsMounted"
 import {
   getAccountsFromDatabase,
   getProductsFromDatabase,

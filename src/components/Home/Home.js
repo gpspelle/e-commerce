@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"
-import AliceCarousel from "react-alice-carousel"
 import { Col, Container, Row, Spinner } from "react-bootstrap"
+import { useHistory } from "react-router-dom"
+import AliceCarousel from "react-alice-carousel"
+import "react-alice-carousel/lib/alice-carousel.css"
+
 import { ABOUT_US, DEALS, PRODUCT_TYPES } from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
-import "react-alice-carousel/lib/alice-carousel.css"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 import ProductOfferHomeMobile from "../ProductOfferHomeMobile/ProductOfferHomeMobile"
 import AdminHome from "../AdminHome/AdminHome"
 import {
@@ -12,7 +15,6 @@ import {
   processLightingDealInformation,
 } from "../../utils/LightingDealUtils"
 import { getRandomFromArray, getRandomFromRangeArray } from "../../utils/randomUtils"
-import { useHistory } from "react-router"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"
 import {
@@ -20,7 +22,6 @@ import {
   getProductsFromDatabase,
 } from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import { range } from "../../utils/range"

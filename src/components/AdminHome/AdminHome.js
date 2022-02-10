@@ -1,5 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
+
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
 
 export const openAdminDetailPage = (event, history, account) => {
