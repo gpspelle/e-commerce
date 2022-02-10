@@ -8,7 +8,7 @@ import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import { PRODUCT_TYPES } from "../../constants/constants"
-import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
+import LightningDealDuration from "../LightningDeal/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
