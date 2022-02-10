@@ -37,7 +37,7 @@ export default function NavigationBar() {
                     className="navigation-link"
                     href={NAVIGATION_LINKS[page]}
                   >
-                    <h7>{page}</h7>
+                    <h7>&nbsp;{page}</h7>
                   </Nav.Link>
                 )
               })}
