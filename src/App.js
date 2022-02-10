@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react"
 import DocumentMeta from "react-document-meta"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+
+import useWindowDimensions from "./hooks/useWindowDimensions"
 import {
   ABOUT_US,
   ADMIN_DESCRIPTION,
@@ -10,7 +12,6 @@ import {
   PRODUCTS,
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
-import useWindowDimensions from "./hooks/useWindowDimensions"
 import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
 import Home from "./components/Home/Home"
 import AdminDescription from "./components/AdminDescription/AdminDescription"
