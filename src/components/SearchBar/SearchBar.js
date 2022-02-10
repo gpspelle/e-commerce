@@ -21,13 +21,13 @@ export default function SearchBar({ screenWidth }) {
     event.preventDefault()
     if (searchBarValue && searchBarValue.length > 0) {
       history.push({
-        pathname: screenWidth < 1024 ? `/${PRODUCTS}` : "/",
+        pathname: `/${PRODUCTS}`,
         search: `?q=${searchBarValue}`,
       })
     } else {
       setSearchBarValue("")
       history.push({
-        pathname: screenWidth < 1024 ? `/${PRODUCTS}` : "/",
+        pathname: "/",
       })
     }
     setIsSubmitted(true)
