@@ -7,7 +7,6 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { PRODUCT_TYPES } from "../../constants/constants"
 import LightningDealDuration from "../LightningDeal/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
@@ -23,27 +22,13 @@ import {
   getAccountFromDatabase,
   getProductFromDatabase,
 } from "../../actions/database"
+import { getEmptyProduct } from "../../entities/product"
 import "./ProductDescription.css"
 
 export default function ProductDescription() {
   const location = useLocation()
   const { id } = useParams()
-  const [productData, setProductData] = useState({
-    name: undefined,
-    price: undefined,
-    images: [],
-    productStock: undefined,
-    productSellTypes: [],
-    description: undefined,
-    phoneNumber: undefined,
-    productOwnerId: undefined,
-    commercialName: undefined,
-    tags: [],
-    productType: undefined,
-    dealPrice: undefined,
-    lightningDealDuration: undefined,
-    lightningDealStartTime: undefined,
-  })
+  const [productData, setProductData] = useState(getEmptyProduct())
   const [isFullScreen, setIsFullScreen] = useState(false)
   const { width, height } = useWindowDimensions()
   const [blockScroll, allowScroll] = useScrollBlock()
@@ -67,33 +52,7 @@ export default function ProductDescription() {
 
   useEffect(() => {
     if (location.state) {
-      const data = {}
-      data.id = location.state.id
-      data.name = location.state.name
-      data.description = location.state.description
-      data.price = location.state.price
-      data.images = location.state.images
-      data.productImagesResized = location.state.productImagesResized
-      data.productOwnerId = location.state.productOwnerId
-
-      data.tags = location.state.tags
-      data.productType = location.state.productType
-      data.productStock = location.state.productStock
-      data.productSellTypes = location.state.productSellTypes
-
-      if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
-      if (location.state.commercialName)
-        data.commercialName = location.state.commercialName
-
-      if (location.state.productType === PRODUCT_TYPES.DEAL) {
-        data.dealPrice = location.state.dealPrice
-      } else if (location.state.productType === PRODUCT_TYPES.LIGHTNING_DEAL) {
-        data.dealPrice = location.state.dealPrice
-        data.lightningDealDuration = location.state.lightningDealDuration
-        data.lightningDealStartTime = location.state.lightningDealStartTime
-      }
-
-      setProductData({ ...productData, ...data })
+      setProductData({ ...productData, ...location.state })
     } else {
       getProductFromDatabase({
         productId: id,

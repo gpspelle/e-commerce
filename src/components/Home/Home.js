@@ -4,16 +4,10 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import {
-  ABOUT_US,
-  DEALS,
-  PRODUCT_STOCK_SELL_TYPE,
-  PRODUCT_TYPES,
-} from "../../constants/constants"
+import { ABOUT_US, DEALS, PRODUCT_TYPES } from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
-import ProductOfferHomeMobile from "../ProductOfferHomeMobile/ProductOfferHomeMobile"
 import AdminHome from "../AdminHome/AdminHome"
 import {
   isLightningDealValid,
@@ -30,6 +24,8 @@ import scrollToTop from "../../utils/scrollToTop"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import { range } from "../../utils/range"
+import Product from "../Product/Product"
+import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -154,51 +150,36 @@ export default function Home() {
   const productCardSize = productImageSize + 2.5
   const items =
     displayProducts &&
-    displayProducts.map((item) => {
+    displayProducts.map((displayProduct) => {
+      const productEntity = convertProductFromDatabaseToProductEntity({
+        product: displayProduct,
+      })
       return (
         <Col
           key={
-            item.id.S +
-            productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]?.phoneNumber
+            displayProduct.id.S +
+            productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S]?.phoneNumber
           }
         >
-          <ProductOfferHomeMobile
-            id={item.id.S}
-            name={item.PRODUCT_NAME.S}
-            description={item.PRODUCT_DESCRIPTION.S}
-            price={item.PRODUCT_PRICE.N}
-            images={item.PRODUCT_IMAGES.L.map((image) => image.S)}
-            productImagesResized={item.PRODUCT_IMAGES_RESIZED?.L.map(
-              (image) => image.S
-            )}
-            coverImage={item.PRODUCT_COVER_IMAGE?.S}
+          <Product
+            productEntity={productEntity}
             phoneNumber={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]["phoneNumber"]
+                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
+                    "phoneNumber"
+                  ]
                 : false
             }
             commercialName={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S][
+                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
                     "commercialName"
                   ]
                 : false
             }
-            productOwnerId={item.PRODUCT_OWNER_ID?.S}
-            tags={item.PRODUCT_TAGS?.SS || []}
-            productType={item.PRODUCT_TYPE?.S}
-            dealPrice={item.DEAL_PRICE?.N}
-            lightningDealDuration={item.LIGHTNING_DEAL_DURATION?.S}
-            lightningDealStartTime={item.LIGHTNING_DEAL_START_TIME?.S}
-            productStock={item.PRODUCT_STOCK?.N ? parseInt(item.PRODUCT_STOCK.N) : 1}
-            productSellTypes={
-              item.PRODUCT_SELL_TYPES?.L.map((sellType) => sellType.S) || [
-                PRODUCT_STOCK_SELL_TYPE,
-              ]
-            }
-            hasMoreDataToFetch={pagination.fetch}
             productImageSize={productImageSize}
             productCardSize={productCardSize}
+            isProductOfferHome={true}
           />
         </Col>
       )

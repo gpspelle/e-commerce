@@ -5,30 +5,32 @@ import { Card, Row, Col } from "react-bootstrap"
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
 import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
 import LightningDealDuration from "../LightningDeal/LightningDealDuration"
-import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
+import { getIsDeal } from "../../utils/dealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function Product({
-  id,
-  name,
-  description,
-  price,
-  images,
-  productImagesResized,
-  coverImage,
+  productEntity,
   phoneNumber,
-  tags,
-  productOwnerId,
   commercialName,
-  productType,
-  dealPrice,
-  lightningDealStartTime,
-  lightningDealDuration,
-  productStock,
-  productSellTypes,
+  productImageSize,
+  productCardSize,
+  isProductOfferHome,
 }) {
   const history = useHistory()
+
+  const {
+    id,
+    name,
+    price,
+    images,
+    productType,
+    dealPrice,
+    lightningDealStartTime,
+    lightningDealDuration,
+    coverImage,
+  } = productEntity
+
   const isDeal = getIsDeal(productType)
   const isLightningDeal = getIsLightningDeal(productType)
 
@@ -36,30 +38,10 @@ export default function Product({
     if (event.target.type === "button") return
     history.push({
       pathname: `/${id}/${PRODUCT_DESCRIPTION}`,
-      state: {
-        id,
-        name,
-        description,
-        price,
-        images,
-        productImagesResized,
-        phoneNumber,
-        tags,
-        commercialName,
-        productType,
-        isDeal,
-        dealPrice,
-        lightningDealStartTime,
-        lightningDealDuration,
-        productOwnerId,
-        productStock,
-        productSellTypes,
-      },
+      state: { ...productEntity, phoneNumber, commercialName },
     })
   }
 
-  var productImageSize = "258px"
-  var productCardSize = "260px"
   return (
     <Card
       style={{
@@ -70,6 +52,7 @@ export default function Product({
     >
       {coverImage ? (
         <ProgressiveBlurryImageLoad
+          style={{ marginLeft: "0.5px" }}
           width={productImageSize}
           height={productImageSize}
           small={`data:image/jpeg;base64,${coverImage}`}
@@ -78,6 +61,7 @@ export default function Product({
       ) : (
         <img
           style={{
+            marginLeft: "0.5px",
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
@@ -94,6 +78,7 @@ export default function Product({
               <Card.Title
                 className="notranslate"
                 style={{
+                  fontSize: isProductOfferHome ? "15px" : "",
                   textDecoration: isDeal ? "line-through" : "none",
                   color: isDeal ? "lightgray" : "inherit",
                   marginBottom: "0",
@@ -102,7 +87,14 @@ export default function Product({
                 R$ {price}
               </Card.Title>
               {isDeal && (
-                <Card.Title className="notranslate">&nbsp;R$ {dealPrice}</Card.Title>
+                <Card.Title
+                  style={{
+                    fontSize: isProductOfferHome ? "15px" : "",
+                  }}
+                  className="notranslate"
+                >
+                  &nbsp;R$ {dealPrice}
+                </Card.Title>
               )}
             </Col>
           </Row>
@@ -111,7 +103,7 @@ export default function Product({
               <Card.Text
                 style={{
                   fontSize: "15px",
-                  marginBottom: "0.25rem",
+                  marginBottom: isProductOfferHome ? "" : "0.25rem",
                   overflowX: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
@@ -122,25 +114,29 @@ export default function Product({
               </Card.Text>
             </Col>
           </Row>
-          <Row>
-            <Card.Text
-              style={{
-                fontSize: "12px",
-                overflowX: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-              className="notranslate"
-            >
-              {`Vendido por ${commercialName ? commercialName : "..."}`}
-            </Card.Text>
-          </Row>
+          {!isProductOfferHome && (
+            <Row>
+              <Card.Text
+                style={{
+                  fontSize: "12px",
+                  overflowX: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+                className="notranslate"
+              >
+                {`Vendido por ${commercialName ? commercialName : "..."}`}
+              </Card.Text>
+            </Row>
+          )}
         </div>
-        <LightningDealDuration
-          isProductDescription={false}
-          lightningDealDuration={lightningDealDuration}
-          lightningDealStartTime={lightningDealStartTime}
-        />
+        {!isProductOfferHome && (
+          <LightningDealDuration
+            isProductDescription={false}
+            lightningDealDuration={lightningDealDuration}
+            lightningDealStartTime={lightningDealStartTime}
+          />
+        )}
       </Card.Body>
     </Card>
   )

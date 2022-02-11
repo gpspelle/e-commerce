@@ -157,7 +157,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
           }}
         >
           <Product
-            {...productEntity}
+            productEntity={productEntity}
             phoneNumber={
               Object.keys(productOwnerIdToOwnerData).length !== 0
                 ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
@@ -172,7 +172,9 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
                   ]
                 : false
             }
-            hasMoreDataToFetch={pagination.fetch}
+            productImageSize="258px"
+            productCardSize="260px"
+            isProductOfferHome={false}
           />
         </Col>
       )
