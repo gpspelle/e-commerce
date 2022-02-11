@@ -1,11 +1,14 @@
 export const REST_API =
   process.env.REACT_APP_REST_API ||
   "https://nlv53clpuf.execute-api.us-east-1.amazonaws.com/dev"
-
 export const PAGE_TITLE = process.env.REACT_APP_PAGE_TITLE || "Lojinha"
 export const PAGE_DESCRIPTION =
   process.env.REACT_APP_PAGE_DESCRIPTION || "A loja virtual"
 export const APP_NAME = process.env.REACT_APP_APP_NAME || "Lojinha"
+export const PRODUCT_STOCK_SELL_TYPE =
+  process.env.REACT_APP_PRODUCT_STOCK || "PRODUCT_STOCK"
+export const PRODUCT_ORDER_SELL_TYPE =
+  process.env.REACT_APP_PRODUCT_ORDER || "PRODUCT_ORDER"
 
 export const PRODUCTS_ENDPOINT = "customer-products"
 export const PRODUCT_ENDPOINT = "customer-product"
@@ -23,9 +26,6 @@ export const PRODUCT_TYPES = {
   LIGHTNING_DEAL: "LIGHTNING_DEAL",
   NORMAL: "NORMAL",
 }
-
-export const PRODUCT_STOCK_SELL_TYPE = "PRODUCT_STOCK"
-export const PRODUCT_ORDER_SELL_TYPE = "PRODUCT_ORDER"
 
 export const NAVIGATION_LINKS = {
   "Tela de início": "/",
