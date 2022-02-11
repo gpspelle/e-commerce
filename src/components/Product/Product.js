@@ -52,7 +52,6 @@ export default function Product({
     >
       {coverImage ? (
         <ProgressiveBlurryImageLoad
-          style={{ marginLeft: "0.5px" }}
           width={productImageSize}
           height={productImageSize}
           small={`data:image/jpeg;base64,${coverImage}`}
@@ -61,7 +60,6 @@ export default function Product({
       ) : (
         <img
           style={{
-            marginLeft: "0.5px",
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
