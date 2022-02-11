@@ -14,7 +14,7 @@ import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import MemoizedSimilarProducts from "../SimilarProducts/SimilarProducts"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
-import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
+import ProductSellTypeInfo from "../ProductSellTypeInfo/ProductSellTypeInfo"
 import scrollToTop from "../../utils/scrollToTop"
 import AboutAdmin from "../AdminDescription/AboutAdmin"
 import Footer from "../Footer/Footer"
@@ -33,6 +33,7 @@ export default function ProductDescription() {
     price: undefined,
     images: [],
     productStock: undefined,
+    productSellTypes: [],
     description: undefined,
     phoneNumber: undefined,
     productOwnerId: undefined,
@@ -78,6 +79,7 @@ export default function ProductDescription() {
       data.tags = location.state.tags
       data.productType = location.state.productType
       data.productStock = location.state.productStock
+      data.productSellTypes = location.state.productSellTypes
 
       if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
       if (location.state.commercialName)
@@ -132,6 +134,7 @@ export default function ProductDescription() {
     lightningDealStartTime,
     lightningDealDuration,
     productStock,
+    productSellTypes,
   } = productData
 
   const isDeal = getIsDeal(productType)
@@ -225,7 +228,10 @@ export default function ProductDescription() {
                   style={{ marginTop: "1rem", marginBottom: "0" }}
                   className="notranslate"
                 >
-                  <ProductStockInfo productStock={productStock} />
+                  <ProductSellTypeInfo
+                    productStock={productStock}
+                    productSellTypes={productSellTypes}
+                  />
                 </h6>
                 <SendMessageWhatsAppButton
                   style={{

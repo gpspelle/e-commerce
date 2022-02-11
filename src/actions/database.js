@@ -4,10 +4,10 @@ import {
   ACCOUNTS_ENDPOINT,
   PRODUCTS_ENDPOINT,
   PRODUCT_ENDPOINT,
-  PRODUCT_TYPES,
   REST_API,
   TAGS_ENDPOINT,
 } from "../constants/constants"
+import { convertProductFromDatabaseToProductEntity } from "../utils/convertProductFromDatabaseToProductEntity"
 
 export const getAccountsFromDatabase = async ({ setAccounts, productOwnerIds }) => {
   if (productOwnerIds !== undefined && Array.isArray(productOwnerIds)) {
@@ -123,30 +123,12 @@ export const getProductFromDatabase = async ({
     })
 
     setFailedToFetchProduct(false)
-    const data = {}
-    data.id = response.data.Item.id.S
-    data.name = response.data.Item.PRODUCT_NAME.S
-    data.description = response.data.Item.PRODUCT_DESCRIPTION.S
-    data.price = response.data.Item.PRODUCT_PRICE.N
-    data.images = response.data.Item.PRODUCT_IMAGES.L.map((item) => item.S)
-    data.productImagesResized = response.data.Item.PRODUCT_IMAGES_RESIZED?.L.map(
-      (item) => item.S
-    )
-    data.productOwnerId = response.data.Item.PRODUCT_OWNER_ID?.S
-    data.tags = response.data.Item?.PRODUCT_TAGS?.SS
-    data.productType = response.data.Item?.PRODUCT_TYPE?.S
-    data.productStock = response.data.Item.PRODUCT_STOCK?.N
-      ? parseInt(response.data.Item.PRODUCT_STOCK.N)
-      : 1
-    if (data.productType === PRODUCT_TYPES.DEAL) {
-      data.dealPrice = response.data.Item.DEAL_PRICE.N
-    } else if (data.productType === PRODUCT_TYPES.LIGHTNING_DEAL) {
-      data.dealPrice = response.data.Item.DEAL_PRICE.N
-      data.lightningDealDuration = response.data.Item.LIGHTNING_DEAL_DURATION.S
-      data.lightningDealStartTime = response.data.Item.LIGHTNING_DEAL_START_TIME.S
-    }
 
-    setProductData({ ...productData, ...data })
+    const productEntity = convertProductFromDatabaseToProductEntity({
+      product: response.data.Item,
+    })
+
+    setProductData({ ...productData, ...productEntity })
   } catch (e) {
     setFailedToFetchProduct(true)
   }

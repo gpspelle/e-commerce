@@ -7,13 +7,17 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import { PRODUCT_TYPES } from "../../constants/constants"
+import {
+  PRODUCT_ORDER_SELL_TYPE,
+  PRODUCT_STOCK_SELL_TYPE,
+  PRODUCT_TYPES,
+} from "../../constants/constants"
 import LightningDealDuration from "../LightningDeal/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import MemoizedSimilarProductsMobile from "../SimilarProductsMobile/SimilarProductsMobile"
-import ProductStockInfo from "../ProductStockInfo/ProductStockInfo"
+import ProductSellTypeInfo from "../ProductSellTypeInfo/ProductSellTypeInfo"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
 import AboutAdmin from "../AdminDescription/AboutAdmin"
 import scrollToTop from "../../utils/scrollToTop"
@@ -32,6 +36,7 @@ export default function ProductDescriptionMobile() {
     price: undefined,
     images: [],
     productStock: undefined,
+    productSellTypes: [],
     description: undefined,
     phoneNumber: undefined,
     productOwnerId: undefined,
@@ -83,6 +88,8 @@ export default function ProductDescriptionMobile() {
       data.tags = location.state.tags
       data.productType = location.state.productType
       data.productStock = location.state.productStock
+      data.productSellTypes = location.state.productSellTypes
+
       if (location.state.phoneNumber) data.phoneNumber = location.state.phoneNumber
       if (location.state.commercialName)
         data.commercialName = location.state.commercialName
@@ -136,6 +143,7 @@ export default function ProductDescriptionMobile() {
     lightningDealStartTime,
     lightningDealDuration,
     productStock,
+    productSellTypes,
   } = productData
 
   const isDeal = getIsDeal(productType)
@@ -199,7 +207,10 @@ export default function ProductDescriptionMobile() {
           commercialName={commercialName}
           text={"Gostei desse"}
         />
-        <ProductStockInfo productStock={productStock} />
+        <ProductSellTypeInfo
+          productStock={productStock}
+          productSellTypes={productSellTypes}
+        />
         {isLightningDeal && (
           <LightningDealDuration
             isProductDescription={true}
@@ -235,17 +246,6 @@ export default function ProductDescriptionMobile() {
             style={{ width: "70%", wordWrap: "break-word" }}
           >
             {commercialName}
-          </div>
-          <div style={{ width: "30%" }}>Estoque</div>
-          <div
-            className="notranslate"
-            style={{ width: "70%", wordWrap: "break-word" }}
-          >
-            {productStock !== undefined &&
-              productStock > 1 &&
-              `${productStock} unidades`}
-            {(productStock === undefined || productStock === 1) && "1 unidade"}
-            {productStock === 0 && "Sob encomenda"}
           </div>
         </div>
         <hr

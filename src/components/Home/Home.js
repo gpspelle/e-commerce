@@ -4,7 +4,12 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import { ABOUT_US, DEALS, PRODUCT_TYPES } from "../../constants/constants"
+import {
+  ABOUT_US,
+  DEALS,
+  PRODUCT_STOCK_SELL_TYPE,
+  PRODUCT_TYPES,
+} from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -186,6 +191,11 @@ export default function Home() {
             lightningDealDuration={item.LIGHTNING_DEAL_DURATION?.S}
             lightningDealStartTime={item.LIGHTNING_DEAL_START_TIME?.S}
             productStock={item.PRODUCT_STOCK?.N ? parseInt(item.PRODUCT_STOCK.N) : 1}
+            productSellTypes={
+              item.PRODUCT_SELL_TYPES?.L.map((sellType) => sellType.S) || [
+                PRODUCT_STOCK_SELL_TYPE,
+              ]
+            }
             hasMoreDataToFetch={pagination.fetch}
             productImageSize={productImageSize}
             productCardSize={productCardSize}

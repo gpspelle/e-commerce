@@ -24,6 +24,9 @@ export const PRODUCT_TYPES = {
   NORMAL: "NORMAL",
 }
 
+export const PRODUCT_STOCK_SELL_TYPE = "PRODUCT_STOCK"
+export const PRODUCT_ORDER_SELL_TYPE = "PRODUCT_ORDER"
+
 export const NAVIGATION_LINKS = {
   "Tela de início": "/",
   "Todos os produtos": `/${PRODUCTS}`,

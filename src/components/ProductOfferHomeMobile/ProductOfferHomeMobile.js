@@ -25,6 +25,7 @@ export default function ProductOfferHomeMobile({
   lightningDealStartTime,
   lightningDealDuration,
   productStock,
+  productSellTypes,
   productImageSize,
   productCardSize,
 }) {
@@ -53,6 +54,7 @@ export default function ProductOfferHomeMobile({
         lightningDealDuration,
         productOwnerId,
         productStock,
+        productSellTypes,
       },
     })
   }

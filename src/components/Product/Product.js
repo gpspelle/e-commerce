@@ -26,6 +26,7 @@ export default function Product({
   lightningDealStartTime,
   lightningDealDuration,
   productStock,
+  productSellTypes,
 }) {
   const history = useHistory()
   const isDeal = getIsDeal(productType)
@@ -52,6 +53,7 @@ export default function Product({
         lightningDealDuration,
         productOwnerId,
         productStock,
+        productSellTypes,
       },
     })
   }

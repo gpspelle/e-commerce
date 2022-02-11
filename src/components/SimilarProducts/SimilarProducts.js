@@ -10,6 +10,7 @@ import {
   getSimilarProductsFromDatabase,
 } from "../../actions/database"
 import "./SimilarProducts.css"
+import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 
 const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()
@@ -117,33 +118,14 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
                 {products.slice(start, end).map((similarProduct) => {
                   const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
                   const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
+                  const productEntity = convertProductFromDatabaseToProductEntity({
+                    product: similarProduct,
+                  })
                   return (
                     <Pagination.Item
                       style={{ position: "relative", margin: "auto" }}
                       key={similarProduct.id.S}
-                      onClick={() =>
-                        openDetailPage({
-                          id: similarProduct.id.S,
-                          name: similarProduct.PRODUCT_NAME.S,
-                          description: similarProduct.PRODUCT_DESCRIPTION.S,
-                          price: similarProduct.PRODUCT_PRICE.N,
-                          images: similarProduct.PRODUCT_IMAGES.L.map(
-                            (image) => image.S
-                          ),
-                          productImagesResized:
-                            similarProduct.PRODUCT_IMAGES_RESIZED?.L.map(
-                              (image) => image.S
-                            ),
-                          tags: similarProduct.PRODUCT_TAGS
-                            ? similarProduct.PRODUCT_TAGS.SS
-                            : [],
-                          productStock: similarProduct.PRODUCT_STOCK?.N
-                            ? parseInt(similarProduct.PRODUCT_STOCK.N)
-                            : 1,
-                          productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
-                          productType: similarProduct.PRODUCT_TYPE?.S,
-                        })
-                      }
+                      onClick={() => openDetailPage(productEntity)}
                     >
                       {coverImage ? (
                         <ProgressiveBlurryImageLoad

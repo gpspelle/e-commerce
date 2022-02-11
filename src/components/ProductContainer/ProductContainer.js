@@ -17,6 +17,7 @@ import {
   getProductsFromDatabase,
 } from "../../actions/database"
 import scrollToTop from "../../utils/scrollToTop"
+import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 
 const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
   const query = useQuery()
@@ -138,12 +139,15 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
 
   const items =
     displayProducts &&
-    displayProducts.map((item) => {
+    displayProducts.map((displayProduct) => {
+      const productEntity = convertProductFromDatabaseToProductEntity({
+        product: displayProduct,
+      })
       return (
         <Col
           key={
-            item.id.S +
-            productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]?.phoneNumber
+            displayProduct.id.S +
+            productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S]?.phoneNumber
           }
           style={{
             display: "flex",
@@ -153,34 +157,21 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
           }}
         >
           <Product
-            id={item.id.S}
-            name={item.PRODUCT_NAME.S}
-            description={item.PRODUCT_DESCRIPTION.S}
-            price={item.PRODUCT_PRICE.N}
-            images={item.PRODUCT_IMAGES.L.map((image) => image.S)}
-            productImagesResized={item.PRODUCT_IMAGES_RESIZED?.L.map(
-              (image) => image.S
-            )}
-            coverImage={item.PRODUCT_COVER_IMAGE?.S}
+            {...productEntity}
             phoneNumber={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S]["phoneNumber"]
+                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
+                    "phoneNumber"
+                  ]
                 : false
             }
             commercialName={
               Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[item.PRODUCT_OWNER_ID.S][
+                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
                     "commercialName"
                   ]
                 : false
             }
-            productOwnerId={item.PRODUCT_OWNER_ID?.S}
-            tags={item.PRODUCT_TAGS?.SS || []}
-            productType={item.PRODUCT_TYPE?.S}
-            dealPrice={item.DEAL_PRICE?.N}
-            lightningDealDuration={item.LIGHTNING_DEAL_DURATION?.S}
-            lightningDealStartTime={item.LIGHTNING_DEAL_START_TIME?.S}
-            productStock={item.PRODUCT_STOCK?.N ? parseInt(item.PRODUCT_STOCK.N) : 1}
             hasMoreDataToFetch={pagination.fetch}
           />
         </Col>

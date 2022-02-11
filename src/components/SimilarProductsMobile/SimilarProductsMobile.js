@@ -12,6 +12,7 @@ import {
   getSimilarProductsFromDatabase,
 } from "../../actions/database"
 import "./SimilarProductsMobile.css"
+import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 
 const SimilarProductsMobile = ({ id, tags }) => {
   const history = useHistory()
@@ -32,29 +33,16 @@ const SimilarProductsMobile = ({ id, tags }) => {
       const components = similarProductsData.products.map((similarProduct, i) => {
         const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
         const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
-        const similarProductJsonData = {
-          id: similarProduct.id.S,
-          name: similarProduct.PRODUCT_NAME.S,
-          description: similarProduct.PRODUCT_DESCRIPTION.S,
-          price: similarProduct.PRODUCT_PRICE.N,
-          images: similarProduct.PRODUCT_IMAGES.L.map((image) => image.S),
-          productImagesResized: similarProduct.PRODUCT_IMAGES_RESIZED?.L.map(
-            (image) => image.S
-          ),
-          productStock: similarProduct.PRODUCT_STOCK?.N
-            ? parseInt(similarProduct.PRODUCT_STOCK.N)
-            : 1,
-          tags: similarProduct.PRODUCT_TAGS ? similarProduct.PRODUCT_TAGS.SS : [],
-          productOwnerId: similarProduct.PRODUCT_OWNER_ID?.S,
-        }
-
+        const productEntity = convertProductFromDatabaseToProductEntity({
+          product: similarProduct,
+        })
         return coverImage ? (
           <ProgressiveBlurryImageLoad
             width={128}
             height={128}
             small={`data:image/jpeg;base64,${coverImage}`}
             large={firstImage}
-            onClick={() => openDetailPage(similarProductJsonData)}
+            onClick={() => openDetailPage(productEntity)}
             style={{
               cursor: "pointer",
               paddingRight:
