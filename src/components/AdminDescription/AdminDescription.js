@@ -18,44 +18,53 @@ export default function AdminDescription() {
   const location = useLocation()
   const { id } = useParams()
   const { width } = useWindowDimensions()
-  const [accounts, setAccounts] = useState([
-    {
-      name: undefined,
-      phone_number: undefined,
-      commercial_name: undefined,
-      crop_profile_photo: undefined,
-      about_me: undefined,
-      about_products: undefined,
-    },
-  ])
+  const [accountsData, setAccountsData] = useState({
+    accountsPagination: { key: undefined, fetch: true },
+    accounts: [],
+  })
+
+  const { accounts, accountsPagination } = accountsData
 
   useEffect(() => {
     scrollToTop()
 
     if (location.state) {
-      setAccounts([
-        {
-          name: location.state.name,
-          phone_number: location.state.phone_number,
-          commercial_name: location.state.commercial_name,
-          crop_profile_photo: location.state.crop_profile_photo,
-          about_me: location.state.about_me,
-          about_products: location.state.about_products,
-        },
-      ])
+      setAccountsData({
+        accounts: [
+          {
+            name: location.state.name,
+            phone_number: location.state.phone_number,
+            commercial_name: location.state.commercial_name,
+            crop_profile_photo: location.state.crop_profile_photo,
+            about_me: location.state.about_me,
+            about_products: location.state.about_products,
+          },
+        ],
+        accountsPagination: { key: undefined, fetch: false },
+      })
     } else {
-      getAccountsFromDatabase({ setAccounts, productOwnerIds: [id] })
+      getAccountsFromDatabase({ setAccountsData, productOwnerIds: [id] })
     }
   }, [])
 
-  const {
-    name,
+  var name,
     phone_number,
     commercial_name,
     crop_profile_photo,
     about_me,
-    about_products,
-  } = accounts[0]
+    about_products
+
+  if (accounts.length > 0) {
+    // eslint-disable-next-line prettier/prettier
+    ;({
+      name,
+      phone_number,
+      commercial_name,
+      crop_profile_photo,
+      about_me,
+      about_products,
+    } = accounts[0])
+  }
 
   return (
     <>

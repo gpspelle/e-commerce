@@ -18,7 +18,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
   const [similarProductsData, setSimilarProductsData] = useState({
     productsIds: [],
     products: [],
-    pagination: { key: undefined, fetch: false, isLoading: true },
+    productPagination: { key: undefined, fetch: false, isLoading: true },
   })
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
@@ -35,16 +35,16 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
   }, [screenWidth])
 
   useEffect(() => {
-    if (similarProductsData.pagination.fetch) {
+    if (similarProductsData.productPagination.fetch) {
       getSimilarProductsFromDatabase({
         similarProductsData,
         setSimilarProductsData,
         products: similarProductsData.products,
-        pagination: similarProductsData.pagination,
+        productPagination: similarProductsData.productPagination,
         productsIds: similarProductsData.productsIds,
       })
     }
-  }, [similarProductsData.productsIds, similarProductsData.pagination.fetch])
+  }, [similarProductsData.productsIds, similarProductsData.productPagination.fetch])
 
   useEffect(() => {
     getProductsIdsByTagsFromDatabase({
@@ -87,7 +87,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
     setPositionSimilarProducts({ start, end })
   }
 
-  const { products, pagination } = similarProductsData
+  const { products, productPagination } = similarProductsData
   const { start, end } = positionSimilarProducts
 
   return (
@@ -101,7 +101,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
           }}
         />
         <h4>Produtos relacionados</h4>
-        {pagination.isLoading ? (
+        {productPagination.isLoading ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"

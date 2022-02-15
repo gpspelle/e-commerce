@@ -20,7 +20,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
   const [similarProductsData, setSimilarProductsData] = useState({
     productsIds: [],
     products: [],
-    pagination: { key: undefined, fetch: false, isLoading: true },
+    productPagination: { key: undefined, fetch: false, isLoading: true },
   })
 
   const responsive = {
@@ -29,7 +29,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
   }
 
   useEffect(() => {
-    if (!similarProductsData.pagination.fetch) {
+    if (!similarProductsData.productPagination.fetch) {
       const components = similarProductsData.products.map((similarProduct, i) => {
         const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
         const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
@@ -65,19 +65,19 @@ const SimilarProductsMobile = ({ id, tags }) => {
       })
       setItems(components)
     }
-  }, [similarProductsData.products, similarProductsData.pagination.fetch])
+  }, [similarProductsData.products, similarProductsData.productPagination.fetch])
 
   useEffect(() => {
-    if (similarProductsData.pagination.fetch) {
+    if (similarProductsData.productPagination.fetch) {
       getSimilarProductsFromDatabase({
         similarProductsData,
         setSimilarProductsData,
         products: similarProductsData.products,
-        pagination: similarProductsData.pagination,
+        productPagination: similarProductsData.productPagination,
         productsIds: similarProductsData.productsIds,
       })
     }
-  }, [similarProductsData.productsIds, similarProductsData.pagination.fetch])
+  }, [similarProductsData.productsIds, similarProductsData.productPagination.fetch])
 
   useEffect(() => {
     getProductsIdsByTagsFromDatabase({
@@ -106,7 +106,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
           }}
         />
         <h4>Produtos relacionados</h4>
-        {similarProductsData.pagination.isLoading ? (
+        {similarProductsData.productPagination.isLoading ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}
             animation="border"

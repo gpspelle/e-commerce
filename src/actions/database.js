@@ -9,7 +9,10 @@ import {
 } from "../constants/constants"
 import { convertProductFromDatabaseToProductEntity } from "../utils/convertProductFromDatabaseToProductEntity"
 
-export const getAccountsFromDatabase = async ({ setAccounts, productOwnerIds }) => {
+export const getAccountsFromDatabase = async ({
+  setAccountsData,
+  productOwnerIds,
+}) => {
   if (productOwnerIds !== undefined && Array.isArray(productOwnerIds)) {
     const body = {
       productOwnerIds,
@@ -19,14 +22,20 @@ export const getAccountsFromDatabase = async ({ setAccounts, productOwnerIds }) 
       return
     }
 
-    const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
+    const { data, key } = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`, {
       params: body,
     })
 
-    setAccounts(response.data)
+    setAccountsData({
+      accounts: data,
+      accountsPagination: { key, fetch: key ? true : false },
+    })
   } else {
-    const response = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`)
-    setAccounts(response.data)
+    const { data, key } = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`)
+    setAccountsData({
+      accounts: data,
+      accountsPagination: { key, fetch: key ? true : false },
+    })
   }
 }
 
@@ -34,10 +43,10 @@ export const getProductsFromDatabase = async ({
   setProductData,
   setProductOwnerIds,
   products,
-  pagination,
+  productPagination,
 }) => {
   const body = {
-    key: pagination.key,
+    key: productPagination.key,
   }
 
   const config = {
@@ -66,7 +75,7 @@ export const getProductsFromDatabase = async ({
   setProductData({
     products: concatProducts,
     allProducts: concatProducts,
-    pagination: { key, fetch: key ? true : false },
+    productPagination: { key, fetch: key ? true : false },
   })
 }
 
@@ -138,11 +147,11 @@ export const getSimilarProductsFromDatabase = async ({
   similarProductsData,
   setSimilarProductsData,
   products,
-  pagination,
+  productPagination,
   productsIds,
 }) => {
   const body = {
-    key: pagination.key,
+    key: productPagination.key,
   }
 
   const config = {
@@ -166,7 +175,7 @@ export const getSimilarProductsFromDatabase = async ({
   setSimilarProductsData({
     ...similarProductsData,
     products: concatProducts,
-    pagination: {
+    productPagination: {
       key,
       fetch: key ? true : false,
       isLoading: key ? true : false,
@@ -198,7 +207,7 @@ export const getProductsIdsByTagsFromDatabase = async ({
     setSimilarProductsData({
       products: [],
       productsIds: [...sameTagProductIdsSet],
-      pagination: { key: undefined, fetch: true, isLoading: true },
+      productPagination: { key: undefined, fetch: true, isLoading: true },
     })
   }
 }

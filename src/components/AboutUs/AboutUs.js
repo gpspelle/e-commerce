@@ -13,7 +13,12 @@ import NavigationBar from "../NavigationBar/NavigationBar"
 export default function AboutUs() {
   const location = useLocation()
   const adminsRef = useRef()
-  const [accounts, setAccounts] = useState(undefined)
+  const [accountsData, setAccountsData] = useState({
+    accountsPagination: { key: undefined, fetch: false },
+    accounts: [],
+  })
+
+  const { accounts, accountsPagination } = accountsData
 
   useEffect(() => {
     if (location.state) {
@@ -21,9 +26,18 @@ export default function AboutUs() {
       window.scrollTo(0, adminsRef.current.offsetTop)
     } else {
       scrollToTop()
-      getAccountsFromDatabase({ setAccounts })
+      setAccountsData({
+        ...accountsData,
+        accountsPagination: { key: undefined, fetch: true },
+      })
     }
   }, [])
+
+  useEffect(() => {
+    if (accountsPagination.fetch) {
+      getAccountsFromDatabase({ setAccountsData })
+    }
+  }, [accountsPagination])
 
   return (
     <>

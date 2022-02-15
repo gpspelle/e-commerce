@@ -36,12 +36,17 @@ export default function Home() {
   const [productData, setProductData] = useState({
     products: [],
     allProducts: [],
-    pagination: { key: undefined, fetch: true },
+    productPagination: { key: undefined, fetch: true },
   })
-  const [accounts, setAccounts] = useState([])
+
+  const [accountsData, setAccountsData] = useState({
+    accountsPagination: { key: undefined, fetch: true },
+    accounts: [],
+  })
   const isMounted = useIsMounted()
   const { width, height } = useWindowDimensions()
-  const { products, allProducts, pagination } = productData
+  const { products, allProducts, productPagination } = productData
+  const { accounts, accountsPagination } = accountsData
   const searchBarValue = query.get("q")
   const productDealsResponsive = {
     0: { items: 2 },
@@ -55,6 +60,10 @@ export default function Home() {
     568: { items: 4 },
     700: { items: 5 },
   }
+
+  useEffect(() => {
+    scrollToTop()
+  }, [])
 
   useEffect(() => {
     if (searchBarValue && allProducts.length > 0) {
@@ -92,18 +101,24 @@ export default function Home() {
   }, [searchBarValue, allProducts])
 
   useEffect(() => {
-    scrollToTop()
-
-    if (isMounted.current) {
-      getAccountsFromDatabase({ setAccounts })
+    if (accountsPagination.fetch) {
+      if (isMounted.current) {
+        getAccountsFromDatabase({
+          setAccountsData,
+        })
+      }
     }
-  }, [])
+  }, [accountsPagination.key])
 
   useEffect(() => {
-    if (pagination.fetch) {
-      getProductsFromDatabase({ setProductData, pagination, products })
+    if (productPagination.fetch) {
+      getProductsFromDatabase({
+        setProductData,
+        productPagination,
+        products,
+      })
     }
-  }, [pagination.key])
+  }, [productPagination.key])
 
   var productOwnerIdToOwnerData = {}
   if (accounts.length > 0) {
@@ -115,7 +130,7 @@ export default function Home() {
     })
   }
 
-  var displayProducts
+  var displayProducts = []
   if (products.length > 0) {
     displayProducts = products.filter(
       (product) =>
@@ -148,66 +163,102 @@ export default function Home() {
 
   const productImageSize = width * multiplier
   const productCardSize = productImageSize + 2.5
-  const items =
-    displayProducts &&
-    displayProducts.map((displayProduct) => {
-      const productEntity = convertProductFromDatabaseToProductEntity({
-        product: displayProduct,
-      })
-      return (
-        <Col
-          key={
-            displayProduct.id.S +
-            productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S]?.phoneNumber
+  const items = displayProducts.map((displayProduct) => {
+    const productEntity = convertProductFromDatabaseToProductEntity({
+      product: displayProduct,
+    })
+    return (
+      <Col
+        key={
+          displayProduct.id.S +
+          productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S]?.phoneNumber
+        }
+      >
+        <Product
+          productEntity={productEntity}
+          phoneNumber={
+            Object.keys(productOwnerIdToOwnerData).length !== 0
+              ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
+                  "phoneNumber"
+                ]
+              : false
           }
-        >
-          <Product
-            productEntity={productEntity}
-            phoneNumber={
-              Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
-                    "phoneNumber"
-                  ]
-                : false
-            }
-            commercialName={
-              Object.keys(productOwnerIdToOwnerData).length !== 0
-                ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
-                    "commercialName"
-                  ]
-                : false
-            }
-            productImageSize={productImageSize}
-            productCardSize={productCardSize}
-            isProductOfferHome={true}
-          />
-        </Col>
-      )
-    })
+          commercialName={
+            Object.keys(productOwnerIdToOwnerData).length !== 0
+              ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
+                  "commercialName"
+                ]
+              : false
+          }
+          productImageSize={productImageSize}
+          productCardSize={productCardSize}
+          isProductOfferHome={true}
+        />
+      </Col>
+    )
+  })
 
-  const admins =
-    accounts &&
-    getRandomFromArray(accounts, randomIndexes).map((account) => {
-      return (
-        <Col
-          key={account.id}
-          style={{
-            minHeight: 120,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: "12px",
-            paddingBottom: "12px",
-            paddingRight: "0px",
-            paddingLeft: "0px",
-          }}
-        >
-          <AdminHome account={account} />
-        </Col>
-      )
-    })
+  const admins = getRandomFromArray(accounts, randomIndexes).map((account) => {
+    return (
+      <Col
+        key={account.id}
+        style={{
+          minHeight: 120,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: "12px",
+          paddingBottom: "12px",
+          paddingRight: "0px",
+          paddingLeft: "0px",
+        }}
+      >
+        <AdminHome account={account} />
+      </Col>
+    )
+  })
 
   const extra = width < 1024 ? 0 : 6
+
+  const isLoadedProducts = productPagination.fetch ? (
+    <Spinner
+      style={{
+        margin: "auto",
+        display: "flex",
+        color: "#212529",
+      }}
+      animation="border"
+    />
+  ) : (
+    <p
+      style={{
+        margin: "auto",
+        display: "flex",
+      }}
+    >
+      Não foram encontradas ofertas nesse momento
+    </p>
+  )
+
+  const isLoadedAdmins = accountsPagination.fetch ? (
+    <Spinner
+      style={{
+        margin: "auto",
+        display: "flex",
+        color: "#212529",
+      }}
+      animation="border"
+    />
+  ) : (
+    <p
+      style={{
+        margin: "auto",
+        display: "flex",
+      }}
+    >
+      Não foram encontrados artesãos nesse momento
+    </p>
+  )
 
   return (
     <>
@@ -236,7 +287,7 @@ export default function Home() {
             </p>
           </Col>
         </Row>
-        {items === undefined ? (
+        {items.length === 0 ? (
           <div
             /* TODO: crazy math to get the vertical size of the items */
             style={{
@@ -246,14 +297,7 @@ export default function Home() {
               justifyContent: "center",
             }}
           >
-            <Spinner
-              style={{
-                margin: "auto",
-                display: "flex",
-                color: "#212529",
-              }}
-              animation="border"
-            />
+            {isLoadedProducts}
           </div>
         ) : (
           <>
@@ -303,14 +347,7 @@ export default function Home() {
               justifyContent: "center",
             }}
           >
-            <Spinner
-              style={{
-                margin: "auto",
-                display: "flex",
-                color: "#212529",
-              }}
-              animation="border"
-            />
+            {isLoadedAdmins}
           </div>
         ) : (
           <>

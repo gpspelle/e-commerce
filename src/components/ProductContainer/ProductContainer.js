@@ -25,14 +25,19 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
   const [productData, setProductData] = useState({
     products: [],
     allProducts: [],
-    pagination: { key: undefined, fetch: true },
+    productPagination: { key: undefined, fetch: true },
   })
   const [productOwnerIds, setProductOwnerIds] = useState([])
-  const [accounts, setAccounts] = useState([])
+  const [accountsData, setAccountsData] = useState({
+    accountsPagination: { key: undefined, fetch: false },
+    accounts: [],
+  })
+
   const { width, height } = useWindowDimensions()
   const isMounted = useIsMounted()
 
-  const { products, allProducts, pagination } = productData
+  const { products, allProducts, productPagination } = productData
+  const { accounts, accountsPagination } = accountsData
   const searchBarValue = query.get("q")
 
   useEffect(() => {
@@ -77,21 +82,30 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
   useEffect(() => {
     if (productOwnerIds.length > 0) {
       if (isMounted.current) {
-        getAccountsFromDatabase({ setAccounts, productOwnerIds })
+        setAccountsData({
+          ...accountsData,
+          accountsPagination: { key: undefined, fetch: true },
+        })
       }
     }
   }, [productOwnerIds])
 
   useEffect(() => {
-    if (pagination.fetch) {
+    if (accountsPagination.fetch) {
+      getAccountsFromDatabase({ setAccountsData, productOwnerIds })
+    }
+  }, [accountsPagination])
+
+  useEffect(() => {
+    if (productPagination.fetch) {
       getProductsFromDatabase({
         setProductData,
         setProductOwnerIds,
-        pagination,
+        productPagination,
         products,
       })
     }
-  }, [pagination.key])
+  }, [productPagination.key])
 
   var productOwnerIdToOwnerData = {}
   if (accounts.length > 0) {
@@ -202,7 +216,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
         ) : (
           <NoProductFoundMessage
             screenWidth={width}
-            hasMoreDataToFetch={pagination.fetch}
+            hasMoreDataToFetch={productPagination.fetch}
             searchBarValue={searchBarValue}
             isDeals={isDeals}
           />
