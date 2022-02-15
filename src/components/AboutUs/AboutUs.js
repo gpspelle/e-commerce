@@ -22,7 +22,11 @@ export default function AboutUs() {
 
   useEffect(() => {
     if (location.state) {
-      setAccounts(location.state.accounts)
+      setAccountsData({
+        ...accountsData,
+        accounts: location.state.accounts,
+        accountsPagination: { key: undefined, fetch: false },
+      })
       window.scrollTo(0, adminsRef.current.offsetTop)
     } else {
       scrollToTop()
