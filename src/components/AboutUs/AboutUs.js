@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap"
 import { useLocation } from "react-router-dom"
 
 import { getAccountsFromDatabase } from "../../actions/database"
-import { APP_NAME } from "../../constants/constants"
+import { APP_CITY, APP_NAME } from "../../constants/constants"
 import scrollToTop from "../../utils/scrollToTop"
 import AdminHome from "../AdminHome/AdminHome"
 import { LateralCard } from "../Blocks/LateralCard"
@@ -57,7 +57,7 @@ export default function AboutUs() {
           imagePosition="left"
           smallSrc="/small-about-us.png"
           src="/about-us.png"
-          text={`A ${APP_NAME} surgiu como uma ideia para reunir artesãos de Araras e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada`}
+          text={`A ${APP_NAME} surgiu como uma ideia para reunir artesãos de ${APP_CITY} e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada`}
         />
         <LateralCard
           imageSize={120}
