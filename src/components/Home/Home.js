@@ -43,6 +43,8 @@ export default function Home() {
     accountsPagination: { key: undefined, fetch: true },
     accounts: [],
   })
+  const [offersCarouselActiveIndex, setOffersCarouselActiveIndex] = useState(0)
+  const [accountsCarouselActiveIndex, setAccountsCarouselActiveIndex] = useState(0)
   const isMounted = useIsMounted()
   const { width, height } = useWindowDimensions()
   const { products, allProducts, productPagination } = productData
@@ -302,6 +304,8 @@ export default function Home() {
         ) : (
           <>
             <AliceCarousel
+              activeIndex={offersCarouselActiveIndex}
+              onSlideChanged={(e) => setOffersCarouselActiveIndex(e.item)}
               mouseTracking={width < 1024 ? true : false}
               items={items}
               responsive={productDealsResponsive}
@@ -352,6 +356,8 @@ export default function Home() {
         ) : (
           <>
             <AliceCarousel
+              activeIndex={accountsCarouselActiveIndex}
+              onSlideChanged={(e) => setAccountsCarouselActiveIndex(e.item)}
               mouseTracking={width < 1024 ? true : false}
               items={admins}
               responsive={adminsResponsive}
