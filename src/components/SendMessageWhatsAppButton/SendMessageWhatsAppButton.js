@@ -34,8 +34,8 @@ export default function SendMessageWhatsAppButton({
   return (
     <div style={style} className="notranslate">
       <Button
+        className="primary-background no-border"
         disabled={phoneNumber && commercialName ? false : true}
-        variant="success"
         style={{ width: "100%", height: "38px" }}
         onClick={messageFunction}
       >

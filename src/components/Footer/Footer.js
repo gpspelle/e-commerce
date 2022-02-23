@@ -6,7 +6,7 @@ import { APP_NAME, NAVIGATION_LINKS } from "../../constants/constants"
 
 export default function Footer() {
   return (
-    <div style={{ width: "100%", backgroundColor: "#212529" }}>
+    <div className="primary-background" style={{ width: "100%" }}>
       <Container
         style={{
           justifyContent: "left",

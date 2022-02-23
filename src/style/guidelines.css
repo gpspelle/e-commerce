@@ -1,0 +1,128 @@
+/** primary **/
+.primary-light-background {
+    background: #B35A7A;
+}
+
+.primary-light-color {
+    color: #B35A7A;
+}
+
+.primary-background {
+    background: #B33E69 !important;
+}
+
+.primary-color {
+    color: #B33E69;
+}
+
+.primary-dark-background {
+    background: #8C2A4E;
+}
+
+.primary-dark-color {
+    color: #8C2A4E;
+}
+
+/** secondary **/
+.secondary-light-background {
+    background: #587798;
+}
+
+.secondary-light-color {
+    color: #587798;
+}
+
+.secondary-background {
+    background: #426B98;
+}
+
+.secondary-color {
+    color: #426B98;
+}
+
+.secondary-dark-background {
+    background: #2C4E73;
+}
+
+.secondary-dark-color {
+    color: #2C4E73;
+}
+
+/** helpers **/
+.helper-error-background {
+    background: #BE464C;
+}
+
+.helper-error-color {
+    color: #BE464C;
+}
+
+.helper-success-background {
+    background: #3AA669;
+}
+
+.helper-success-color {
+    color: #3AA669;
+}
+
+.helper-warning-background {
+    background: #F2994A;
+}
+
+.helper-warning-color {
+    color: #F2994A;
+}
+
+/** black and white **/
+.dark-background {
+    background: #263F59;
+}
+
+.dark-color {
+    color: #263F59;
+}
+
+.dark-dark-background {
+    background: #132333;
+}
+
+.dard-dark-color {
+    color: #132333;
+}
+
+.light-background {
+    background: #FFFFFF;
+}
+
+.light-color {
+    color: #FFFFFF;
+}
+
+.light-dark-background {
+    background: #F5F7FA;
+}
+
+.light-dark-color {
+    color: #F5F7FA;
+}
+
+.grey-background {
+    background: #AFC1D3;
+}
+
+.grey-color {
+    color: #AFC1D3
+}
+
+.grey-dark-background {
+    background: #879AAD;
+}
+
+.grey-dark-color {
+    color: #879AAD;
+}
+
+/** button border**/
+.no-border {
+    border: none !important;
+}
