@@ -18,6 +18,7 @@ import AdminDescription from "./components/AdminDescription/AdminDescription"
 import AboutUs from "./components/AboutUs/AboutUs"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
 import Footer from "./components/Footer/Footer"
+import "./App.css"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")

@@ -4,6 +4,9 @@ import ReactDOM from "react-dom"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import "./react-bootstrap.min.css"
+import "./style/fonts/Poppins/Poppins-Regular.ttf"
+import "./style/fonts/Poppins/Poppins-Bold.ttf"
+import "./style/fonts/Poppins/Poppins-Italic.ttf"
 import "./index.css"
 
 ReactDOM.render(
