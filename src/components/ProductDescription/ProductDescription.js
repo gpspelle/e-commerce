@@ -24,6 +24,7 @@ import {
 } from "../../actions/database"
 import { getEmptyProduct } from "../../entities/product"
 import "./ProductDescription.css"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -67,6 +68,7 @@ export default function ProductDescription() {
     return (
       <>
         <NavigationBar />
+        <SearchBar />
         <NoProductFoundMessage screenWidth={width} />
         <Footer />
       </>
@@ -107,7 +109,8 @@ export default function ProductDescription() {
       }}
     >
       <NavigationBar />
-      <Container style={{ paddingTop: "40px" }}>
+      <SearchBar />
+      <Container>
         <Row>
           {isFullScreen ? (
             <Col>
@@ -176,13 +179,6 @@ export default function ProductDescription() {
                   </div>
                 )}
                 <h5 className="notranslate my-4">{description}</h5>
-                <h6
-                  className="notranslate"
-                  style={{ marginTop: "1rem", marginBottom: "0" }}
-                >
-                  Vendido por
-                </h6>
-                <h6 className="notranslate">{commercialName}</h6>
                 <h6
                   style={{ marginTop: "1rem", marginBottom: "0" }}
                   className="notranslate"

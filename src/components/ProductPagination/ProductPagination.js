@@ -29,30 +29,6 @@ function PaginatedItems({ products, itemsPerPage, screenWidth, scrollFunction })
 
   return (
     <>
-      {screenWidth < 1024 && (
-        <ReactPaginate
-          previousLabel="&#8592; Anterior"
-          nextLabel="Próximo &#8594;"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-          breakLabel="..."
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          pageCount={pageCount}
-          onPageChange={handlePageClick}
-          containerClassName="pagination"
-          activeClassName="active"
-          renderOnZeroPageCount={null}
-          marginPagesDisplayed={0}
-          pageRangeDisplayed={0}
-          forcePage={currentPage}
-          className="first-pagination-mobile pagination"
-        />
-      )}
       {currentItems}
       <ReactPaginate
         previousLabel="&#8592; Anterior"

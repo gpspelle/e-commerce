@@ -4,7 +4,8 @@ import { MdOutlineEditNote } from "react-icons/md"
 export const ProductOrderInfo = () => {
   return (
     <p>
-      <MdOutlineEditNote /> Sob encomenda
+      <MdOutlineEditNote />
+      &nbsp;&nbsp;Sob encomenda
     </p>
   )
 }

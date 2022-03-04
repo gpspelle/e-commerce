@@ -20,6 +20,7 @@ import NavigationBar from "./components/NavigationBar/NavigationBar"
 import Footer from "./components/Footer/Footer"
 import "./App.css"
 import "./style/guidelines.css"
+import SearchBar from "./components/SearchBar/SearchBar"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
@@ -37,7 +38,7 @@ function App() {
   }*/
 
   return (
-    <div style={{ paddingTop: "30px" }}>
+    <div>
       <Router>
         <Suspense fallback={<div>Carregando...</div>}>
           <Switch>
@@ -49,12 +50,14 @@ function App() {
             </Route>
             <Route path={`/${DEALS}`}>
               <NavigationBar />
-              <MemoizedProductContainer isDeals={true} paddingTop={"62px"} />
+              <SearchBar />
+              <MemoizedProductContainer isDeals={true} />
               <Footer />
             </Route>
             <Route path={`/${PRODUCTS}`}>
               <NavigationBar />
-              <MemoizedProductContainer isDeals={false} paddingTop={"62px"} />
+              <SearchBar />
+              <MemoizedProductContainer isDeals={false} />
               <Footer />
             </Route>
             <Route path={`/${ABOUT_US}`}>

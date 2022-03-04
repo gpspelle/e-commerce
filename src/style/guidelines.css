@@ -79,7 +79,7 @@
 }
 
 .dark-color {
-    color: #263F59;
+    color: #263F59 !important;
 }
 
 .dark-dark-background {
@@ -99,7 +99,7 @@
 }
 
 .light-dark-background {
-    background: #F5F7FA;
+    background: #F5F7FA !important;
 }
 
 .light-dark-color {

@@ -34,9 +34,14 @@ export default function SendMessageWhatsAppButton({
   return (
     <div style={style} className="notranslate">
       <Button
-        className="primary-background no-border"
+        className="primary-background no-border font-face-poppins-bold"
         disabled={phoneNumber && commercialName ? false : true}
-        style={{ width: "100%", height: "38px" }}
+        style={{
+          width: "100%",
+          height: "44px",
+          fontSize: "12px",
+          lineHeight: "18px",
+        }}
         onClick={messageFunction}
       >
         {text}

@@ -6,7 +6,7 @@ import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { PRODUCTS } from "../../constants/constants"
 import "./SearchBar.css"
 
-export default function SearchBar({ screenWidth }) {
+export default function SearchBar() {
   const history = useHistory()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [searchBarValue, setSearchBarValue] = useState("")
@@ -36,27 +36,29 @@ export default function SearchBar({ screenWidth }) {
   return (
     <Container
       style={{
-        position: "fixed",
-        width: screenWidth < 1024 ? "100%" : "40%",
-        left: screenWidth < 1024 ? 0 : (screenWidth - 200) / 3,
-        top: screenWidth < 1024 ? 56 : 0,
-        paddingLeft: screenWidth < 1024 ? "2%" : 0,
-        paddingRight: screenWidth < 1024 ? "2%" : 0,
-        marginTop: screenWidth < 1024 ? 0 : 8,
+        position: "relative",
+        marginTop: "16px",
         maxWidth: "100%",
+        marginBottom: "32px",
       }}
     >
       <Form style={{ display: "flex" }} onSubmit={applySearchOnProducts}>
         <Form.Group controlId="formSearchBar" style={{ width: "100%" }}>
-          <Form.Control
-            className={isSubmitted ? "remove-focus-search-bar" : ""}
-            value={searchBarValue}
-            onChange={(e) => setSearchBarValue(e.target.value)}
-            type="text"
-            placeholder="O que você está buscando?"
-          />
+          <div className="search-input-div light-dark-background">
+            <input
+              className={
+                isSubmitted
+                  ? "light-dark-background specific-form-control font-face-poppins-italic remove-focus-search-bar"
+                  : "light-dark-background specific-form-control font-face-poppins-italic"
+              }
+              value={searchBarValue}
+              onChange={(e) => setSearchBarValue(e.target.value)}
+              type="text"
+              placeholder="O que você está buscando?"
+            />
+            <SearchBarButton />
+          </div>
         </Form.Group>
-        <SearchBarButton />
       </Form>
     </Container>
   )

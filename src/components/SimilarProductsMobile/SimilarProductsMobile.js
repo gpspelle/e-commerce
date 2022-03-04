@@ -98,14 +98,12 @@ const SimilarProductsMobile = ({ id, tags }) => {
   return (
     <div className="similar-products" style={{ minHeight: "220px" }}>
       <Container>
-        <hr
-          style={{
-            color: "gray",
-            backgroundColor: "gray",
-            height: 1,
-          }}
-        />
-        <h4>Produtos relacionados</h4>
+        <h6
+          style={{ paddingTop: "32px", marginBottom: "16px" }}
+          className="font-face-poppins-bold"
+        >
+          Produtos relacionados
+        </h6>
         {similarProductsData.productPagination.isLoading ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}

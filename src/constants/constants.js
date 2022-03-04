@@ -30,8 +30,8 @@ export const PRODUCT_TYPES = {
 }
 
 export const NAVIGATION_LINKS = {
-  "Pagina inicial": "/",
-  Produtos: `/${PRODUCTS}`,
-  Promoções: `/${DEALS}`,
-  "Sobre nós": `/${ABOUT_US}`,
+  "Página inicial": { path: "/", icon: "/home.svg" },
+  Produtos: { path: `/${PRODUCTS}`, icon: "/products.svg" },
+  Promoções: { path: `/${DEALS}`, icon: "/deals.svg" },
+  "Sobre nós": { path: `/${ABOUT_US}`, icon: "/about-us.svg" },
 }

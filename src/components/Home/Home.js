@@ -26,6 +26,7 @@ import NavigationBar from "../NavigationBar/NavigationBar"
 import { range } from "../../utils/range"
 import Product from "../Product/Product"
 import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
+import SearchBar from "../SearchBar/SearchBar"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -265,10 +266,13 @@ export default function Home() {
   return (
     <>
       <NavigationBar />
-      <Container style={{ minHeight: height * 0.99, paddingTop: "72px" }}>
+      <SearchBar />
+      <Container style={{ minHeight: height * 0.99 }}>
         <Row className="my-2">
           <Col style={{ maxWidth: "70%" }}>
-            <h2>Nossas ofertas</h2>
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
+              Nossas ofertas
+            </h6>
           </Col>
           <Col
             style={{
@@ -318,7 +322,9 @@ export default function Home() {
         )}
         <Row className="my-3">
           <Col style={{ maxWidth: "70%" }}>
-            <h2>Nossos Artesãos</h2>
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
+              Nossos artesãos
+            </h6>
           </Col>
           <Col
             style={{
@@ -370,7 +376,9 @@ export default function Home() {
         )}
         <Row className="my-3">
           <Col style={{ maxWidth: "70%" }}>
-            <h2>Nossas vantagens</h2>
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
+              Nossas vantagens
+            </h6>
           </Col>
         </Row>
         <Row>

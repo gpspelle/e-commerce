@@ -3,6 +3,9 @@ import { Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
+import SendMessageWhatsAppButton, {
+  sendHelloWhatsAppMessage,
+} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import "./AboutAdmin.css"
 
 export default function AboutAdmin({
@@ -35,11 +38,13 @@ export default function AboutAdmin({
         <Col style={{ maxWidth: "70%" }}>
           <Row>
             <Col>
-              <h6>{commercialName}</h6>
+              <p className="font-face-poppins-bold">{commercialName}</p>
             </Col>
           </Row>
           <Row>
-            <Col className="line-clamp">{aboutMe}</Col>
+            <Col className="line-clamp">
+              <p style={{ marginBottom: "0px" }}>{aboutMe}</p>
+            </Col>
           </Row>
           <Row>
             <Col>
@@ -55,12 +60,13 @@ export default function AboutAdmin({
                     about_products: aboutProducts,
                   },
                 }}
+                className="secondary-color more-button"
                 style={{
                   display: "inline-block",
                   textDecoration: "none",
                   float: "right",
-                  marginTop: "12px",
-                  marginBottom: "12px",
+                  marginTop: "16px",
+                  marginBottom: "16px",
                 }}
               >
                 Ver mais
@@ -89,12 +95,31 @@ export default function AboutAdmin({
       <Col style={{ maxWidth: "70%" }}>
         <Row>
           <Col>
-            <h4>{commercialName}</h4>
+            <h6 className="font-face-poppins-bold">{commercialName}</h6>
           </Col>
         </Row>
         <Row>
           <Col>
-            <h6>{productOwnerName}</h6>
+            <p>{productOwnerName}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            {phoneNumber && (
+              <img
+                height="16px"
+                width="16px"
+                src="/whatsapp.svg"
+                style={{ cursor: "pointer" }}
+                onClick={() =>
+                  sendHelloWhatsAppMessage({
+                    accountId: productOwnerId,
+                    phoneNumber,
+                    commercialName,
+                  })
+                }
+              />
+            )}
           </Col>
         </Row>
       </Col>

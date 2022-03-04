@@ -167,7 +167,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: "20px",
+            paddingTop: "8px",
           }}
         >
           <Product

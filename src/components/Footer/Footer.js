@@ -25,7 +25,7 @@ export default function Footer() {
           return (
             <Link
               key={page}
-              to={NAVIGATION_LINKS[page]}
+              to={NAVIGATION_LINKS[page].path}
               className="light-color"
               style={{
                 display: "inline-block",

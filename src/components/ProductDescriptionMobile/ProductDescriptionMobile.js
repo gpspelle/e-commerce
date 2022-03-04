@@ -23,7 +23,7 @@ import {
   getProductFromDatabase,
 } from "../../actions/database"
 import { getEmptyProduct } from "../../entities/product"
-import "./ProductDescriptionMobile.css"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function ProductDescriptionMobile() {
   const location = useLocation()
@@ -67,6 +67,7 @@ export default function ProductDescriptionMobile() {
     return (
       <>
         <NavigationBar />
+        <SearchBar />
         <NoProductFoundMessage screenWidth={width} />
         <Footer />
       </>
@@ -107,7 +108,12 @@ export default function ProductDescriptionMobile() {
       }}
     >
       <NavigationBar />
-      <Container style={{ paddingTop: "82px" }}>
+      <SearchBar />
+
+      <Container>
+        <h6 style={{ marginBottom: "16px" }} className="font-face-poppins-bold">
+          {name}
+        </h6>
         {imagesIsDefined && (
           <ImageCarousel
             isFullScreen={isFullScreen}
@@ -121,25 +127,38 @@ export default function ProductDescriptionMobile() {
             isLightningDeal={isLightningDeal}
           />
         )}
-        <h2>{name}</h2>
         {isDeal ? (
-          <div className="notranslate" style={{ display: "flex" }}>
-            &nbsp;
-            <div style={{ textDecoration: "line-through", color: "lightgray" }}>
-              &nbsp;R$ {price}
-            </div>{" "}
-            &nbsp;R$ <div className="display-price">{dealPrice}</div>
+          <div className="notranslate">
+            <h7
+              className="helper-warning-color"
+              style={{ textDecoration: "line-through", marginBottom: "0px" }}
+            >
+              R$ {price}
+            </h7>
+            <h4 style={{ marginBottom: "32px" }}>R$ {dealPrice}</h4>
           </div>
         ) : (
-          <div className="notranslate" style={{ display: "flex" }}>
-            <span> R$&nbsp;</span>
-            <span className="display-price">{price}</span>
-          </div>
+          <h4 style={{ marginTop: "32px", marginBottom: "32px" }}>R$ {price}</h4>
         )}
+        <h6
+          style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "space-around",
+            marginBottom: "16px",
+            justifyContent: "left",
+          }}
+        >
+          {description}
+        </h6>
+        <ProductSellTypeInfo
+          productStock={productStock}
+          productSellTypes={productSellTypes}
+        />
         <SendMessageWhatsAppButton
           style={{
-            paddingTop: "12px",
-            paddingBottom: "12px",
+            paddingTop: "16px",
+            paddingBottom: "32px",
             width: "20rem",
             margin: "0 auto",
           }}
@@ -157,10 +176,6 @@ export default function ProductDescriptionMobile() {
           commercialName={commercialName}
           text={"Gostei desse"}
         />
-        <ProductSellTypeInfo
-          productStock={productStock}
-          productSellTypes={productSellTypes}
-        />
         {isLightningDeal && (
           <LightningDealDuration
             isProductDescription={true}
@@ -168,44 +183,12 @@ export default function ProductDescriptionMobile() {
             lightningDealStartTime={lightningDealStartTime}
           />
         )}
-        <hr
-          style={{
-            color: "gray",
-            backgroundColor: "gray",
-            height: 1,
-          }}
-        />
-        <h5>Detalhes do produto</h5>
-        <div
-          style={{
-            display: "flex",
-            flexFlow: "row wrap",
-            justifyContent: "space-around",
-          }}
+        <h6
+          style={{ marginBottom: "16px" }}
+          className="font-face-poppins-bold dark-dark-color"
         >
-          <div style={{ width: "30%" }}>Descrição</div>
-          <div
-            className="notranslate"
-            style={{ width: "70%", wordWrap: "break-word" }}
-          >
-            {description}
-          </div>
-          <div style={{ width: "30%" }}>Vendido por</div>
-          <div
-            className="notranslate"
-            style={{ width: "70%", wordWrap: "break-word" }}
-          >
-            {commercialName}
-          </div>
-        </div>
-        <hr
-          style={{
-            color: "gray",
-            backgroundColor: "gray",
-            height: 1,
-          }}
-        />
-        <h5 style={{ marginBottom: "22px" }}>Sobre o artesão</h5>
+          Sobre o artesão
+        </h6>
         <AboutAdmin
           isComplete={true}
           phoneNumber={phoneNumber}

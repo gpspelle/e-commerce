@@ -47,6 +47,9 @@ export default function Product({
       style={{
         maxWidth: productCardSize,
         cursor: "pointer",
+        border: "1px solid #AFC1D3",
+        boxSizing: "border-box",
+        borderRadius: "0px",
       }}
       onClick={openDetailPage}
     >
@@ -59,11 +62,11 @@ export default function Product({
         />
       ) : (
         <img
+          className="light-dark-background"
           style={{
             width: productImageSize,
             height: productImageSize,
             objectFit: "contain",
-            backgroundColor: "#F4F4F4",
           }}
           src={images[0]}
         />

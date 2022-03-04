@@ -7,10 +7,11 @@ export const ProductStockInfo = ({ productStock }) => {
   return (
     <>
       <p style={{ marginBottom: "0px" }}>
-        <GiHandTruck /> Em estoque
+        <GiHandTruck />
+        &nbsp;&nbsp;Em estoque
       </p>
-      <p style={{ marginLeft: "1.25rem" }}>
-        Quantidade: {productStock} unidade{isPlural}
+      <p style={{ marginLeft: "1rem" }}>
+        &nbsp;Quantidade: {productStock} unidade{isPlural}
       </p>
     </>
   )

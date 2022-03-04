@@ -6,10 +6,10 @@ import { getAccountsFromDatabase } from "../../actions/database"
 import { APP_CITY, APP_NAME } from "../../constants/constants"
 import scrollToTop from "../../utils/scrollToTop"
 import AdminHome from "../AdminHome/AdminHome"
-import { LateralCard } from "../Blocks/LateralCard"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function AboutUs() {
   const location = useLocation()
@@ -47,13 +47,11 @@ export default function AboutUs() {
   return (
     <>
       <NavigationBar />
-      <Container style={{ paddingTop: "82px" }}>
+      <SearchBar />
+      <Container>
         <Row>
           <Col>
-            <h6
-              className="dark-color font-face-poppins-bold"
-              style={{ marginBottom: "16px" }}
-            >
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
               Sobre o projeto
             </h6>
           </Col>
@@ -83,7 +81,7 @@ export default function AboutUs() {
           <Row ref={adminsRef} style={{ paddingTop: "16px" }}>
             <Col>
               <h6
-                className="dark-color font-face-poppins-bold"
+                className="font-face-poppins-bold"
                 style={{ marginBottom: "16px" }}
               >
                 Nossos artesãos

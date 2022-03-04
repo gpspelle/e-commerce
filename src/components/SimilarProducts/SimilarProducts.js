@@ -93,14 +93,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
   return (
     <div className="similar-products" style={{ minHeight: "220px" }}>
       <Container>
-        <hr
-          style={{
-            color: "gray",
-            backgroundColor: "gray",
-            height: 1,
-          }}
-        />
-        <h4>Produtos relacionados</h4>
+        <h4 style={{ paddingTop: "32px" }}>Produtos relacionados</h4>
         {productPagination.isLoading ? (
           <Spinner
             style={{ margin: "auto", display: "flex", color: "#212529" }}

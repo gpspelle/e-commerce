@@ -6,12 +6,11 @@ export default function SearchBarButton() {
   return (
     <Button
       type="submit"
+      className="light-dark-background dark-color"
       style={{
-        backgroundColor: "white",
-        color: "#212529",
         borderColor: "none",
         border: "none",
-        marginLeft: "2px",
+        marginLeft: "8px",
       }}
     >
       <AiOutlineSearch />

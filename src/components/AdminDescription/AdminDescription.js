@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Card, Col, Container, Row } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
-import { BsWhatsapp } from "react-icons/bs"
 
 import { getAccountsFromDatabase } from "../../actions/database"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -9,10 +8,8 @@ import scrollToTop from "../../utils/scrollToTop"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import MemoizedProductContainer from "../ProductContainer/ProductContainer"
-import SendMessageWhatsAppButton, {
-  sendHelloWhatsAppMessage,
-} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import AboutAdmin from "./AboutAdmin"
+import SearchBar from "../SearchBar/SearchBar"
 
 export default function AdminDescription() {
   const location = useLocation()
@@ -69,7 +66,8 @@ export default function AdminDescription() {
   return (
     <>
       <NavigationBar />
-      <Container style={{ paddingTop: "82px" }}>
+      <SearchBar />
+      <Container>
         <AboutAdmin
           isComplete={false}
           phoneNumber={phone_number}
@@ -79,60 +77,25 @@ export default function AdminDescription() {
           cropProfilePhoto={crop_profile_photo}
           screenWidth={width}
         />
-        {phone_number && (
-          <Col>
-            <SendMessageWhatsAppButton
-              style={{
-                paddingTop: "8px",
-                maxWidth: "240px",
-              }}
-              messageFunction={() =>
-                sendHelloWhatsAppMessage({
-                  accountId: id,
-                  phoneNumber: phone_number,
-                  commercialName: commercial_name,
-                })
-              }
-              phoneNumber={phone_number}
-              commercialName={commercial_name}
-              text={
-                <>
-                  <BsWhatsapp />
-                  &nbsp;Conversar com artesão
-                </>
-              }
-            />
-          </Col>
-        )}
-        <h4 style={{ marginBottom: "0px", marginTop: "24px" }}>Meus produtos</h4>
+        <h6
+          className="font-face-poppins-bold"
+          style={{ marginTop: "32px", marginBottom: "8px" }}
+        >
+          Meus produtos
+        </h6>
         <MemoizedProductContainer
           isDeals={false}
           paddingTop={"0px"}
           filterByAdmin={id}
         />
-        {about_me && (
-          <Row style={{ marginTop: "12px" }}>
-            <Col>
-              <Card>
-                <Card.Body>
-                  <Card.Title>Sobre mim</Card.Title>
-                  <Card.Text>{about_me}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        )}
-        {about_products && (
-          <Row style={{ marginTop: "12px", marginBottom: "12px" }}>
-            <Col>
-              <Card>
-                <Card.Body>
-                  <Card.Title>Sobre os meus produtos</Card.Title>
-                  <Card.Text>{about_products}</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+        {(about_me || about_products) && (
+          <>
+            <h6 style={{ marginTop: "32px" }} className="font-face-poppins-bold">
+              Um pouco da minha história
+            </h6>
+            <p style={{ marginBottom: "8px" }}>{about_me}</p>
+            <p>{about_products}</p>
+          </>
         )}
       </Container>
       <Footer />
