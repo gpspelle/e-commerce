@@ -68,7 +68,7 @@ export default function NoProductFoundMessage({
               </Card.Text>
             </div>
             <Button
-              className="my-2"
+              className="my-2 primary-background no-border"
               onClick={handleClick}
               style={{ width: "100%" }}
               variant="primary"
