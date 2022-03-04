@@ -30,8 +30,8 @@ export const PRODUCT_TYPES = {
 }
 
 export const NAVIGATION_LINKS = {
-  "Tela de início": "/",
-  "Todos os produtos": `/${PRODUCTS}`,
-  Ofertas: `/${DEALS}`,
+  "Pagina inicial": "/",
+  Produtos: `/${PRODUCTS}`,
+  Promoções: `/${DEALS}`,
   "Sobre nós": `/${ABOUT_US}`,
 }

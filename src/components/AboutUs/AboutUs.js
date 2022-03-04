@@ -9,6 +9,7 @@ import AdminHome from "../AdminHome/AdminHome"
 import { LateralCard } from "../Blocks/LateralCard"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
+import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
 export default function AboutUs() {
   const location = useLocation()
@@ -49,46 +50,67 @@ export default function AboutUs() {
       <Container style={{ paddingTop: "82px" }}>
         <Row>
           <Col>
-            <h4>Sobre o projeto</h4>
+            <h6
+              className="dark-color font-face-poppins-bold"
+              style={{ marginBottom: "16px" }}
+            >
+              Sobre o projeto
+            </h6>
           </Col>
         </Row>
-        <LateralCard
-          imageSize={120}
-          imagePosition="left"
-          smallSrc="/small-about-us.png"
-          src="/about-us.png"
-          text={`A ${APP_NAME} surgiu como uma ideia para reunir artesãos de ${APP_CITY} e ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma unificada`}
-        />
-        <LateralCard
-          imageSize={120}
-          imagePosition="right"
-          text="Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega ou sob encomenda"
-        />
-        <Row ref={adminsRef} style={{ paddingTop: "16px" }}>
-          <Col>
-            <h4 style={{ marginBottom: "0px" }}>Nossos artesãos</h4>
-          </Col>
-        </Row>
-        {/* TODO: this implies that there are at least two rows of admins
+        <div
+          style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}
+        >
+          <ProgressiveBlurryImageLoad
+            small="/small-about-us.png"
+            large="/about-us.png"
+            height={240}
+            width={240}
+          />
+        </div>
+        <p>
+          A {APP_NAME} surgiu como uma ideia para reunir artesãos de {APP_CITY} e
+          ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma
+          unificada
+        </p>
+        <p>
+          Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega
+          ou sob encomenda
+        </p>
+      </Container>
+      <Container className="light-dark-background">
+        <div>
+          <Row ref={adminsRef} style={{ paddingTop: "16px" }}>
+            <Col>
+              <h6
+                className="dark-color font-face-poppins-bold"
+                style={{ marginBottom: "16px" }}
+              >
+                Nossos artesãos
+              </h6>
+            </Col>
+          </Row>
+          {/* TODO: this implies that there are at least two rows of admins
        with 144 px each */}
-        <Row style={{ minHeight: 144 * 2 }}>
-          {accounts &&
-            accounts.map((account) => {
-              return (
-                <Col
-                  key={account.id}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    paddingBottom: "12px",
-                  }}
-                >
-                  <AdminHome account={account} />
-                </Col>
-              )
-            })}
-        </Row>
+          <Row style={{ minHeight: 144 * 2 }}>
+            {accounts &&
+              accounts.map((account) => {
+                return (
+                  <Col
+                    key={account.id}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingBottom: "12px",
+                    }}
+                  >
+                    <AdminHome account={account} />
+                  </Col>
+                )
+              })}
+          </Row>
+        </div>
       </Container>
       <Footer />
     </>

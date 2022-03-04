@@ -11,24 +11,28 @@ export default function Footer() {
         style={{
           justifyContent: "left",
           display: "inline-grid",
-          paddingLeft: "32px",
         }}
       >
-        <div style={{ paddingTop: "16px", paddingBottom: "8px" }}>
-          <h2 style={{ color: "#fff", display: "inline-block" }}>{APP_NAME}</h2>
+        <div style={{ paddingTop: "32px", paddingBottom: "16px" }}>
+          <h6
+            className="light-color font-face-poppins-bold"
+            style={{ display: "inline-block" }}
+          >
+            {APP_NAME}
+          </h6>
         </div>
         {Object.keys(NAVIGATION_LINKS).map((page) => {
           return (
             <Link
               key={page}
               to={NAVIGATION_LINKS[page]}
+              className="light-color"
               style={{
-                color: "#fff",
                 display: "inline-block",
                 textDecoration: "none",
               }}
             >
-              <p>{page}</p>
+              <p style={{ marginBottom: "8px" }}>{page}</p>
             </Link>
           )
         })}

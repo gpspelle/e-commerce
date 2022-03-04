@@ -64,7 +64,7 @@ export default function NoProductFoundMessage({
                 </div>
               )}
               <Card.Text>
-                Para voltar à tela de início, clique no botão abaixo
+                Para voltar à página inicial, clique no botão abaixo
               </Card.Text>
             </div>
             <Button

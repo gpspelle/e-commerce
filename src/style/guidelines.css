@@ -95,7 +95,7 @@
 }
 
 .light-color {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .light-dark-background {
@@ -125,4 +125,12 @@
 /** button border**/
 .no-border {
     border: none !important;
+}
+
+/* condition for screen size max of 810px */
+@media (max-width:810px) {
+
+    /* your conditional / responsive CSS inside this condition */
+    p { font-size: 12px; line-height: 18px; }
+  
 }
