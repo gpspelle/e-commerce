@@ -44,7 +44,7 @@ function PaginatedItems({ products, itemsPerPage, screenWidth, scrollFunction })
         breakLinkClassName="page-link"
         pageCount={pageCount}
         onPageChange={handlePageClick}
-        containerClassName="pagination"
+        containerClassName="pagination font-face-poppins-bold"
         activeClassName="active"
         renderOnZeroPageCount={null}
         forcePage={currentPage}
