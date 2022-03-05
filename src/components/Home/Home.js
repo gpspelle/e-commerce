@@ -297,8 +297,8 @@ export default function Home() {
           <div
             /* TODO: crazy math to get the vertical size of the items */
             style={{
-              minHeight: productCardSize + 76.5 + 47.5 + extra,
-              height: productCardSize + 76.5 + 47.5 + extra,
+              minHeight: productCardSize + 76.5 + 47.5 + extra + 22,
+              height: productCardSize + 76.5 + 47.5 + extra + 22,
               display: "flex",
               justifyContent: "center",
             }}
