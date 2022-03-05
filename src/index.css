@@ -23,6 +23,5 @@ body {
   font-family: "PoppinsItalic";
   src: local("PoppinsItalic"),
     url("./style/fonts/Poppins/Poppins-Italic.ttf") format("truetype");
-  font-style: italic;
 }
 
