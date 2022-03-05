@@ -130,7 +130,9 @@ export default function ProductDescriptionMobile() {
         {isDeal ? (
           <div className="notranslate">
             <h7
-              className="helper-warning-color"
+              className={
+                isLightningDeal ? "helper-error-color" : "helper-warning-color"
+              }
               style={{ textDecoration: "line-through", marginBottom: "0px" }}
             >
               R$ {price}

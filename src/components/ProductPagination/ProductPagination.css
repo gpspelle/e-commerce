@@ -1,5 +1,7 @@
 .page-link {
-    color: #212529 !important;
+    color: #F5F7FA !important;
+    border-radius: 2px;
+    border: none !important;
 }
 
 .page-item {
@@ -12,12 +14,7 @@
 
 .active > .page-link {
     font-weight: bold;    
-    border: 1px solid #888;
-    border-radius: 10px;
-    box-sizing: border-box;
-    box-shadow: 0 0 8px 0 rgba(0,0,0,0.25);
-    border-color: #888 !important;
-    background-color: #CCC !important;
+    background-color: #263F59 !important;
 }
 
 .pagination {

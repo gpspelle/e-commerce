@@ -91,7 +91,7 @@
 }
 
 .light-background {
-    background: #FFFFFF;
+    background: #FFFFFF !important;
 }
 
 .light-color {
@@ -119,7 +119,7 @@
 }
 
 .grey-dark-color {
-    color: #879AAD;
+    color: #879AAD !important;
 }
 
 /** button border**/

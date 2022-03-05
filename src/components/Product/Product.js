@@ -72,72 +72,71 @@ export default function Product({
         />
       )}
       {isLightningDeal && <LightningDealWaterMark />}
-      <Card.Body>
+      <Card.Body style={{ paddingTop: "8px" }}>
         <div>
           <Row>
             <Col style={{ display: "flex" }}>
-              <Card.Title
-                className="notranslate"
-                style={{
-                  fontSize: isProductOfferHome ? "15px" : "",
-                  textDecoration: isDeal ? "line-through" : "none",
-                  color: isDeal ? "lightgray" : "inherit",
-                  marginBottom: "0",
-                }}
-              >
-                R$ {price}
-              </Card.Title>
-              {isDeal && (
-                <Card.Title
-                  style={{
-                    fontSize: isProductOfferHome ? "15px" : "",
-                  }}
-                  className="notranslate"
-                >
-                  &nbsp;R$ {dealPrice}
-                </Card.Title>
+              {isDeal ? (
+                <div className="notranslate" style={{ display: "flex" }}>
+                  <small
+                    className={
+                      lightningDealDuration && lightningDealStartTime
+                        ? "helper-error-color"
+                        : "helper-warning-color"
+                    }
+                    style={{
+                      textDecoration: "line-through",
+                      lineHeight: "30px",
+                    }}
+                  >
+                    R$ {price}
+                  </small>
+                  <h5 style={{ marginBottom: "4px" }}>
+                    &nbsp;&nbsp;&nbsp;R$ {dealPrice}
+                  </h5>
+                </div>
+              ) : (
+                <h5 style={{ marginTop: "16px", marginBottom: "4px" }}>
+                  R$ {price}
+                </h5>
               )}
             </Col>
           </Row>
           <Row>
             <Col>
-              <Card.Text
+              <p
                 style={{
-                  fontSize: "15px",
-                  marginBottom: isProductOfferHome ? "" : "0.25rem",
                   overflowX: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  marginBottom: "4.39px",
                 }}
                 className="notranslate"
               >
                 {name}
-              </Card.Text>
+              </p>
             </Col>
           </Row>
-          {!isProductOfferHome && (
-            <Row>
-              <Card.Text
-                style={{
-                  fontSize: "12px",
-                  overflowX: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-                className="notranslate"
-              >
-                {`Vendido por ${commercialName ? commercialName : "..."}`}
-              </Card.Text>
-            </Row>
-          )}
+          <Row>
+            <small
+              style={{
+                fontSize: "12px",
+                overflowX: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                marginBottom: "4px",
+              }}
+              className="notranslate"
+            >
+              {`Vendido por ${commercialName ? commercialName : "..."}`}
+            </small>
+          </Row>
         </div>
-        {!isProductOfferHome && (
-          <LightningDealDuration
-            isProductDescription={false}
-            lightningDealDuration={lightningDealDuration}
-            lightningDealStartTime={lightningDealStartTime}
-          />
-        )}
+        <LightningDealDuration
+          isProductDescription={false}
+          lightningDealDuration={lightningDealDuration}
+          lightningDealStartTime={lightningDealStartTime}
+        />
       </Card.Body>
     </Card>
   )

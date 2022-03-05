@@ -210,7 +210,7 @@ export default function ProductDescription() {
                   text={"Gostei desse"}
                 />
               </Col>
-              <h5 style={{ marginBottom: "22px" }}>Sobre o artesão</h5>
+              <h5 style={{ marginBottom: "16px" }}>Sobre o artesão</h5>
               <AboutAdmin
                 isComplete={true}
                 phoneNumber={phoneNumber}

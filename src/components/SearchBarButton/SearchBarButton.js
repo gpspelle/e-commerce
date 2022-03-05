@@ -2,11 +2,11 @@ import React from "react"
 import { Button } from "react-bootstrap"
 import { AiOutlineSearch } from "react-icons/ai"
 
-export default function SearchBarButton() {
+export default function SearchBarButton({ color, backgroundColor }) {
   return (
     <Button
       type="submit"
-      className="light-dark-background dark-color"
+      className={`${color} ${backgroundColor}`}
       style={{
         borderColor: "none",
         border: "none",

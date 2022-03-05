@@ -41,6 +41,8 @@ export default function SendMessageWhatsAppButton({
           height: "44px",
           fontSize: "12px",
           lineHeight: "18px",
+          padding: "13px 16px",
+          borderRadius: "8px",
         }}
         onClick={messageFunction}
       >

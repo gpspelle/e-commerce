@@ -33,19 +33,21 @@ export default function LightningDealDuration({
 
   if (isProductDescription) {
     return (
-      <p style={{ textAlign: "left", color: "#BE464C" }}>
-        <AiOutlineClockCircle />
-        &nbsp;Oferta acaba em&nbsp;
+      <p className="helper-error-color" style={{ textAlign: "left" }}>
+        <img src="/alert.svg" height="12px" />
+        &nbsp;&nbsp;Termina em&nbsp;
         {displayLeftDuration}
       </p>
     )
   }
 
   return (
-    <div style={{ textAlign: "left", fontSize: "12px", color: "#BE464C" }}>
-      <AiOutlineClockCircle />
-      &nbsp;Oferta acaba em&nbsp;
+    <p
+      className="helper-error-color"
+      style={{ textAlign: "left", marginBottom: "0px" }}
+    >
+      Termina em&nbsp;
       {displayLeftDuration}
-    </div>
+    </p>
   )
 }

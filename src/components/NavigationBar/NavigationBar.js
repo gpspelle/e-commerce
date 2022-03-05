@@ -43,7 +43,9 @@ export default function NavigationBar() {
                     href={NAVIGATION_LINKS[page].path}
                   >
                     <div style={{ display: "flex" }}>
-                      <img src={NAVIGATION_LINKS[page].icon} />
+                      <div style={{ marginTop: "4px" }}>
+                        {NAVIGATION_LINKS[page].icon}
+                      </div>
                       <p
                         className="dark-color"
                         style={{ marginBottom: "8px", marginTop: "8px" }}

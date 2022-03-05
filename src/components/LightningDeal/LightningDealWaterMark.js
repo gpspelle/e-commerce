@@ -6,12 +6,12 @@ export default function LightningDealWaterMark({ isProductDescription }) {
   return (
     <>
       <AiFillThunderbolt
+        className="helper-error-color"
         style={{
           position: "absolute",
           margin: "19px",
           fontSize: "24px",
           zIndex: "1",
-          color: "green",
           top,
           visibility: "visible",
         }}
@@ -24,7 +24,7 @@ export default function LightningDealWaterMark({ isProductDescription }) {
           margin: "8px",
           zIndex: "0",
           top,
-          border: "1.25px solid green",
+          border: "1.25px solid #BE464C",
           borderRadius: "10px",
           visibility: "visible",
         }}

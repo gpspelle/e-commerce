@@ -11,6 +11,8 @@ export default function SearchBar() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [searchBarValue, setSearchBarValue] = useState("")
 
+  const isSearchBarEmpty = searchBarValue === ""
+
   useEffect(() => {
     if (isSubmitted) {
       setIsSubmitted(false)
@@ -33,6 +35,9 @@ export default function SearchBar() {
     setIsSubmitted(true)
   }
 
+  const backgroundColor = "light-dark-background"
+  const color = !isSearchBarEmpty ? "dark-color" : "grey-dark-color"
+
   return (
     <Container
       style={{
@@ -44,19 +49,25 @@ export default function SearchBar() {
     >
       <Form style={{ display: "flex" }} onSubmit={applySearchOnProducts}>
         <Form.Group controlId="formSearchBar" style={{ width: "100%" }}>
-          <div className="search-input-div light-dark-background">
+          <div
+            className={`search-input-div ${backgroundColor}`}
+            style={{ borderRadius: "8px" }}
+          >
             <input
               className={
-                isSubmitted
-                  ? "light-dark-background specific-form-control font-face-poppins-italic remove-focus-search-bar"
-                  : "light-dark-background specific-form-control font-face-poppins-italic"
+                !isSearchBarEmpty
+                  ? `${backgroundColor} specific-form-control font-face-poppins-italic remove-focus-search-bar`
+                  : `${backgroundColor} grey-dark-color specific-form-control font-face-poppins-italic`
               }
               value={searchBarValue}
               onChange={(e) => setSearchBarValue(e.target.value)}
               type="text"
               placeholder="O que você está buscando?"
+              // this is required or safari on iOS will
+              // zoom into the input field
+              style={{ fontSize: "16px" }}
             />
-            <SearchBarButton />
+            <SearchBarButton color={color} backgroundColor={backgroundColor} />
           </div>
         </Form.Group>
       </Form>
