@@ -43,12 +43,14 @@ export default function ProductDescriptionMobile() {
   }, [])
 
   useEffect(() => {
-    getAccountFromDatabase({
-      accountId: productData.productOwnerId,
-      productData,
-      setProductData,
-    })
-  }, [productData.productOwnerId])
+    if (!productData.phoneNumber || !productData.commercialName) {
+      getAccountFromDatabase({
+        accountId: productData.productOwnerId,
+        productData,
+        setProductData,
+      })
+    }
+  }, [productData])
 
   useEffect(() => {
     if (location.state) {
@@ -97,6 +99,8 @@ export default function ProductDescriptionMobile() {
     productSellTypes,
   } = productData
 
+  console.log(productData.phoneNumber)
+
   const isDeal = getIsDeal(productType)
   const isLightningDeal = getIsLightningDeal(productType)
   const imagesIsDefined = images.length > 0
@@ -135,18 +139,34 @@ export default function ProductDescriptionMobile() {
         )}
         {isDeal ? (
           <div className="notranslate">
-            <h7
+            <h6
               className={
                 isLightningDeal ? "helper-error-color" : "helper-warning-color"
               }
               style={{ textDecoration: "line-through", marginBottom: "0px" }}
             >
               R$ {price}
-            </h7>
-            <h4 style={{ marginBottom: "32px" }}>R$ {dealPrice}</h4>
+            </h6>
+            <h4 style={{ marginBottom: isLightningDeal ? "5px" : "32px" }}>
+              R$ {dealPrice}
+            </h4>
           </div>
         ) : (
-          <h4 style={{ marginTop: "32px", marginBottom: "32px" }}>R$ {price}</h4>
+          <h4
+            style={{
+              marginTop: "32px",
+              marginBottom: "32px",
+            }}
+          >
+            R$ {price}
+          </h4>
+        )}
+        {isLightningDeal && (
+          <LightningDealDuration
+            isProductDescription={true}
+            lightningDealDuration={lightningDealDuration}
+            lightningDealStartTime={lightningDealStartTime}
+          />
         )}
         <h6
           style={{
@@ -184,13 +204,6 @@ export default function ProductDescriptionMobile() {
           commercialName={commercialName}
           text={"Gostei desse"}
         />
-        {isLightningDeal && (
-          <LightningDealDuration
-            isProductDescription={true}
-            lightningDealDuration={lightningDealDuration}
-            lightningDealStartTime={lightningDealStartTime}
-          />
-        )}
         <h6
           style={{ marginBottom: "16px" }}
           className="font-face-poppins-bold dark-dark-color"

@@ -15,7 +15,7 @@ export default function Product({
   commercialName,
   productImageSize,
   productCardSize,
-  isProductOfferHome,
+  isRelatedProduct,
 }) {
   const history = useHistory()
 
@@ -72,12 +72,15 @@ export default function Product({
         />
       )}
       {isLightningDeal && <LightningDealWaterMark />}
-      <Card.Body style={{ paddingTop: "8px" }}>
+      <Card.Body
+        className="light-background"
+        style={{ paddingTop: "0px", paddingBottom: "0px" }}
+      >
         <div>
           <Row>
             <Col style={{ display: "flex" }}>
               {isDeal ? (
-                <div className="notranslate" style={{ display: "flex" }}>
+                <div className="notranslate" style={{ display: "block" }}>
                   <small
                     className={
                       lightningDealDuration && lightningDealStartTime
@@ -85,18 +88,17 @@ export default function Product({
                         : "helper-warning-color"
                     }
                     style={{
+                      fontSize: "11px",
                       textDecoration: "line-through",
-                      lineHeight: "30px",
+                      lineHeight: "16px",
                     }}
                   >
                     R$ {price}
                   </small>
-                  <h5 style={{ marginBottom: "4px" }}>
-                    &nbsp;&nbsp;&nbsp;R$ {dealPrice}
-                  </h5>
+                  <h5 style={{ marginBottom: "4px" }}>R$ {dealPrice}</h5>
                 </div>
               ) : (
-                <h5 style={{ marginTop: "16px", marginBottom: "4px" }}>
+                <h5 style={{ marginTop: "24px", marginBottom: "4px" }}>
                   R$ {price}
                 </h5>
               )}
@@ -109,7 +111,7 @@ export default function Product({
                   overflowX: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
-                  marginBottom: "4.39px",
+                  marginBottom: isRelatedProduct ? "7.86px" : "4.39px",
                 }}
                 className="notranslate"
               >
@@ -117,26 +119,30 @@ export default function Product({
               </p>
             </Col>
           </Row>
-          <Row>
-            <small
-              style={{
-                fontSize: "12px",
-                overflowX: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                marginBottom: "4px",
-              }}
-              className="notranslate"
-            >
-              {`Vendido por ${commercialName ? commercialName : "..."}`}
-            </small>
-          </Row>
+          {!isRelatedProduct && (
+            <Row>
+              <small
+                style={{
+                  fontSize: "12px",
+                  overflowX: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  marginBottom: isLightningDeal ? "4px" : "22.7px",
+                }}
+                className="notranslate"
+              >
+                {`Vendido por ${commercialName ? commercialName : "..."}`}
+              </small>
+            </Row>
+          )}
         </div>
-        <LightningDealDuration
-          isProductDescription={false}
-          lightningDealDuration={lightningDealDuration}
-          lightningDealStartTime={lightningDealStartTime}
-        />
+        {!isRelatedProduct && (
+          <LightningDealDuration
+            isProductDescription={false}
+            lightningDealDuration={lightningDealDuration}
+            lightningDealStartTime={lightningDealStartTime}
+          />
+        )}
       </Card.Body>
     </Card>
   )

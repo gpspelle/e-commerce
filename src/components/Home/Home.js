@@ -195,7 +195,6 @@ export default function Home() {
           }
           productImageSize={productImageSize}
           productCardSize={productCardSize}
-          isProductOfferHome={true}
         />
       </Col>
     )
@@ -297,8 +296,8 @@ export default function Home() {
           <div
             /* TODO: crazy math to get the vertical size of the items */
             style={{
-              minHeight: productCardSize + 76.5 + 47.5 + extra + 22,
-              height: productCardSize + 76.5 + 47.5 + extra + 22,
+              minHeight: productCardSize + 76.5 + 47.5 + extra + 40.5,
+              height: productCardSize + 76.5 + 47.5 + extra + 40.5,
               display: "flex",
               justifyContent: "center",
             }}

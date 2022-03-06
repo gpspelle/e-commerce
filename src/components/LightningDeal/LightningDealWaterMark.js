@@ -6,7 +6,7 @@ export default function LightningDealWaterMark({ isProductDescription }) {
   return (
     <>
       <AiFillThunderbolt
-        className="helper-error-color"
+        className="helper-error-color light-background"
         style={{
           position: "absolute",
           margin: "19px",

@@ -188,7 +188,6 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
             }
             productImageSize="258px"
             productCardSize="260px"
-            isProductOfferHome={false}
           />
         </Col>
       )

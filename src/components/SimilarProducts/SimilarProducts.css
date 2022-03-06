@@ -1,21 +1,8 @@
 .similar-products, .similar-products * {
-    background-color: #F0F0F0;
+    background-color: #F5F7FA;
 }
 
 .page-link {
-    background-color: #F0F0F0 !important;
+    background-color: #F5F7FA !important;
     border: none !important;
-}
-
-li.page-item > a.page-link > span {
-    font-size: 30px;
-    color:  #212529;
-}
-
-.card-text {
-    color:  #212529;
-}
-
-li.page-item.disabled * span {
-    font-size: 30px;
 }
