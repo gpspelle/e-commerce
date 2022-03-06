@@ -108,24 +108,28 @@ export default function ProductDescription() {
         visibility: isFullScreen ? "hidden" : "",
       }}
     >
-      <NavigationBar />
-      <SearchBar />
+      <div style={{ display: isFullScreen ? "none" : "" }}>
+        <NavigationBar />
+        <SearchBar />
+      </div>
       <Container>
         <Row>
           {isFullScreen ? (
             <Col>
               {imagesIsDefined && (
-                <ImageCarousel
-                  isFullScreen={isFullScreen}
-                  setIsFullScreen={setIsFullScreen}
-                  images={images}
-                  screenWidth={width}
-                  screenHeight={height}
-                  allowScroll={allowScroll}
-                  blockScroll={blockScroll}
-                  productImagesResized={productImagesResized}
-                  isLightningDeal={isLightningDeal}
-                />
+                <div style={{ marginTop: isFullScreen ? "32px" : "" }}>
+                  <ImageCarousel
+                    isFullScreen={isFullScreen}
+                    setIsFullScreen={setIsFullScreen}
+                    images={images}
+                    screenWidth={width}
+                    screenHeight={height}
+                    allowScroll={allowScroll}
+                    blockScroll={blockScroll}
+                    productImagesResized={productImagesResized}
+                    isLightningDeal={isLightningDeal}
+                  />
+                </div>
               )}
             </Col>
           ) : (

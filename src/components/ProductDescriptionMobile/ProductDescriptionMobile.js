@@ -102,30 +102,36 @@ export default function ProductDescriptionMobile() {
   const imagesIsDefined = images.length > 0
 
   return (
-    <div
-      style={{
-        visibility: isFullScreen ? "hidden" : "",
-      }}
-    >
-      <NavigationBar />
-      <SearchBar />
-
+    <div style={{ visibility: isFullScreen ? "hidden" : "" }}>
+      <div
+        style={{
+          display: isFullScreen ? "none" : "",
+        }}
+      >
+        <NavigationBar />
+        <SearchBar />
+      </div>
       <Container>
-        <h6 style={{ marginBottom: "16px" }} className="font-face-poppins-bold">
+        <h6
+          style={{ marginBottom: "16px", display: isFullScreen ? "none" : "" }}
+          className="font-face-poppins-bold"
+        >
           {name}
         </h6>
         {imagesIsDefined && (
-          <ImageCarousel
-            isFullScreen={isFullScreen}
-            setIsFullScreen={setIsFullScreen}
-            images={images}
-            screenWidth={width}
-            screenHeight={height}
-            allowScroll={allowScroll}
-            blockScroll={blockScroll}
-            productImagesResized={productImagesResized}
-            isLightningDeal={isLightningDeal}
-          />
+          <div style={{ marginTop: isFullScreen ? "32px" : "" }}>
+            <ImageCarousel
+              isFullScreen={isFullScreen}
+              setIsFullScreen={setIsFullScreen}
+              images={images}
+              screenWidth={width}
+              screenHeight={height}
+              allowScroll={allowScroll}
+              blockScroll={blockScroll}
+              productImagesResized={productImagesResized}
+              isLightningDeal={isLightningDeal}
+            />
+          </div>
         )}
         {isDeal ? (
           <div className="notranslate">
