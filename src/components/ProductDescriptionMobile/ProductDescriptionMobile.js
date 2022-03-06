@@ -53,6 +53,7 @@ export default function ProductDescriptionMobile() {
   }, [productData])
 
   useEffect(() => {
+    scrollToTop()
     if (location.state) {
       setProductData({ ...productData, ...location.state })
     } else {
@@ -98,8 +99,6 @@ export default function ProductDescriptionMobile() {
     productStock,
     productSellTypes,
   } = productData
-
-  console.log(productData.phoneNumber)
 
   const isDeal = getIsDeal(productType)
   const isLightningDeal = getIsLightningDeal(productType)
