@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom"
 import { Card } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
-import LightningDealDuration from "../LightningDeal/LightningDealDuration"
+import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
+import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightningDeal } from "../../utils/LightningDealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
@@ -47,7 +47,7 @@ export default function ProductMobile({
         tags,
         commercialName,
         productType,
-        isDeal,
+        isDeal: isDeal || isLightningDeal,
         dealPrice,
         lightningDealStartTime,
         lightningDealDuration,
@@ -123,14 +123,14 @@ export default function ProductMobile({
           <Card.Text
             className="notranslate"
             style={{
-              textDecoration: isDeal ? "line-through" : "none",
-              color: isDeal ? "lightgray" : "inherit",
-              marginBottom: isDeal ? "0" : "",
+              textDecoration: isDeal || isLightningDeal ? "line-through" : "none",
+              color: isDeal || isLightningDeal ? "lightgray" : "inherit",
+              marginBottom: isDeal || isLightningDeal ? "0px" : "",
             }}
           >
             R$ {price}
           </Card.Text>
-          {isDeal && (
+          {(isDeal || isLightningDeal) && (
             <Card.Text className="notranslate">&nbsp;R$ {dealPrice}</Card.Text>
           )}
         </div>

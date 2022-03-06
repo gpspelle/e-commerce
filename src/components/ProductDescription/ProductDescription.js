@@ -7,7 +7,7 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import LightningDealDuration from "../LightningDeal/LightningDealDuration"
+import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
@@ -128,6 +128,9 @@ export default function ProductDescription() {
                     blockScroll={blockScroll}
                     productImagesResized={productImagesResized}
                     isLightningDeal={isLightningDeal}
+                    isDeal={isDeal}
+                    price={price}
+                    dealPrice={dealPrice}
                   />
                 </div>
               )}
@@ -146,6 +149,9 @@ export default function ProductDescription() {
                     blockScroll={blockScroll}
                     productImagesResized={productImagesResized}
                     isLightningDeal={isLightningDeal}
+                    isDeal={isDeal}
+                    price={price}
+                    dealPrice={dealPrice}
                   />
                 )}
               </Col>
@@ -163,7 +169,7 @@ export default function ProductDescription() {
                     lightningDealStartTime={lightningDealStartTime}
                   />
                 )}
-                {isDeal ? (
+                {isDeal || isLightningDeal ? (
                   <div className="notranslate my-4" style={{ display: "flex" }}>
                     <h5
                       style={{ textDecoration: "line-through", color: "lightgray" }}
@@ -201,10 +207,10 @@ export default function ProductDescription() {
                   }}
                   messageFunction={() =>
                     sendBuyWhatsAppMessage({
-                      isDeal,
+                      isDeal: isDeal || isLightningDeal,
                       id,
                       name,
-                      price: isDeal ? dealPrice : price,
+                      price: isDeal || isLightningDeal ? dealPrice : price,
                       phoneNumber,
                       commercialName,
                     })

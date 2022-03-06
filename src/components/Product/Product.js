@@ -3,11 +3,12 @@ import { useHistory } from "react-router-dom"
 import { Card, Row, Col } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
-import LightningDealDuration from "../LightningDeal/LightningDealDuration"
+import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
+import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import { getIsDeal } from "../../utils/dealUtils"
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
+import DealWaterMark from "../DealWaterMark/DealWaterMark"
 
 export default function Product({
   productEntity,
@@ -72,6 +73,9 @@ export default function Product({
         />
       )}
       {isLightningDeal && <LightningDealWaterMark />}
+      {isDeal && (
+        <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
+      )}
       <Card.Body
         className="light-background"
         style={{ paddingTop: "0px", paddingBottom: "0px" }}
@@ -79,7 +83,7 @@ export default function Product({
         <div>
           <Row>
             <Col style={{ display: "flex" }}>
-              {isDeal ? (
+              {isDeal || isLightningDeal ? (
                 <div className="notranslate" style={{ display: "block" }}>
                   <small
                     className={

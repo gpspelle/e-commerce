@@ -7,7 +7,7 @@ import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import LightningDealDuration from "../LightningDeal/LightningDealDuration"
+import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
 import { getIsDeal } from "../../utils/dealUtils"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
@@ -133,10 +133,13 @@ export default function ProductDescriptionMobile() {
               blockScroll={blockScroll}
               productImagesResized={productImagesResized}
               isLightningDeal={isLightningDeal}
+              isDeal={isDeal}
+              price={price}
+              dealPrice={dealPrice}
             />
           </div>
         )}
-        {isDeal ? (
+        {isDeal || isLightningDeal ? (
           <div className="notranslate">
             <h6
               className={
@@ -191,10 +194,10 @@ export default function ProductDescriptionMobile() {
           }}
           messageFunction={() =>
             sendBuyWhatsAppMessage({
-              isDeal,
+              isDeal: isDeal || isLightningDeal,
               id,
               name,
-              price: isDeal ? dealPrice : price,
+              price: isDeal || isLightningDeal ? dealPrice : price,
               phoneNumber,
               commercialName,
             })

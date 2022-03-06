@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import LightningDealWaterMark from "../LightningDeal/LightningDealWaterMark"
+import DealWaterMark from "../DealWaterMark/DealWaterMark"
+import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
 import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
 import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"
 import "./ImageCarousel.css"
@@ -23,6 +24,9 @@ export default function ImageCarousel({
   blockScroll,
   productImagesResized,
   isLightningDeal,
+  isDeal,
+  price,
+  dealPrice,
 }) {
   const [originalImagesDimensions, setOriginalImagesDimensions] = useState()
   const [actualShowingImageNumber, setActualShowingImageNumber] = useState(0)
@@ -50,8 +54,9 @@ export default function ImageCarousel({
               allowScroll={allowScroll}
               blockScroll={blockScroll}
             />
-            {isLightningDeal && (
-              <LightningDealWaterMark isProductDescription={true} />
+            {isLightningDeal && <LightningDealWaterMark />}
+            {isDeal && (
+              <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
             )}
           </div>
         )
@@ -70,7 +75,10 @@ export default function ImageCarousel({
             allowScroll={allowScroll}
             blockScroll={blockScroll}
           />
-          {isLightningDeal && <LightningDealWaterMark isProductDescription={true} />}
+          {isLightningDeal && <LightningDealWaterMark />}
+          {isDeal && (
+            <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
+          )}
         </div>
       )
     })
