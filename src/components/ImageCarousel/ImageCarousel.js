@@ -56,7 +56,9 @@ export default function ImageCarousel({
             />
             {isLightningDeal && <LightningDealWaterMark />}
             {isDeal && (
-              <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
+              <DealWaterMark
+                dealOffPercentage={(100 * (1 - dealPrice / price)) >> 0}
+              />
             )}
           </div>
         )
@@ -77,7 +79,9 @@ export default function ImageCarousel({
           />
           {isLightningDeal && <LightningDealWaterMark />}
           {isDeal && (
-            <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
+            <DealWaterMark
+              dealOffPercentage={(100 * (1 - dealPrice / price)) >> 0}
+            />
           )}
         </div>
       )

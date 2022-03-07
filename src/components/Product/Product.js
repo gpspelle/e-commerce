@@ -74,7 +74,7 @@ export default function Product({
       )}
       {isLightningDeal && <LightningDealWaterMark />}
       {isDeal && (
-        <DealWaterMark dealOffPercentage={((100 * dealPrice) / price) >> 0} />
+        <DealWaterMark dealOffPercentage={(100 * (1 - dealPrice / price)) >> 0} />
       )}
       <Card.Body
         className="light-background"
