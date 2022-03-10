@@ -88,9 +88,7 @@ export default function AboutUs() {
               </h6>
             </Col>
           </Row>
-          {/* TODO: this implies that there are at least two rows of admins
-       with 144 px each */}
-          <Row style={{ minHeight: 144 * 2 }}>
+          <Row style={{ minHeight: 288 }}>
             {accounts &&
               accounts.map((account) => {
                 return (
@@ -100,10 +98,25 @@ export default function AboutUs() {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      paddingBottom: "12px",
+                      paddingBottom: "16px",
                     }}
                   >
-                    <AdminHome account={account} />
+                    <div>
+                      <AdminHome account={account} />
+                      <p
+                        style={{
+                          fontSize: "12px",
+                          lineHeight: "18px",
+                          maxWidth: "120px",
+                          marginTop: "4px",
+                          display: "flex",
+                          justifyContent: "center",
+                          textAlign: "center",
+                        }}
+                      >
+                        {account.commercial_name}
+                      </p>
+                    </div>
                   </Col>
                 )
               })}
