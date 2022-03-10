@@ -43,7 +43,13 @@ export default function ProductDescriptionMobile() {
   }, [])
 
   useEffect(() => {
-    if (!productData.phoneNumber || !productData.commercialName) {
+    if (
+      !productData.phoneNumber ||
+      !productData.commercialName ||
+      !productData.cropProfilePhoto ||
+      !productData.aboutMe ||
+      !productData.aboutProducts
+    ) {
       getAccountFromDatabase({
         accountId: productData.productOwnerId,
         productData,
