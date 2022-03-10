@@ -77,7 +77,7 @@ const SimilarProductsMobile = ({ id, tags }) => {
         >
           Produtos relacionados
         </h6>
-        {true || similarProductsData.productPagination.isLoading ? (
+        {similarProductsData.productPagination.isLoading ? (
           <div
             style={{
               height: "222.8px",
