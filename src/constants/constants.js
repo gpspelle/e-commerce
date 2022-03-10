@@ -11,6 +11,7 @@ export const PRODUCT_ORDER_SELL_TYPE =
   process.env.REACT_APP_PRODUCT_ORDER || "PRODUCT_ORDER"
 export const APP_CITY = "Araras"
 export const APP_STATE = "São Paulo"
+export const APP_CITY_DD_COORDINATES = [-22.35694, -47.38417]
 
 export const PRODUCTS_ENDPOINT = "customer-products"
 export const PRODUCT_ENDPOINT = "customer-product"

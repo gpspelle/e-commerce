@@ -27,6 +27,7 @@ import { range } from "../../utils/range"
 import Product from "../Product/Product"
 import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 import SearchBar from "../SearchBar/SearchBar"
+import MyMap from "../Map/Map"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -262,6 +263,8 @@ export default function Home() {
     </p>
   )
 
+  const addresses = accounts.map((account) => account.dd_coordinates)
+
   return (
     <>
       <NavigationBar />
@@ -409,6 +412,16 @@ export default function Home() {
             title="Toque de carinho"
             text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
           />
+        </Row>
+        <Row className="my-3">
+          <Col>
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
+              Nossas localizações
+            </h6>
+          </Col>
+        </Row>
+        <Row style={{ marginBottom: "32px" }}>
+          <MyMap addresses={addresses} />
         </Row>
       </Container>
       <Footer />
