@@ -95,10 +95,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
       <Container>
         <h4 style={{ paddingTop: "32px" }}>Produtos relacionados</h4>
         {productPagination.isLoading ? (
-          <Spinner
-            style={{ margin: "auto", display: "flex", color: "#212529" }}
-            animation="border"
-          />
+          <Spinner style={{ margin: "auto", display: "flex" }} animation="border" />
         ) : (
           <>
             {products.length > 0 ? (

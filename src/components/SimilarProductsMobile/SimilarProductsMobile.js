@@ -70,18 +70,25 @@ const SimilarProductsMobile = ({ id, tags }) => {
 
   return (
     <div className="similar-products" style={{ minHeight: "290px" }}>
-      <Container>
+      <Container style={{ minHeight: "290px" }}>
         <h6
           style={{ paddingTop: "32px", marginBottom: "16px" }}
           className="font-face-poppins-bold"
         >
           Produtos relacionados
         </h6>
-        {similarProductsData.productPagination.isLoading ? (
-          <Spinner
-            style={{ margin: "auto", display: "flex", color: "#212529" }}
-            animation="border"
-          />
+        {true || similarProductsData.productPagination.isLoading ? (
+          <div
+            style={{
+              height: "222.8px",
+              display: "flex",
+            }}
+          >
+            <Spinner
+              style={{ margin: "auto", display: "flex" }}
+              animation="border"
+            />
+          </div>
         ) : (
           <>
             {items.length > 0 ? (

@@ -227,7 +227,6 @@ export default function Home() {
       style={{
         margin: "auto",
         display: "flex",
-        color: "#212529",
       }}
       animation="border"
     />
@@ -247,7 +246,6 @@ export default function Home() {
       style={{
         margin: "auto",
         display: "flex",
-        color: "#212529",
       }}
       animation="border"
     />

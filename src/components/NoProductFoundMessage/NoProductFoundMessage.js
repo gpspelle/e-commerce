@@ -37,7 +37,7 @@ export default function NoProductFoundMessage({
           <Spinner
             animation="border"
             role="status"
-            style={{ margin: "auto", display: "flex", color: "#212529" }}
+            style={{ margin: "auto", display: "flex" }}
           >
             <span className="visually-hidden">Loading...</span>
           </Spinner>

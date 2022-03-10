@@ -59,10 +59,7 @@ const OtherImagesZoom = ({
   return (
     <Container style={{ marginLeft: "0px", paddingLeft: "0px" }}>
       {components.length === 0 ? (
-        <Spinner
-          style={{ margin: "auto", display: "flex", color: "#212529" }}
-          animation="border"
-        />
+        <Spinner style={{ margin: "auto", display: "flex" }} animation="border" />
       ) : (
         <AliceCarousel
           activeIndex={actualShowingImageNumber}
