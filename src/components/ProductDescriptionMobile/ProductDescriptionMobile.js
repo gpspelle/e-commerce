@@ -105,6 +105,8 @@ export default function ProductDescriptionMobile() {
     lightningDealDuration,
     productStock,
     productSellTypes,
+    facebookLink,
+    instagramLink,
   } = productData
 
   const isDeal = getIsDeal(productType)
@@ -251,6 +253,8 @@ export default function ProductDescriptionMobile() {
           aboutMe={aboutMe}
           screenWidth={width}
           aboutProducts={aboutProducts}
+          facebookLink={facebookLink}
+          instagramLink={instagramLink}
         />
       </Container>
       <MemoizedSimilarProductsMobile id={id} tags={tags} />

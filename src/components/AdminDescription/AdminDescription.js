@@ -35,6 +35,8 @@ export default function AdminDescription() {
             crop_profile_photo: location.state.crop_profile_photo,
             about_me: location.state.about_me,
             about_products: location.state.about_products,
+            facebook_link: location.state.facebook_link,
+            instagram_link: location.state.instagram_link,
           },
         ],
         accountsPagination: { key: undefined, fetch: false },
@@ -49,7 +51,9 @@ export default function AdminDescription() {
     commercial_name,
     crop_profile_photo,
     about_me,
-    about_products
+    about_products,
+    facebook_link,
+    instagram_link
 
   if (accounts.length > 0) {
     // eslint-disable-next-line prettier/prettier
@@ -60,6 +64,8 @@ export default function AdminDescription() {
       crop_profile_photo,
       about_me,
       about_products,
+      facebook_link,
+      instagram_link,
     } = accounts[0])
   }
 
@@ -76,6 +82,8 @@ export default function AdminDescription() {
           productOwnerId={id}
           cropProfilePhoto={crop_profile_photo}
           screenWidth={width}
+          facebookLink={facebook_link}
+          instagramLink={instagram_link}
         />
         <h6
           className="font-face-poppins-bold"

@@ -16,6 +16,8 @@ export default function AboutAdmin({
   screenWidth,
   aboutProducts,
   isComplete,
+  facebookLink,
+  instagramLink,
 }) {
   const imageSize = Math.min(screenWidth * 0.25, 142)
   if (isComplete) {
@@ -56,6 +58,8 @@ export default function AboutAdmin({
                     crop_profile_photo: cropProfilePhoto,
                     about_me: aboutMe,
                     about_products: aboutProducts,
+                    facebook_link: facebookLink,
+                    instagram_link: instagramLink,
                   },
                 }}
                 className="secondary-color more-button"
@@ -108,7 +112,7 @@ export default function AboutAdmin({
                 height="16px"
                 width="16px"
                 src="/whatsapp.svg"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginRight: "16px" }}
                 onClick={() =>
                   sendHelloWhatsAppMessage({
                     accountId: productOwnerId,
@@ -116,6 +120,24 @@ export default function AboutAdmin({
                     commercialName,
                   })
                 }
+              />
+            )}
+            {facebookLink && (
+              <img
+                height="16px"
+                width="16px"
+                src="/facebook.svg"
+                style={{ cursor: "pointer", marginRight: "16px" }}
+                onClick={() => window.open(facebookLink, "_blank")}
+              />
+            )}
+            {instagramLink && (
+              <img
+                height="16px"
+                width="16px"
+                src="/instagram.svg"
+                style={{ cursor: "pointer", marginRight: "16px" }}
+                onClick={() => window.open(instagramLink, "_blank")}
               />
             )}
           </Col>

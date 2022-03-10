@@ -101,6 +101,8 @@ export const getAccountFromDatabase = async ({
       crop_profile_photo,
       commercial_name,
       phone_number,
+      facebook_link,
+      instagram_link,
     } = response.data[0]
 
     setProductData({
@@ -112,6 +114,8 @@ export const getAccountFromDatabase = async ({
       productOwnerName: name,
       commercialName: commercial_name,
       phoneNumber: phone_number,
+      facebookLink: facebook_link,
+      instagramLink: instagram_link,
     })
   }
 }

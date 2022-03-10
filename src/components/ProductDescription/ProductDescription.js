@@ -97,6 +97,8 @@ export default function ProductDescription() {
     lightningDealDuration,
     productStock,
     productSellTypes,
+    facebookLink,
+    instagramLink,
   } = productData
 
   const isDeal = getIsDeal(productType)
@@ -254,6 +256,8 @@ export default function ProductDescription() {
                 aboutMe={aboutMe}
                 screenWidth={width}
                 aboutProducts={aboutProducts}
+                facebookLink={facebookLink}
+                instagramLink={instagramLink}
               />
             </>
           )}
