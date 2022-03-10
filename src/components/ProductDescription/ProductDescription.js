@@ -6,6 +6,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
+  sendMakeOrderWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
@@ -199,9 +200,10 @@ export default function ProductDescription() {
                   />
                 </h6>
                 <SendMessageWhatsAppButton
+                  className="primary-background"
                   style={{
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
+                    paddingTop: "16px",
+                    paddingBottom: "16px",
                     width: "20rem",
                     margin: "0 auto",
                   }}
@@ -218,6 +220,27 @@ export default function ProductDescription() {
                   phoneNumber={phoneNumber}
                   commercialName={commercialName}
                   text={"Gostei desse"}
+                />
+                <SendMessageWhatsAppButton
+                  className="secondary-background"
+                  style={{
+                    paddingBottom: "32px",
+                    width: "20rem",
+                    margin: "0 auto",
+                  }}
+                  messageFunction={() =>
+                    sendMakeOrderWhatsAppMessage({
+                      isDeal: isDeal || isLightningDeal,
+                      id,
+                      name,
+                      price: isDeal || isLightningDeal ? dealPrice : price,
+                      phoneNumber,
+                      commercialName,
+                    })
+                  }
+                  phoneNumber={phoneNumber}
+                  commercialName={commercialName}
+                  text={"Encomendar similar"}
                 />
               </Col>
               <h5 style={{ marginBottom: "16px" }}>Sobre o artesão</h5>

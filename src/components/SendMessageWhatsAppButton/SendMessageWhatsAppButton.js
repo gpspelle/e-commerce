@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "react-bootstrap"
 
-import { buyMessage, helloMessage } from "../../utils/whatsAppMessages"
+import { buyMessage, helloMessage, orderMessage } from "../../utils/whatsAppMessages"
 
 export const sendBuyWhatsAppMessage = ({
   isDeal,
@@ -15,6 +15,18 @@ export const sendBuyWhatsAppMessage = ({
   window.open(url, "_blank")
 }
 
+export const sendMakeOrderWhatsAppMessage = ({
+  isDeal,
+  id,
+  name,
+  price,
+  phoneNumber,
+  commercialName,
+}) => {
+  const url = orderMessage({ isDeal, id, name, price, phoneNumber, commercialName })
+  window.open(url, "_blank")
+}
+
 export const sendHelloWhatsAppMessage = ({
   accountId,
   phoneNumber,
@@ -25,6 +37,7 @@ export const sendHelloWhatsAppMessage = ({
 }
 
 export default function SendMessageWhatsAppButton({
+  className,
   style,
   phoneNumber,
   commercialName,
@@ -34,7 +47,7 @@ export default function SendMessageWhatsAppButton({
   return (
     <div style={style} className="notranslate">
       <Button
-        className="primary-background no-border font-face-poppins-bold"
+        className={`${className} no-border font-face-poppins-bold`}
         disabled={phoneNumber && commercialName ? false : true}
         style={{
           width: "100%",

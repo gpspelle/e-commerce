@@ -3,9 +3,7 @@ import { Col, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
-import SendMessageWhatsAppButton, {
-  sendHelloWhatsAppMessage,
-} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
+import { sendHelloWhatsAppMessage } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import "./AboutAdmin.css"
 
 export default function AboutAdmin({

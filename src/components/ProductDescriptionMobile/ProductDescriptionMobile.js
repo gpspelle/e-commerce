@@ -6,6 +6,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
+  sendMakeOrderWhatsAppMessage,
 } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import ImageCarousel from "../ImageCarousel/ImageCarousel"
@@ -192,9 +193,9 @@ export default function ProductDescriptionMobile() {
           productSellTypes={productSellTypes}
         />
         <SendMessageWhatsAppButton
+          className="primary-background"
           style={{
             paddingTop: "16px",
-            paddingBottom: "32px",
             width: "20rem",
             margin: "0 auto",
           }}
@@ -211,6 +212,28 @@ export default function ProductDescriptionMobile() {
           phoneNumber={phoneNumber}
           commercialName={commercialName}
           text={"Gostei desse"}
+        />
+        <SendMessageWhatsAppButton
+          className="secondary-background"
+          style={{
+            paddingTop: "16px",
+            paddingBottom: "32px",
+            width: "20rem",
+            margin: "0 auto",
+          }}
+          messageFunction={() =>
+            sendMakeOrderWhatsAppMessage({
+              isDeal: isDeal || isLightningDeal,
+              id,
+              name,
+              price: isDeal || isLightningDeal ? dealPrice : price,
+              phoneNumber,
+              commercialName,
+            })
+          }
+          phoneNumber={phoneNumber}
+          commercialName={commercialName}
+          text={"Encomendar similar"}
         />
         <h6
           style={{ marginBottom: "16px" }}

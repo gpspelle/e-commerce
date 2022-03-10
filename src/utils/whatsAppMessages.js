@@ -33,6 +33,26 @@ export const buyMessage = ({
   )
 }
 
+export const orderMessage = ({
+  id,
+  name,
+  commercialName,
+  isDeal,
+  price,
+  phoneNumber,
+}) => {
+  const pageBase = getPageBase()
+  const message = `Link do produto: ${pageBase}/${id}/${PRODUCT_DESCRIPTION}\n\nOlá, ${commercialName}!\nTenho interesse no produto ${name}, preço ${
+    isDeal ? "promocional" : ""
+  } R$ ${price}. Mas eu gostaria de fazer a encomenda de um produto similar.`
+  return (
+    "https://api.whatsapp.com/send?phone=" +
+    phoneNumber +
+    "&text=" +
+    encodeURIComponent(message)
+  )
+}
+
 export const helloMessage = ({ accountId, commercialName, phoneNumber }) => {
   const pageBase = getPageBase()
   const pageLink = `Link da página: ${pageBase}/${accountId}/${ADMIN_DESCRIPTION}`

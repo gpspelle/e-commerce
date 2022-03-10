@@ -1,10 +1,10 @@
 /** primary **/
 .primary-light-background {
-    background: #B35A7A;
+    background: #B35A7A !important;
 }
 
 .primary-light-color {
-    color: #B35A7A;
+    color: #B35A7A !important;
 }
 
 .primary-background {
@@ -12,70 +12,70 @@
 }
 
 .primary-color {
-    color: #B33E69;
+    color: #B33E69 !important;
 }
 
 .primary-dark-background {
-    background: #8C2A4E;
+    background: #8C2A4E !important;
 }
 
 .primary-dark-color {
-    color: #8C2A4E;
+    color: #8C2A4E !important;
 }
 
 /** secondary **/
 .secondary-light-background {
-    background: #587798;
+    background: #587798 !important;
 }
 
 .secondary-light-color {
-    color: #587798;
+    color: #587798 !important;
 }
 
 .secondary-background {
-    background: #426B98;
+    background: #426B98 !important;
 }
 
 .secondary-color {
-    color: #426B98;
+    color: #426B98 !important;
 }
 
 .secondary-dark-background {
-    background: #2C4E73;
+    background: #2C4E73 !important;
 }
 
 .secondary-dark-color {
-    color: #2C4E73;
+    color: #2C4E73 !important;
 }
 
 /** helpers **/
 .helper-error-background {
-    background: #BE464C;
+    background: #BE464C !important;
 }
 
 .helper-error-color {
-    color: #BE464C;
+    color: #BE464C !important;
 }
 
 .helper-success-background {
-    background: #3AA669;
+    background: #3AA669 !important;
 }
 
 .helper-success-color {
-    color: #3AA669;
+    color: #3AA669 !important;
 }
 
 .helper-warning-background {
-    background: #F2994A;
+    background: #F2994A !important;
 }
 
 .helper-warning-color {
-    color: #F2994A;
+    color: #F2994A !important;
 }
 
 /** black and white **/
 .dark-background {
-    background: #263F59;
+    background: #263F59 !important;
 }
 
 .dark-color {
@@ -83,11 +83,11 @@
 }
 
 .dark-dark-background {
-    background: #132333;
+    background: #132333 !important;
 }
 
 .dard-dark-color {
-    color: #132333;
+    color: #132333 !important;
 }
 
 .light-background {
@@ -103,15 +103,15 @@
 }
 
 .light-dark-color {
-    color: #F5F7FA;
+    color: #F5F7FA !important;
 }
 
 .grey-background {
-    background: #AFC1D3;
+    background: #AFC1D3 !important;
 }
 
 .grey-color {
-    color: #AFC1D3
+    color: #AFC1D3 !important;
 }
 
 .grey-dark-background {
