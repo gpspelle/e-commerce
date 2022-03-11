@@ -6,7 +6,7 @@ import SearchBarButton from "../SearchBarButton/SearchBarButton"
 import { PRODUCTS } from "../../constants/constants"
 import "./SearchBar.css"
 
-export default function SearchBar() {
+export default function SearchBar({ isHeroHeader }) {
   const history = useHistory()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [searchBarValue, setSearchBarValue] = useState("")
@@ -35,7 +35,7 @@ export default function SearchBar() {
     setIsSubmitted(true)
   }
 
-  const backgroundColor = "light-dark-background"
+  const backgroundColor = isHeroHeader ? "light-background" : "light-dark-background"
   const color = !isSearchBarEmpty ? "dark-color" : "grey-dark-color"
 
   return (

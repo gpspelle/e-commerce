@@ -26,7 +26,7 @@ import NavigationBar from "../NavigationBar/NavigationBar"
 import { range } from "../../utils/range"
 import Product from "../Product/Product"
 import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
-import SearchBar from "../SearchBar/SearchBar"
+import HeroHeader from "../HeroHeader/HeroHeader"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -263,7 +263,7 @@ export default function Home() {
   return (
     <>
       <NavigationBar />
-      <SearchBar />
+      <HeroHeader />
       <Container style={{ minHeight: height * 0.99 }}>
         <Row className="my-2">
           <Col style={{ maxWidth: "70%" }}>

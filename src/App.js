@@ -21,6 +21,7 @@ import Footer from "./components/Footer/Footer"
 import "./App.css"
 import "./style/guidelines.css"
 import SearchBar from "./components/SearchBar/SearchBar"
+import HeroHeader from "./components/HeroHeader/HeroHeader"
 
 const ProductDescription = lazy(() =>
   import("./components/ProductDescription/ProductDescription")
@@ -50,13 +51,13 @@ function App() {
             </Route>
             <Route path={`/${DEALS}`}>
               <NavigationBar />
-              <SearchBar />
+              <HeroHeader />
               <MemoizedProductContainer isDeals={true} />
               <Footer />
             </Route>
             <Route path={`/${PRODUCTS}`}>
               <NavigationBar />
-              <SearchBar />
+              <HeroHeader />
               <MemoizedProductContainer isDeals={false} />
               <Footer />
             </Route>

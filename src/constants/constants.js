@@ -9,8 +9,11 @@ export const PRODUCT_STOCK_SELL_TYPE =
   process.env.REACT_APP_PRODUCT_STOCK || "PRODUCT_STOCK"
 export const PRODUCT_ORDER_SELL_TYPE =
   process.env.REACT_APP_PRODUCT_ORDER || "PRODUCT_ORDER"
-export const APP_CITY = "Araras"
-export const APP_STATE = "São Paulo"
+export const APP_CITY = process.env.REACT_APP_APP_CITY || "Araras"
+export const APP_STATE = process.env.REACT_APP_APP_STATE || "São Paulo"
+export const HERO_HEADER_TEXT =
+  process.env.REACT_APP_HERO_HEADER_TEXT ||
+  "Casa do Artesanato, trazendo o melhor do artesanato mais perto de você"
 
 export const PRODUCTS_ENDPOINT = "customer-products"
 export const PRODUCT_ENDPOINT = "customer-product"

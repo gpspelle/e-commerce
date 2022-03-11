@@ -43,7 +43,12 @@ export default function LightningDealDuration({
   return (
     <p
       className="helper-error-color"
-      style={{ textAlign: "left", marginBottom: "0px" }}
+      style={{
+        fontSize: "9px",
+        lineHeight: "18.5px",
+        textAlign: "left",
+        marginBottom: "0px",
+      }}
     >
       Termina em&nbsp;
       {displayLeftDuration}
