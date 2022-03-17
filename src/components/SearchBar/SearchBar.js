@@ -38,6 +38,47 @@ export default function SearchBar({ isHeroHeader }) {
   const backgroundColor = isHeroHeader ? "light-background" : "light-dark-background"
   const color = !isSearchBarEmpty ? "dark-color" : "grey-dark-color"
 
+  const searchBarCoreContent = (
+    <Form style={{ display: "flex" }} onSubmit={applySearchOnProducts}>
+      <Form.Group controlId="formSearchBar" style={{ width: "100%" }}>
+        <div
+          className={`search-input-div ${backgroundColor}`}
+          style={{ borderRadius: "8px" }}
+        >
+          <input
+            className={
+              !isSearchBarEmpty
+                ? `${backgroundColor} specific-form-control font-face-poppins-italic remove-focus-search-bar`
+                : `${backgroundColor} grey-dark-color specific-form-control font-face-poppins-italic`
+            }
+            value={searchBarValue}
+            onChange={(e) => setSearchBarValue(e.target.value)}
+            type="text"
+            placeholder="O que você está buscando?"
+            // this is required or safari on iOS will
+            // zoom into the input field
+            style={{ fontSize: "16px" }}
+          />
+          <SearchBarButton color={color} backgroundColor={backgroundColor} />
+        </div>
+      </Form.Group>
+    </Form>
+  )
+
+  if (isHeroHeader) {
+    return (
+      <div
+        style={{
+          position: "relative",
+          marginTop: "16px",
+          maxWidth: "100%",
+          marginBottom: "32px",
+        }}
+      >
+        {searchBarCoreContent}
+      </div>
+    )
+  }
   return (
     <Container
       style={{
@@ -47,30 +88,7 @@ export default function SearchBar({ isHeroHeader }) {
         marginBottom: "32px",
       }}
     >
-      <Form style={{ display: "flex" }} onSubmit={applySearchOnProducts}>
-        <Form.Group controlId="formSearchBar" style={{ width: "100%" }}>
-          <div
-            className={`search-input-div ${backgroundColor}`}
-            style={{ borderRadius: "8px" }}
-          >
-            <input
-              className={
-                !isSearchBarEmpty
-                  ? `${backgroundColor} specific-form-control font-face-poppins-italic remove-focus-search-bar`
-                  : `${backgroundColor} grey-dark-color specific-form-control font-face-poppins-italic`
-              }
-              value={searchBarValue}
-              onChange={(e) => setSearchBarValue(e.target.value)}
-              type="text"
-              placeholder="O que você está buscando?"
-              // this is required or safari on iOS will
-              // zoom into the input field
-              style={{ fontSize: "16px" }}
-            />
-            <SearchBarButton color={color} backgroundColor={backgroundColor} />
-          </div>
-        </Form.Group>
-      </Form>
+      {searchBarCoreContent}
     </Container>
   )
 }

@@ -198,8 +198,6 @@ export default function ProductDescriptionMobile() {
           className="primary-background"
           style={{
             paddingTop: "16px",
-            width: "20rem",
-            margin: "0 auto",
           }}
           messageFunction={() =>
             sendBuyWhatsAppMessage({
@@ -220,8 +218,6 @@ export default function ProductDescriptionMobile() {
           style={{
             paddingTop: "16px",
             paddingBottom: "32px",
-            width: "20rem",
-            margin: "0 auto",
           }}
           messageFunction={() =>
             sendMakeOrderWhatsAppMessage({

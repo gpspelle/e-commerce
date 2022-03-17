@@ -23,14 +23,14 @@ export default function HeroHeader() {
           height: "100%",
         }}
       >
-        <Container style={{ maxWidth: "100%" }}>
+        <div style={{ maxWidth: "100%" }}>
           <h6
             style={{ fontSize: width > 500 ? "32px" : "" }}
             className="font-face-poppins-bold light-color"
           >
             {HERO_HEADER_TEXT}
           </h6>
-        </Container>
+        </div>
         <SearchBar isHeroHeader />
       </Container>
     )
