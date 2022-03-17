@@ -69,7 +69,10 @@ const SimilarProductsMobile = ({ id, tags }) => {
   }, [tags, id])
 
   return (
-    <div className="similar-products" style={{ minHeight: "290px" }}>
+    <div
+      className="similar-products"
+      style={{ minHeight: "290px", marginBottom: "32px" }}
+    >
       <Container style={{ minHeight: "290px" }}>
         <h6
           style={{ paddingTop: "32px", marginBottom: "16px" }}
