@@ -52,9 +52,9 @@ export default function Home() {
   const { accounts, accountsPagination } = accountsData
   const searchBarValue = query.get("q")
   const productDealsResponsive = {
-    0: { items: 2 },
-    574: { items: 3 },
-    991: { items: 4 },
+    0: { items: 1 },
+    359: { items: 2 },
+    999: { items: 3 },
   }
 
   const adminsResponsive = {
@@ -159,9 +159,13 @@ export default function Home() {
     displayProducts = getRandomFromArray(displayProducts, randomIndexes)
   }
 
-  var multiplier = 0.45
-  if (width > 574) {
-    multiplier = 0.21
+  var multiplier
+  if (width > 999) {
+    multiplier = 0.28
+  } else if (width > 359) {
+    multiplier = 0.4
+  } else {
+    multiplier = 0.9
   }
 
   const productImageSize = width * multiplier
