@@ -1,8 +1,19 @@
+.navigation-link-mobile {
+    transition: 0s !important;
+    padding-left: 27px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
 .navigation-link {
     transition: 0s !important;
     padding-left: 27px !important;
     padding-top: 0px !important;
     padding-bottom: 0px !important;
+}
+
+.navigation-link:first-child {
+    padding-left: 0px !important;
 }
 
 .navigation-link:hover {
@@ -14,6 +25,11 @@
 
 .navbar-toggler {
     border: none !important;
+}
+
+.navbar-toggler:focus {
+    text-decoration: none !important;
+    box-shadow: none !important;
 }
 
 .box-shadow {

@@ -32,6 +32,8 @@ export const PRODUCT_TYPES = {
   NORMAL: "NORMAL",
 }
 
+export const LARGE_SCREEN = 992
+
 const aboutUsIcon = (
   <svg
     width="12"

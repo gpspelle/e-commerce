@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
+import { LARGE_SCREEN } from "../../constants/constants"
 
 import DealWaterMark from "../DealWaterMark/DealWaterMark"
 import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
@@ -10,8 +11,6 @@ import "./ImageCarousel.css"
 
 const responsive = {
   0: { items: 1 },
-  568: { items: 1 },
-  1024: { items: 1 },
 }
 
 export default function ImageCarousel({
@@ -40,7 +39,7 @@ export default function ImageCarousel({
 
   useEffect(() => {
     const components = images?.map((item, i) => {
-      if (screenWidth > 1024) {
+      if (screenWidth >= LARGE_SCREEN) {
         return (
           <div>
             <OnClickImageZoom
@@ -125,7 +124,7 @@ export default function ImageCarousel({
     <div>
       <AliceCarousel
         activeIndex={actualShowingImageNumber}
-        mouseTracking={screenWidth < 1024 ? true : false}
+        mouseTracking={screenWidth < LARGE_SCREEN ? true : false}
         items={items}
         responsive={responsive}
         controlsStrategy="alternate"

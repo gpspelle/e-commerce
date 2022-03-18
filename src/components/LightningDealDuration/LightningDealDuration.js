@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react"
+import { LARGE_SCREEN } from "../../constants/constants"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 import {
   msToTime,
@@ -10,6 +12,7 @@ export default function LightningDealDuration({
   lightningDealDuration,
   lightningDealStartTime,
 }) {
+  const { width } = useWindowDimensions()
   const [now, setNow] = useState(new Date())
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function LightningDealDuration({
     <p
       className="helper-error-color"
       style={{
-        fontSize: "9px",
+        fontSize: width < LARGE_SCREEN ? "8.5px" : "12px",
         lineHeight: "18.5px",
         textAlign: "left",
         marginBottom: "0px",

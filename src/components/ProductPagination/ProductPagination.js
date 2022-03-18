@@ -1,5 +1,6 @@
 import React, { useEffect, useState, memo } from "react"
 import ReactPaginate from "react-paginate"
+import { LARGE_SCREEN } from "../../constants/constants"
 
 import { isEqual } from "../../utils/isEqual"
 import "./ProductPagination.css"
@@ -48,8 +49,8 @@ function PaginatedItems({ products, itemsPerPage, screenWidth, scrollFunction })
         activeClassName="active"
         renderOnZeroPageCount={null}
         forcePage={currentPage}
-        marginPagesDisplayed={screenWidth > 1024 ? 2 : 0}
-        pageRangeDisplayed={screenWidth > 1024 ? 3 : 0}
+        marginPagesDisplayed={screenWidth >= LARGE_SCREEN ? 2 : 0}
+        pageRangeDisplayed={screenWidth >= LARGE_SCREEN ? 3 : 0}
       />
     </>
   )

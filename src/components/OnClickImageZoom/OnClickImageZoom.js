@@ -1,5 +1,6 @@
 import React from "react"
 import { CloseButton } from "react-bootstrap"
+import { LARGE_SCREEN } from "../../constants/constants"
 
 export default function OnClickImageZoom({
   src,
@@ -22,7 +23,7 @@ export default function OnClickImageZoom({
       style={{
         cursor: isFullScreen ? "" : "pointer",
         height: isFullScreen ? screenHeight - 120 : "",
-        width: screenWidth > 1024 ? "100%" : "",
+        width: screenWidth >= LARGE_SCREEN ? "100%" : "",
         visibility: "visible",
         display: "flex",
         justifyContent: "center",

@@ -10,7 +10,6 @@ export default function Footer() {
       <Container
         style={{
           justifyContent: "left",
-          display: "inline-grid",
         }}
       >
         <div style={{ paddingTop: "32px", paddingBottom: "16px" }}>
@@ -23,17 +22,18 @@ export default function Footer() {
         </div>
         {Object.keys(NAVIGATION_LINKS).map((page) => {
           return (
-            <Link
-              key={page}
-              to={NAVIGATION_LINKS[page].path}
-              className="light-color"
-              style={{
-                display: "inline-block",
-                textDecoration: "none",
-              }}
-            >
-              <p style={{ marginBottom: "8px" }}>{page}</p>
-            </Link>
+            <div key={page}>
+              <Link
+                to={NAVIGATION_LINKS[page].path}
+                className="light-color"
+                style={{
+                  display: "inline-block",
+                  textDecoration: "none",
+                }}
+              >
+                <p style={{ marginBottom: "8px" }}>{page}</p>
+              </Link>
+            </div>
           )
         })}
       </Container>

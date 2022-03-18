@@ -76,7 +76,7 @@ export default function AboutUs() {
           ou sob encomenda
         </p>
       </Container>
-      <Container className="light-dark-background">
+      <Container style={{ marginBottom: "32px" }} className="light-dark-background">
         <div>
           <Row ref={adminsRef} style={{ paddingTop: "16px" }}>
             <Col>

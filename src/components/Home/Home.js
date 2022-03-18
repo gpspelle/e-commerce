@@ -4,7 +4,12 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import { ABOUT_US, DEALS, PRODUCT_TYPES } from "../../constants/constants"
+import {
+  ABOUT_US,
+  DEALS,
+  LARGE_SCREEN,
+  PRODUCT_TYPES,
+} from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -160,10 +165,10 @@ export default function Home() {
   }
 
   var multiplier
-  if (width > 999) {
+  if (width > LARGE_SCREEN) {
     multiplier = 0.28
   } else if (width > 359) {
-    multiplier = 0.4
+    multiplier = 0.42
   } else {
     multiplier = 0.9
   }
@@ -224,7 +229,7 @@ export default function Home() {
     )
   })
 
-  const extra = width < 1024 ? 0 : 6
+  const extra = width < LARGE_SCREEN ? 0 : 6
 
   const isLoadedProducts = productPagination.fetch ? (
     <Spinner
@@ -311,14 +316,14 @@ export default function Home() {
             <AliceCarousel
               activeIndex={offersCarouselActiveIndex}
               onSlideChanged={(e) => setOffersCarouselActiveIndex(e.item)}
-              mouseTracking={width < 1024 ? true : false}
+              mouseTracking={width < LARGE_SCREEN ? true : false}
               items={items}
               responsive={productDealsResponsive}
-              controlsStrategy={width < 1024 ? "responsive" : "alternate"}
+              controlsStrategy={width < LARGE_SCREEN ? "responsive" : "alternate"}
               disableDotsControls={true}
-              disableButtonsControls={width < 1024}
+              disableButtonsControls={width < LARGE_SCREEN}
             />
-            {width < 1024 && <SwipeToSeeMore />}
+            {width < LARGE_SCREEN && <SwipeToSeeMore />}
           </>
         )}
         <Row className="my-3">
@@ -365,14 +370,14 @@ export default function Home() {
             <AliceCarousel
               activeIndex={accountsCarouselActiveIndex}
               onSlideChanged={(e) => setAccountsCarouselActiveIndex(e.item)}
-              mouseTracking={width < 1024 ? true : false}
+              mouseTracking={width < LARGE_SCREEN ? true : false}
               items={admins}
               responsive={adminsResponsive}
-              controlsStrategy={width < 1024 ? "responsive" : "alternate"}
+              controlsStrategy={width < LARGE_SCREEN ? "responsive" : "alternate"}
               disableDotsControls={true}
-              disableButtonsControls={width < 1024}
+              disableButtonsControls={width < LARGE_SCREEN}
             />
-            {width < 1024 && <SwipeToSeeMore />}
+            {width < LARGE_SCREEN && <SwipeToSeeMore />}
           </>
         )}
         <Row className="my-3">

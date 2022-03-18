@@ -44,7 +44,7 @@ function App() {
         <Suspense fallback={<div>Carregando...</div>}>
           <Switch>
             <Route path={`/:id/${PRODUCT_DESCRIPTION}`}>
-              {width < 1024 ? <ProductDescriptionMobile /> : <ProductDescription />}
+              {width < 992 ? <ProductDescriptionMobile /> : <ProductDescription />}
             </Route>
             <Route path={`/:id/${ADMIN_DESCRIPTION}`}>
               <AdminDescription />

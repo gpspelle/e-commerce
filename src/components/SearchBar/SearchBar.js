@@ -3,13 +3,15 @@ import { Container, Form } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
 import SearchBarButton from "../SearchBarButton/SearchBarButton"
-import { PRODUCTS } from "../../constants/constants"
+import { LARGE_SCREEN, PRODUCTS } from "../../constants/constants"
 import "./SearchBar.css"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 export default function SearchBar({ isHeroHeader }) {
   const history = useHistory()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [searchBarValue, setSearchBarValue] = useState("")
+  const { width } = useWindowDimensions()
 
   const isSearchBarEmpty = searchBarValue === ""
 
@@ -71,7 +73,7 @@ export default function SearchBar({ isHeroHeader }) {
         style={{
           position: "relative",
           marginTop: "16px",
-          maxWidth: "100%",
+          maxWidth: width < LARGE_SCREEN ? "100%" : "60%",
           marginBottom: "32px",
         }}
       >
@@ -84,7 +86,7 @@ export default function SearchBar({ isHeroHeader }) {
       style={{
         position: "relative",
         marginTop: "16px",
-        maxWidth: "100%",
+        maxWidth: width < LARGE_SCREEN ? "100%" : "",
         marginBottom: "32px",
       }}
     >

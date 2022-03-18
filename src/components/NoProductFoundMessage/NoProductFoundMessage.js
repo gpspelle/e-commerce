@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, Button, Col, Spinner } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
+import { LARGE_SCREEN } from "../../constants/constants"
 
 export default function NoProductFoundMessage({
   screenWidth,
@@ -44,7 +45,10 @@ export default function NoProductFoundMessage({
         </div>
       ) : (
         <Card
-          style={{ width: screenWidth < 1024 ? "100%" : "24rem", border: "none" }}
+          style={{
+            width: screenWidth < LARGE_SCREEN ? "100%" : "24rem",
+            border: "none",
+          }}
         >
           <Card.Img
             variant="top"

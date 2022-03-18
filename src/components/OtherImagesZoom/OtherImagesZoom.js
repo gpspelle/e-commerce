@@ -2,6 +2,7 @@ import React from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 import { Spinner, Container } from "react-bootstrap"
+import { LARGE_SCREEN } from "../../constants/constants"
 
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 
@@ -15,7 +16,7 @@ const OtherImagesZoom = ({
     0: { items: 3 },
     568: { items: 5 },
     820: { items: 7 },
-    1024: { items: 9 },
+    [LARGE_SCREEN]: { items: 9 },
     1420: { items: 12 },
   }
 

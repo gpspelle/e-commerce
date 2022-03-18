@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import useIsMounted from "../../hooks/useIsMounted"
-import { PRODUCT_TYPES } from "../../constants/constants"
+import { LARGE_SCREEN, PRODUCT_TYPES } from "../../constants/constants"
 import Product from "../Product/Product"
 import {
   isLightningDealValid,
@@ -203,7 +203,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
 
   return (
     <Container ref={productContainerRef} style={{ minHeight: containerHeight }}>
-      <Row style={{ paddingTop: width < 1024 ? paddingTop : "12px" }}>
+      <Row style={{ paddingTop: width < LARGE_SCREEN ? paddingTop : "12px" }}>
         {items && items.length > 0 ? (
           <MemoizedProductPagination
             scrollFunction={() =>
