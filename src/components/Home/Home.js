@@ -4,20 +4,11 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import {
-  ABOUT_US,
-  DEALS,
-  LARGE_SCREEN,
-  PRODUCT_TYPES,
-} from "../../constants/constants"
+import { ABOUT_US, DEALS, LARGE_SCREEN } from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import AdminHome from "../AdminHome/AdminHome"
-import {
-  isLightningDealValid,
-  processLightningDealInformation,
-} from "../../utils/lightningDealUtils"
 import { getRandomFromArray, getRandomFromRangeArray } from "../../utils/randomUtils"
 import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../Blocks/LateralCard"
@@ -29,9 +20,9 @@ import scrollToTop from "../../utils/scrollToTop"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
 import { range } from "../../utils/range"
-import Product from "../Product/Product"
-import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
 import HeroHeader from "../HeroHeader/HeroHeader"
+import { convertProductArrayToDisplayProduct } from "../../utils/convertProductArrayToDisplayProduct"
+import { filterDealsAndLightningDealsFromProductArray } from "../../utils/filterDealsAndLightningDealsFromProductArray"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -50,6 +41,7 @@ export default function Home() {
     accounts: [],
   })
   const [offersCarouselActiveIndex, setOffersCarouselActiveIndex] = useState(0)
+  const [productsCarouselActiveIndex, setProductsCarouselActiveIndex] = useState(0)
   const [accountsCarouselActiveIndex, setAccountsCarouselActiveIndex] = useState(0)
   const isMounted = useIsMounted()
   const { width, height } = useWindowDimensions()
@@ -138,30 +130,14 @@ export default function Home() {
     })
   }
 
+  var displayDealProducts = filterDealsAndLightningDealsFromProductArray({
+    products,
+    randomIndexes,
+  })
+
   var displayProducts = []
   if (products.length > 0) {
-    displayProducts = products.filter(
-      (product) =>
-        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.DEAL ||
-        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTNING_DEAL
-    )
-
-    displayProducts = displayProducts.filter((product) => {
-      const isLightningDeal =
-        product.PRODUCT_TYPE?.S === PRODUCT_TYPES.LIGHTNING_DEAL
-      if (isLightningDeal) {
-        const { miliseconds } = processLightningDealInformation({
-          now: new Date(),
-          lightningDealDuration: product.LIGHTNING_DEAL_DURATION.S,
-          lightningDealStartTime: product.LIGHTNING_DEAL_START_TIME.S,
-        })
-        return isLightningDealValid(miliseconds)
-      }
-
-      return true
-    })
-
-    displayProducts = getRandomFromArray(displayProducts, randomIndexes)
+    displayProducts = getRandomFromArray(products, randomIndexes)
   }
 
   var multiplier
@@ -175,38 +151,19 @@ export default function Home() {
 
   const productImageSize = width * multiplier
   const productCardSize = productImageSize + 2.5
-  const items = displayProducts.map((displayProduct) => {
-    const productEntity = convertProductFromDatabaseToProductEntity({
-      product: displayProduct,
-    })
-    return (
-      <Col
-        key={
-          displayProduct.id.S +
-          productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S]?.phoneNumber
-        }
-      >
-        <Product
-          productEntity={productEntity}
-          phoneNumber={
-            Object.keys(productOwnerIdToOwnerData).length !== 0
-              ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
-                  "phoneNumber"
-                ]
-              : false
-          }
-          commercialName={
-            Object.keys(productOwnerIdToOwnerData).length !== 0
-              ? productOwnerIdToOwnerData[displayProduct.PRODUCT_OWNER_ID.S][
-                  "commercialName"
-                ]
-              : false
-          }
-          productImageSize={productImageSize}
-          productCardSize={productCardSize}
-        />
-      </Col>
-    )
+
+  const dealItems = convertProductArrayToDisplayProduct({
+    productArray: displayDealProducts,
+    productOwnerIdToOwnerData,
+    productImageSize,
+    productCardSize,
+  })
+
+  const items = convertProductArrayToDisplayProduct({
+    productArray: displayProducts,
+    productOwnerIdToOwnerData,
+    productImageSize,
+    productCardSize,
   })
 
   const admins = getRandomFromArray(accounts, randomIndexes).map((account) => {
@@ -246,7 +203,7 @@ export default function Home() {
         display: "flex",
       }}
     >
-      Não foram encontradas ofertas nesse momento
+      Não foram encontradas produtos nesse momento
     </p>
   )
 
@@ -277,7 +234,7 @@ export default function Home() {
         <Row className="my-2">
           <Col style={{ maxWidth: "70%" }}>
             <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
-              Nossas ofertas
+              Nossas promoções
             </h6>
           </Col>
           <Col
@@ -299,7 +256,7 @@ export default function Home() {
             </p>
           </Col>
         </Row>
-        {items.length === 0 ? (
+        {dealItems.length === 0 ? (
           <div
             /* TODO: crazy math to get the vertical size of the items */
             style={{
@@ -316,6 +273,58 @@ export default function Home() {
             <AliceCarousel
               activeIndex={offersCarouselActiveIndex}
               onSlideChanged={(e) => setOffersCarouselActiveIndex(e.item)}
+              mouseTracking={width < LARGE_SCREEN ? true : false}
+              items={dealItems}
+              responsive={productDealsResponsive}
+              controlsStrategy={width < LARGE_SCREEN ? "responsive" : "alternate"}
+              disableDotsControls={true}
+              disableButtonsControls={width < LARGE_SCREEN}
+            />
+            {width < LARGE_SCREEN && <SwipeToSeeMore />}
+          </>
+        )}
+        <Row className="my-2">
+          <Col style={{ maxWidth: "70%" }}>
+            <h6 className="font-face-poppins-bold" style={{ marginBottom: "16px" }}>
+              Nossos produtos
+            </h6>
+          </Col>
+          <Col
+            style={{
+              maxWidth: "30%",
+              justifyContent: "right",
+              display: "flex",
+            }}
+          >
+            <p
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+              onClick={() =>
+                history.push({
+                  pathname: `/${DEALS}`,
+                })
+              }
+            >
+              Ver todos
+            </p>
+          </Col>
+        </Row>
+        {items.length === 0 ? (
+          <div
+            /* TODO: crazy math to get the vertical size of the items */
+            style={{
+              minHeight: productCardSize + 76.5 + 47.5 + extra + 40.5,
+              height: productCardSize + 76.5 + 47.5 + extra + 40.5,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {isLoadedProducts}
+          </div>
+        ) : (
+          <>
+            <AliceCarousel
+              activeIndex={productsCarouselActiveIndex}
+              onSlideChanged={(e) => setProductsCarouselActiveIndex(e.item)}
               mouseTracking={width < LARGE_SCREEN ? true : false}
               items={items}
               responsive={productDealsResponsive}
