@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import { ABOUT_US, DEALS, LARGE_SCREEN } from "../../constants/constants"
+import { ABOUT_US, DEALS, LARGE_SCREEN, PRODUCTS } from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -300,7 +300,7 @@ export default function Home() {
               style={{ textDecoration: "underline", cursor: "pointer" }}
               onClick={() =>
                 history.push({
-                  pathname: `/${DEALS}`,
+                  pathname: `/${PRODUCTS}`,
                 })
               }
             >
