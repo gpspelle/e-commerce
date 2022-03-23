@@ -11,6 +11,7 @@ import {
 } from "../../actions/database"
 import "./SimilarProducts.css"
 import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
+import Product from "../Product/Product"
 
 const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()
@@ -20,6 +21,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
     products: [],
     productPagination: { key: undefined, fetch: false, isLoading: true },
   })
+  const [items, setItems] = useState([])
   const [positionSimilarProducts, setPositionSimilarProducts] = useState({
     start: 0,
     end: numberOfVisibleSimilarProducts,
@@ -45,6 +47,30 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
       })
     }
   }, [similarProductsData.productsIds, similarProductsData.productPagination.fetch])
+
+  useEffect(() => {
+    if (!similarProductsData.productPagination.fetch) {
+      const components = similarProductsData.products.map((similarProduct) => {
+        const productEntity = convertProductFromDatabaseToProductEntity({
+          product: similarProduct,
+        })
+        return (
+          <div key={similarProduct.id.S}>
+            <Product
+              productEntity={productEntity}
+              phoneNumber={false}
+              commercialName={false}
+              productImageSize="120px"
+              productCardSize="122px"
+              isRelatedProduct={true}
+            />
+          </div>
+        )
+      })
+
+      setItems(components)
+    }
+  }, [similarProductsData.products, similarProductsData.productPagination.fetch])
 
   useEffect(() => {
     getProductsIdsByTagsFromDatabase({
@@ -87,46 +113,41 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
     setPositionSimilarProducts({ start, end })
   }
 
-  const { products, productPagination } = similarProductsData
+  const { productPagination } = similarProductsData
   const { start, end } = positionSimilarProducts
 
   return (
-    <div className="similar-products" style={{ minHeight: "220px" }}>
+    <div className="similar-products" style={{ minHeight: "290px" }}>
       <Container>
         <h4 style={{ paddingTop: "32px" }}>Produtos relacionados</h4>
         {productPagination.isLoading ? (
-          <Spinner style={{ margin: "auto", display: "flex" }} animation="border" />
+          <div
+            style={{
+              height: "221px",
+              display: "flex",
+            }}
+          >
+            <Spinner
+              style={{ margin: "auto", display: "flex" }}
+              animation="border"
+            />
+          </div>
         ) : (
           <>
-            {products.length > 0 ? (
+            {items.length > 0 ? (
               <Pagination size="sm">
                 <Pagination.Prev
                   onClick={prevPagination}
                   style={{ position: "relative", margin: "auto" }}
                   disabled={start === 0}
                 />
-                {products.slice(start, end).map((similarProduct) => {
-                  const coverImage = similarProduct.PRODUCT_COVER_IMAGE?.S
-                  const firstImage = similarProduct.PRODUCT_IMAGES.L[0].S
-                  const productEntity = convertProductFromDatabaseToProductEntity({
-                    product: similarProduct,
-                  })
+                {items.slice(start, end).map((similarProduct, i) => {
                   return (
                     <Pagination.Item
                       style={{ position: "relative", margin: "auto" }}
-                      key={similarProduct.id.S}
-                      onClick={() => openDetailPage(productEntity)}
+                      key={similarProduct.key}
                     >
-                      {coverImage ? (
-                        <ProgressiveBlurryImageLoad
-                          width={128}
-                          height={128}
-                          small={`data:image/jpeg;base64,${coverImage}`}
-                          large={firstImage}
-                        />
-                      ) : (
-                        <img style={{ width: 128, height: 128 }} src={firstImage} />
-                      )}
+                      {similarProduct}
                     </Pagination.Item>
                   )
                 })}
@@ -134,8 +155,8 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
                   onClick={nextPagination}
                   style={{ position: "relative", margin: "auto" }}
                   disabled={
-                    end === products.length ||
-                    products.length < numberOfVisibleSimilarProducts
+                    end === items.length ||
+                    items.length < numberOfVisibleSimilarProducts
                   }
                 />
               </Pagination>
