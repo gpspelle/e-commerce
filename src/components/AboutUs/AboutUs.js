@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap"
 import { useLocation } from "react-router-dom"
 
 import { getAccountsFromDatabase } from "../../actions/database"
-import { APP_CITY, APP_NAME } from "../../constants/constants"
+import { ABOUT_US_DESCRIPTION } from "../../constants/constants"
 import scrollToTop from "../../utils/scrollToTop"
 import AdminHome from "../AdminHome/AdminHome"
 import Footer from "../Footer/Footer"
@@ -66,15 +66,9 @@ export default function AboutUs() {
             width={240}
           />
         </div>
-        <p>
-          A {APP_NAME} surgiu como uma ideia para reunir artesãos de {APP_CITY} e
-          ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma
-          unificada
-        </p>
-        <p>
-          Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega
-          ou sob encomenda
-        </p>
+        {Object.keys(ABOUT_US_DESCRIPTION).map((key) => {
+          return <p>{ABOUT_US_DESCRIPTION[key]}</p>
+        })}
       </Container>
       <Container style={{ marginBottom: "32px" }} className="light-dark-background">
         <div>

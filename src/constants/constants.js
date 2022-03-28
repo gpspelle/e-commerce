@@ -15,6 +15,31 @@ export const HERO_HEADER_TEXT =
   process.env.REACT_APP_HERO_HEADER_TEXT ||
   `${APP_NAME}, trazendo o melhor do artesanato mais perto de você`
 
+export const ADVANTAGES = (process.env.REACT_APP_ADVANTAGES &&
+  JSON.parse(process.env.REACT_APP_ADVANTAGES)) || {
+  advantage_0: {
+    title: "Feito para você",
+    text: "Comercializamos apenas produtos artesanais, pensados e sob medida para você",
+  },
+  advantage_1: {
+    title: "Qualidade sem igual",
+    text: "Nossos produtos são feitos somente com materiais de primeira linha",
+  },
+  advantage_2: {
+    title: "Toque de carinho",
+    text: "Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos",
+  },
+}
+
+export const ABOUT_US_DESCRIPTION = (process.env.REACT_APP_ABOUT_US_DESCRIPTION &&
+  JSON.parse(process.env.REACT_APP_ABOUT_US_DESCRIPTION)) || {
+  description_0: `A ${APP_NAME} surgiu como uma ideia para reunir artesãos de ${APP_CITY} e
+    ajudá-los a oferecer seus produtos e serviços por meio de uma plataforma
+    unificada`,
+  description_1: `Todos os produtos são feitos carinhosamente e são vendidos à pronta entrega
+    ou sob encomenda`,
+}
+
 export const PRODUCTS_ENDPOINT = "customer-products"
 export const PRODUCT_ENDPOINT = "customer-product"
 export const ACCOUNTS_ENDPOINT = "accounts"

@@ -4,7 +4,13 @@ import { useHistory } from "react-router-dom"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
 
-import { ABOUT_US, DEALS, LARGE_SCREEN, PRODUCTS } from "../../constants/constants"
+import {
+  ABOUT_US,
+  ADVANTAGES,
+  DEALS,
+  LARGE_SCREEN,
+  PRODUCTS,
+} from "../../constants/constants"
 import useIsMounted from "../../hooks/useIsMounted"
 import useQuery from "../../hooks/useQuery"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -396,36 +402,18 @@ export default function Home() {
             </h6>
           </Col>
         </Row>
-        <Row>
-          <LateralCard
-            imageSize={120}
-            imagePosition="left"
-            smallSrc="/small-advantage-1.png"
-            src="/advantage-1.png"
-            title="Feito para você"
-            text="Comercializamos apenas produtos artesanais, pensados e sob medida para você"
-          />
-        </Row>
-        <Row>
-          <LateralCard
-            imageSize={120}
-            imagePosition="left"
-            smallSrc="/small-advantage-2.png"
-            src="/advantage-2.png"
-            title="Qualidade sem igual"
-            text="Nossos produtos são feitos somente com materiais de primeira linha"
-          />
-        </Row>
-        <Row>
-          <LateralCard
-            imageSize={120}
-            imagePosition="left"
-            smallSrc="/small-advantage-3.png"
-            src="/advantage-3.png"
-            title="Toque de carinho"
-            text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
-          />
-        </Row>
+        {Object.keys(ADVANTAGES).map((key, i) => (
+          <Row key={key}>
+            <LateralCard
+              imageSize={120}
+              imagePosition="left"
+              smallSrc={`/small-advantage-${i}.png`}
+              src={`/advantage-${i}.png`}
+              title={ADVANTAGES[key]["title"]}
+              text={ADVANTAGES[key]["text"]}
+            />
+          </Row>
+        ))}
       </Container>
       <Footer />
     </>
