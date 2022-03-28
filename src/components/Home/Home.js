@@ -420,7 +420,7 @@ export default function Home() {
           <LateralCard
             imageSize={120}
             imagePosition="left"
-            smallSrc="/small-advantage-2.png"
+            smallSrc="/small-advantage-3.png"
             src="/advantage-3.png"
             title="Toque de carinho"
             text="Comprar produtos artesanais cria uma relação mais próxima com quem desenvolve seus produtos"
