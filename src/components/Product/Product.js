@@ -87,9 +87,7 @@ export default function Product({
                 <div className="notranslate" style={{ display: "block" }}>
                   <small
                     className={
-                      lightningDealDuration && lightningDealStartTime
-                        ? "helper-error-color"
-                        : "helper-warning-color"
+                      isLightningDeal ? "helper-error-color" : "helper-warning-color"
                     }
                     style={{
                       fontSize: "11px",
@@ -140,7 +138,7 @@ export default function Product({
             </Row>
           )}
         </div>
-        {!isRelatedProduct && (
+        {!isRelatedProduct && isLightningDeal && (
           <LightningDealDuration
             isProductDescription={false}
             lightningDealDuration={lightningDealDuration}
