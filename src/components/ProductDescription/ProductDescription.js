@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap"
 
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useScrollBlock from "../../hooks/useScrollBlock"
+import useScript from "../../hooks/useScript"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
   sendMakeOrderWhatsAppMessage,
@@ -26,6 +27,7 @@ import {
 import { getEmptyProduct } from "../../entities/product"
 import "./ProductDescription.css"
 import SearchBar from "../SearchBar/SearchBar"
+import AmazonPay from "amazon-pay-react"
 
 export default function ProductDescription() {
   const location = useLocation()
@@ -35,6 +37,8 @@ export default function ProductDescription() {
   const { width, height } = useWindowDimensions()
   const [blockScroll, allowScroll] = useScrollBlock()
   const [failedToFetchProduct, setFailedToFetchProduct] = useState(false)
+
+  useScript("https://static-na.payments-amazon.com/checkout.js")
 
   useEffect(() => {
     scrollToTop()
@@ -201,6 +205,7 @@ export default function ProductDescription() {
                     productSellTypes={productSellTypes}
                   />
                 </h6>
+
                 <SendMessageWhatsAppButton
                   className="primary-background"
                   style={{
