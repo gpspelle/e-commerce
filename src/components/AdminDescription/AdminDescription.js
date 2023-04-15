@@ -20,7 +20,7 @@ export default function AdminDescription() {
     accounts: [],
   })
 
-  const { accounts, accountsPagination } = accountsData
+  const { accounts } = accountsData
 
   useEffect(() => {
     scrollToTop()
@@ -67,6 +67,8 @@ export default function AdminDescription() {
       facebook_link,
       instagram_link,
     } = accounts[0])
+  } else {
+    return <></>
   }
 
   return (

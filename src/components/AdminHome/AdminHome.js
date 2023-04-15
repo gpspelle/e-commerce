@@ -2,6 +2,7 @@ import React from "react"
 import { useHistory } from "react-router-dom"
 
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
+import Image from "../../basicBlocks/Image"
 
 export const openAdminDetailPage = (event, history, account) => {
   if (event.target.type === "button") return
@@ -14,9 +15,8 @@ export const openAdminDetailPage = (event, history, account) => {
 
 export default function AdminHome({ account }) {
   const history = useHistory()
-
   return (
-    <img
+    <Image
       style={{
         width: 120,
         height: 120,
@@ -26,6 +26,7 @@ export default function AdminHome({ account }) {
         borderRadius: 500,
       }}
       src={account.crop_profile_photo || "/user.png"}
+      fallbackSrc="/user.png"
       onClick={(e) => openAdminDetailPage(e, history, account)}
     />
   )

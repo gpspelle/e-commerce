@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
 import { sendHelloWhatsAppMessage } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import "./AboutAdmin.css"
+import Image from "../../basicBlocks/Image"
 
 export default function AboutAdmin({
   productOwnerName,
@@ -24,7 +25,7 @@ export default function AboutAdmin({
     return (
       <Row style={{ marginBottom: "16px" }}>
         <Col style={{ maxWidth: "30%" }}>
-          <img
+          <Image
             style={{
               width: imageSize,
               height: imageSize,
@@ -33,6 +34,7 @@ export default function AboutAdmin({
               borderRadius: 500,
             }}
             src={cropProfilePhoto || "/user.png"}
+            fallbackSrc="/user.png"
           />
         </Col>
         <Col style={{ maxWidth: "70%" }}>
@@ -83,7 +85,7 @@ export default function AboutAdmin({
   return (
     <Row>
       <Col style={{ maxWidth: "30%" }}>
-        <img
+        <Image
           style={{
             width: imageSize,
             height: imageSize,
@@ -92,6 +94,7 @@ export default function AboutAdmin({
             borderRadius: 500,
           }}
           src={cropProfilePhoto || "/user.png"}
+          fallbackSrc="/user.png"
         />
       </Col>
       <Col style={{ maxWidth: "70%" }}>
