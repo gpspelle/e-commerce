@@ -1,6 +1,7 @@
 import React from "react"
 import { CloseButton } from "react-bootstrap"
 import { LARGE_SCREEN } from "../../constants/constants"
+import Image from "../../basicBlocks/Image"
 
 export default function OnClickImageZoom({
   src,
@@ -34,7 +35,8 @@ export default function OnClickImageZoom({
       }}
     >
       {isFullScreen ? (
-        <img
+        <Image
+          fallbackSrc="/not-found.png"
           src={src}
           alt=""
           style={{
@@ -45,12 +47,16 @@ export default function OnClickImageZoom({
           }}
         />
       ) : (
-        <img
-          width={"100%"}
-          height={`${imageHeight}px`}
+        <Image
+          fallbackSrc="/not-found.png"
           src={src}
           alt=""
-          style={{ backgroundColor: "#F4F4F4" }}
+          style={{
+            objectFit: "contain",
+            width: "100%",
+            height: imageHeight,
+            backgroundColor: "#F4F4F4",
+          }}
         />
       )}
       <CloseButton

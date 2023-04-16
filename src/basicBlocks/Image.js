@@ -10,7 +10,7 @@ const onError = (status, setStatus) => {
   }
 }
 
-export default function Image({ src, fallbackSrc, style, onClick }) {
+function Image({ src, fallbackSrc, style, onClick, alt, className }) {
   const [status, setStatus] = useState({ error: false, src, fallbackSrc })
   return (
     <img
@@ -18,6 +18,10 @@ export default function Image({ src, fallbackSrc, style, onClick }) {
       src={status.src}
       onError={() => onError(status, setStatus)}
       onClick={onClick}
+      alt={alt}
+      className={className}
     />
   )
 }
+
+export default Image

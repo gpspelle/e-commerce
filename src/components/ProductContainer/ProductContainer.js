@@ -66,11 +66,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
           }
         })
 
-        if (match) {
-          return true
-        }
-
-        return false
+        return match
       })
 
       setProductData({ ...productData, products: filteredProducts })
@@ -153,10 +149,11 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
 
   const items =
     displayProducts &&
-    displayProducts.map((displayProduct) => {
+    [displayProducts[0]].map((displayProduct) => {
       const productEntity = convertProductFromDatabaseToProductEntity({
         product: displayProduct,
       })
+
       return (
         <Col
           key={

@@ -74,24 +74,12 @@ export default function ProductMobile({
       }}
       onClick={openDetailPage}
     >
-      {coverImage ? (
-        <ProgressiveBlurryImageLoad
-          width={productImageSize}
-          height={productImageSize}
-          small={`data:image/jpeg;base64,${coverImage}`}
-          large={images[0]}
-        />
-      ) : (
-        <img
-          style={{
-            width: productImageSize,
-            height: productImageSize,
-            objectFit: "contain",
-            backgroundColor: "#F4F4F4",
-          }}
-          src={images[0]}
-        />
-      )}
+      <ProgressiveBlurryImageLoad
+        width={productImageSize}
+        height={productImageSize}
+        large={images[0]}
+        largeFallback="/not-found.png"
+      />
       {isLightningDeal && <LightningDealWaterMark />}
       <Card.Body
         style={{

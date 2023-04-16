@@ -33,11 +33,6 @@ const ProductDescriptionMobile = lazy(() =>
 function App() {
   const { width, height } = useWindowDimensions()
 
-  /*if (process.env.NODE_ENV !== "production") {
-    const { whyDidYouUpdate } = require("why-did-you-update")
-    whyDidYouUpdate(React)
-  }*/
-
   return (
     <div>
       <Router>

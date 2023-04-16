@@ -183,7 +183,6 @@ export default function ProductDescriptionMobile() {
           style={{
             display: "flex",
             flexFlow: "row wrap",
-            justifyContent: "space-around",
             marginBottom: "16px",
             justifyContent: "left",
           }}

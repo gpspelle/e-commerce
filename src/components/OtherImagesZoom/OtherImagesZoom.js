@@ -5,6 +5,7 @@ import { Spinner, Container } from "react-bootstrap"
 import { LARGE_SCREEN } from "../../constants/constants"
 
 import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
+import Image from "../../basicBlocks/Image"
 
 const OtherImagesZoom = ({
   productImages,
@@ -29,7 +30,6 @@ const OtherImagesZoom = ({
       <ProgressiveBlurryImageLoad
         width={100}
         height={100}
-        small={`data:image/jpeg;base64,${productImagesResized[i]}`}
         large={firstImage}
         onClick={() => setActualShowingImageNumber(i)}
         style={{
@@ -39,9 +39,10 @@ const OtherImagesZoom = ({
               ? "2.5px solid orange"
               : "",
         }}
+        largeFallback="/not-found.png"
       />
     ) : (
-      <img
+      <Image
         style={{
           width: 100,
           height: 100,
@@ -51,6 +52,7 @@ const OtherImagesZoom = ({
               ? "2.5px solid orange"
               : "",
         }}
+        fallbackSrc="/not-found.png"
         src={firstImage}
         onClick={() => setActualShowingImageNumber(i)}
       />

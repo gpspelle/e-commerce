@@ -7,10 +7,10 @@ import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
 import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import { getIsDeal } from "../../utils/dealUtils"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
 import DealWaterMark from "../DealWaterMark/DealWaterMark"
+import ProductImage from "./ProductImage"
 
-export default function Product({
+function Product({
   productEntity,
   phoneNumber,
   commercialName,
@@ -54,24 +54,11 @@ export default function Product({
       }}
       onClick={openDetailPage}
     >
-      {coverImage ? (
-        <ProgressiveBlurryImageLoad
-          width={productImageSize}
-          height={productImageSize}
-          small={`data:image/jpeg;base64,${coverImage}`}
-          large={images[0]}
-        />
-      ) : (
-        <img
-          className="light-dark-background"
-          style={{
-            width: productImageSize,
-            height: productImageSize,
-            objectFit: "contain",
-          }}
-          src={images[0]}
-        />
-      )}
+      <ProductImage
+        coverImage={coverImage}
+        productImageSize={productImageSize}
+        image={images[0]}
+      />
       {isLightningDeal && <LightningDealWaterMark />}
       {isDeal && (
         <DealWaterMark dealOffPercentage={(100 * (1 - dealPrice / price)) >> 0} />
@@ -149,3 +136,5 @@ export default function Product({
     </Card>
   )
 }
+
+export default Product
