@@ -1,7 +1,7 @@
 import React from "react"
 
-import Image from "../../basicBlocks/Image"
-import useProgressiveImageLoad from "../../hooks/useProgressiveImageLoad"
+import Image from "./Image"
+import useProgressiveImageLoad from "../hooks/useProgressiveImageLoad"
 
 function ProgressiveBlurryImageLoad({
   small,

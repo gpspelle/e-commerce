@@ -5,13 +5,13 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import useQuery from "../../hooks/useQuery"
 import useIsMounted from "../../hooks/useIsMounted"
 import { LARGE_SCREEN, PRODUCT_TYPES } from "../../constants/constants"
-import Product from "../Product/Product"
+import Product from "./Product"
 import {
   isLightningDealValid,
   processLightningDealInformation,
 } from "../../utils/lightningDealUtils"
 import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
-import MemoizedProductPagination from "../ProductPagination/ProductPagination"
+import MemoizedProductPagination from "./ProductPagination"
 import {
   getAccountsFromDatabase,
   getProductsFromDatabase,
@@ -149,7 +149,7 @@ const ProductContainer = ({ isDeals, paddingTop, filterByAdmin }) => {
 
   const items =
     displayProducts &&
-    [displayProducts[0]].map((displayProduct) => {
+    displayProducts.map((displayProduct) => {
       const productEntity = convertProductFromDatabaseToProductEntity({
         product: displayProduct,
       })

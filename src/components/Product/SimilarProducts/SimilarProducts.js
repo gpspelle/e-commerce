@@ -1,16 +1,16 @@
 import React, { useState, useEffect, memo } from "react"
 import { Pagination, Container, Spinner } from "react-bootstrap"
-import { PRODUCT_DESCRIPTION } from "../../constants/constants"
+import { PRODUCT_DESCRIPTION } from "../../../constants/constants"
 import { useHistory } from "react-router-dom"
 
-import scrollToTop from "../../utils/scrollToTop"
+import scrollToTop from "../../../utils/scrollToTop"
 import {
   getProductsIdsByTagsFromDatabase,
   getSimilarProductsFromDatabase,
-} from "../../actions/database"
+} from "../../../actions/database"
 import "./SimilarProducts.css"
-import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
-import Product from "../Product/Product"
+import { convertProductFromDatabaseToProductEntity } from "../../../utils/convertProductFromDatabaseToProductEntity"
+import Product from "../Product"
 
 const SimilarProducts = ({ id, screenWidth, tags }) => {
   const history = useHistory()

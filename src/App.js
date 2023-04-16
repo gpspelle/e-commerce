@@ -12,7 +12,7 @@ import {
   PRODUCTS,
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
-import MemoizedProductContainer from "./components/ProductContainer/ProductContainer"
+import MemoizedProductContainer from "./components/Product/ProductContainer"
 import Home from "./components/Home/Home"
 import AdminDescription from "./components/AdminDescription/AdminDescription"
 import AboutUs from "./components/AboutUs/AboutUs"
@@ -24,10 +24,10 @@ import SearchBar from "./components/SearchBar/SearchBar"
 import HeroHeader from "./components/HeroHeader/HeroHeader"
 
 const ProductDescription = lazy(() =>
-  import("./components/ProductDescription/ProductDescription")
+  import("./components/Product/ProductDescription")
 )
 const ProductDescriptionMobile = lazy(() =>
-  import("./components/ProductDescriptionMobile/ProductDescriptionMobile")
+  import("./components/ProductMobile/ProductDescriptionMobile")
 )
 
 function App() {

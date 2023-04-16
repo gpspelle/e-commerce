@@ -8,7 +8,7 @@ import scrollToTop from "../../utils/scrollToTop"
 import AdminHome from "../AdminHome/AdminHome"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../../basicBlocks/ProgressiveBlurryImageLoad"
 import SearchBar from "../SearchBar/SearchBar"
 
 export default function AboutUs() {

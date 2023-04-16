@@ -7,7 +7,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions"
 import scrollToTop from "../../utils/scrollToTop"
 import Footer from "../Footer/Footer"
 import NavigationBar from "../NavigationBar/NavigationBar"
-import MemoizedProductContainer from "../ProductContainer/ProductContainer"
+import MemoizedProductContainer from "../Product/ProductContainer"
 import AboutAdmin from "./AboutAdmin"
 import SearchBar from "../SearchBar/SearchBar"
 

@@ -7,7 +7,7 @@ import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
 import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightningDeal } from "../../utils/LightningDealUtils"
-import ProgressiveBlurryImageLoad from "../ProgressiveBlurryImageLoad/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../../basicBlocks/ProgressiveBlurryImageLoad"
 
 // this is not used for now, waiting for the designer's work
 export default function ProductMobile({

@@ -2,7 +2,7 @@ import React from "react"
 import {
   PRODUCT_ORDER_SELL_TYPE,
   PRODUCT_STOCK_SELL_TYPE,
-} from "../../constants/constants"
+} from "../../../constants/constants"
 import { ProductOrderInfo } from "./ProductOrderInfo"
 import { ProductStockInfo } from "./ProductStockInfo"
 
