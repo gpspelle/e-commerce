@@ -2,30 +2,27 @@ import React, { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { Container, Row, Col } from "react-bootstrap"
 
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import useScrollBlock from "../../hooks/useScrollBlock"
+import useWindowDimensions from "../hooks/useWindowDimensions"
+import useScrollBlock from "../hooks/useScrollBlock"
 import SendMessageWhatsAppButton, {
   sendBuyWhatsAppMessage,
   sendMakeOrderWhatsAppMessage,
-} from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
-import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
-import ImageCarousel from "../ImageCarousel/ImageCarousel"
-import { getIsDeal } from "../../utils/dealUtils"
-import { getIsLightningDeal } from "../../utils/lightningDealUtils"
-import MemoizedSimilarProducts from "./SimilarProducts/SimilarProducts"
-import NoProductFoundMessage from "../NoProductFoundMessage/NoProductFoundMessage"
-import ProductSellTypeInfo from "./ProductSellTypeInfo/ProductSellTypeInfo"
-import scrollToTop from "../../utils/scrollToTop"
-import AboutAdmin from "../AdminDescription/AboutAdmin"
-import Footer from "../Footer/Footer"
-import NavigationBar from "../NavigationBar/NavigationBar"
-import {
-  getAccountFromDatabase,
-  getProductFromDatabase,
-} from "../../actions/database"
-import { getEmptyProduct } from "../../entities/product"
-import "./ProductDescription.css"
-import SearchBar from "../SearchBar/SearchBar"
+} from "../components/SendMessageWhatsAppButton/SendMessageWhatsAppButton"
+import LightningDealDuration from "../components/Deals/LightningDealDuration"
+import ImageCarousel from "../components/Image/ImageCarousel/ImageCarousel"
+import { getIsDeal } from "../utils/dealUtils"
+import { getIsLightningDeal } from "../utils/lightningDealUtils"
+import MemoizedSimilarProducts from "../components/Product/SimilarProducts/SimilarProducts"
+import NoProductFoundMessage from "../components/NoProductFoundMessage/NoProductFoundMessage"
+import ProductSellTypeInfo from "../components/Product/ProductSellTypeInfo/ProductSellTypeInfo"
+import scrollToTop from "../utils/scrollToTop"
+import AboutAdmin from "../components/Admin/AboutAdmin"
+import Footer from "../components/Footer/Footer"
+import NavigationBar from "../components/NavigationBar/NavigationBar"
+import { getAccountFromDatabase, getProductFromDatabase } from "../actions/database"
+import { getEmptyProduct } from "../entities/product"
+import "../hooks/ProductDescription.css"
+import SearchBar from "../components/Search/SearchBar"
 
 export default function ProductDescription() {
   const location = useLocation()

@@ -1,7 +1,7 @@
 import React from "react"
 import { CloseButton } from "react-bootstrap"
 import { LARGE_SCREEN } from "../../constants/constants"
-import Image from "../../basicBlocks/Image"
+import Image from "./Image"
 
 export default function OnClickImageZoom({
   src,

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react"
 import { Card, Col, Container, Row } from "react-bootstrap"
 import { useLocation, useParams } from "react-router-dom"
 
-import { getAccountsFromDatabase } from "../../actions/database"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import scrollToTop from "../../utils/scrollToTop"
-import Footer from "../Footer/Footer"
-import NavigationBar from "../NavigationBar/NavigationBar"
-import MemoizedProductContainer from "../Product/ProductContainer"
-import AboutAdmin from "./AboutAdmin"
-import SearchBar from "../SearchBar/SearchBar"
+import { getAccountsFromDatabase } from "../actions/database"
+import useWindowDimensions from "../hooks/useWindowDimensions"
+import scrollToTop from "../utils/scrollToTop"
+import Footer from "../components/Footer/Footer"
+import NavigationBar from "../components/NavigationBar/NavigationBar"
+import MemoizedProductContainer from "../components/Product/ProductContainer"
+import AboutAdmin from "../components/Admin/AboutAdmin"
+import SearchBar from "../components/Search/SearchBar"
 
-export default function AdminDescription() {
+export default function AdminPage() {
   const location = useLocation()
   const { id } = useParams()
   const { width } = useWindowDimensions()

@@ -2,7 +2,7 @@ import React from "react"
 import { Container } from "react-bootstrap"
 import { HERO_HEADER_TEXT, LARGE_SCREEN } from "../../constants/constants"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
-import SearchBar from "../SearchBar/SearchBar"
+import SearchBar from "../Search/SearchBar"
 
 export default function HeroHeader() {
   const { width } = useWindowDimensions()

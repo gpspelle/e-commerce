@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Container, Form } from "react-bootstrap"
 import { useHistory } from "react-router-dom"
 
-import SearchBarButton from "../SearchBarButton/SearchBarButton"
+import SearchBarButton from "./SearchBarButton"
 import { LARGE_SCREEN, PRODUCTS } from "../../constants/constants"
 import "./SearchBar.css"
 import useWindowDimensions from "../../hooks/useWindowDimensions"

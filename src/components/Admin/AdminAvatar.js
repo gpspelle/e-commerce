@@ -2,7 +2,7 @@ import React from "react"
 import { useHistory } from "react-router-dom"
 
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
-import Image from "../../basicBlocks/Image"
+import Image from "../Image/Image"
 
 export const openAdminDetailPage = (event, history, account) => {
   if (event.target.type === "button") return
@@ -13,7 +13,7 @@ export const openAdminDetailPage = (event, history, account) => {
   })
 }
 
-export default function AdminHome({ account }) {
+export default function AdminAvatar({ account }) {
   const history = useHistory()
   return (
     <Image

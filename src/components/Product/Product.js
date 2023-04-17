@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom"
 import { Card, Row, Col } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
-import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
+import LightningDealWaterMark from "../Deals/WaterMarks/LightningDealWaterMark"
+import LightningDealDuration from "../Deals/LightningDealDuration"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import { getIsDeal } from "../../utils/dealUtils"
-import DealWaterMark from "../DealWaterMark/DealWaterMark"
+import DealWaterMark from "../Deals/WaterMarks/DealWaterMark"
 import ProductImage from "./ProductImage"
 
 function Product({

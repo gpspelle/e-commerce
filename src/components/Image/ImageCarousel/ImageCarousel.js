@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
-import { LARGE_SCREEN } from "../../constants/constants"
+import { LARGE_SCREEN } from "../../../constants/constants"
 
-import DealWaterMark from "../DealWaterMark/DealWaterMark"
-import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
-import OnClickImageZoom from "../OnClickImageZoom/OnClickImageZoom"
-import OtherImagesZoom from "../OtherImagesZoom/OtherImagesZoom"
+import DealWaterMark from "../../Deals/WaterMarks/DealWaterMark"
+import LightningDealWaterMark from "../../Deals/WaterMarks/LightningDealWaterMark"
+import OnClickImageZoom from "../OnClickImageZoom"
+import OtherImagesZoom from "../OtherImagesZoom"
 import "./ImageCarousel.css"
 
 const responsive = {

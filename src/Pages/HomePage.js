@@ -11,30 +11,30 @@ import {
   EXTRA_LARGE_SCREEN,
   LARGE_SCREEN,
   PRODUCTS,
-} from "../../constants/constants"
-import useIsMounted from "../../hooks/useIsMounted"
-import useQuery from "../../hooks/useQuery"
-import useWindowDimensions from "../../hooks/useWindowDimensions"
-import AdminHome from "../AdminHome/AdminHome"
-import { getRandomFromArray, getRandomFromRangeArray } from "../../utils/randomUtils"
-import SwipeToSeeMore from "../SwipeToSeeMore/SwipeToSeeMore"
-import { LateralCard } from "../Blocks/LateralCard"
+} from "../constants/constants"
+import useIsMounted from "../hooks/useIsMounted"
+import useQuery from "../hooks/useQuery"
+import useWindowDimensions from "../hooks/useWindowDimensions"
+import AdminAvatar from "../components/Admin/AdminAvatar"
+import { getRandomFromArray, getRandomFromRangeArray } from "../utils/randomUtils"
+import SwipeToSeeMore from "../components/SwipeToSeeMore/SwipeToSeeMore"
+import { LateralCard } from "../components/LateralCard/LateralCard"
 import {
   getAccountsFromDatabase,
   getProductsFromDatabase,
-} from "../../actions/database"
-import scrollToTop from "../../utils/scrollToTop"
-import Footer from "../Footer/Footer"
-import NavigationBar from "../NavigationBar/NavigationBar"
-import { range } from "../../utils/range"
-import HeroHeader from "../HeroHeader/HeroHeader"
-import { convertProductArrayToDisplayProduct } from "../../utils/convertProductArrayToDisplayProduct"
-import { filterDealsAndLightningDealsFromProductArray } from "../../utils/filterDealsAndLightningDealsFromProductArray"
+} from "../actions/database"
+import scrollToTop from "../utils/scrollToTop"
+import Footer from "../components/Footer/Footer"
+import NavigationBar from "../components/NavigationBar/NavigationBar"
+import { range } from "../utils/range"
+import HeroHeader from "../components/HeroHeader/HeroHeader"
+import { convertProductArrayToDisplayProduct } from "../utils/convertProductArrayToDisplayProduct"
+import { filterDealsAndLightningDealsFromProductArray } from "../utils/filterDealsAndLightningDealsFromProductArray"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
 
-export default function Home() {
+export default function HomePage() {
   const query = useQuery()
   const history = useHistory()
   const [productData, setProductData] = useState({
@@ -191,7 +191,7 @@ export default function Home() {
           paddingLeft: "0px",
         }}
       >
-        <AdminHome account={account} />
+        <AdminAvatar account={account} />
       </Col>
     )
   })

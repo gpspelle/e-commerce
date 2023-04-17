@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import { ADMIN_DESCRIPTION } from "../../constants/constants"
 import { sendHelloWhatsAppMessage } from "../SendMessageWhatsAppButton/SendMessageWhatsAppButton"
 import "./AboutAdmin.css"
-import Image from "../../basicBlocks/Image"
+import Image from "../Image/Image"
 
 export default function AboutAdmin({
   productOwnerName,
@@ -123,6 +123,7 @@ export default function AboutAdmin({
                     commercialName,
                   })
                 }
+                alt="whatsapp icon"
               />
             )}
             {facebookLink && (
@@ -132,6 +133,7 @@ export default function AboutAdmin({
                 src="/facebook.svg"
                 style={{ cursor: "pointer", marginRight: "16px" }}
                 onClick={() => window.open(facebookLink, "_blank")}
+                alt="facebook icon"
               />
             )}
             {instagramLink && (
@@ -141,6 +143,7 @@ export default function AboutAdmin({
                 src="/instagram.svg"
                 style={{ cursor: "pointer", marginRight: "16px" }}
                 onClick={() => window.open(instagramLink, "_blank")}
+                alt="instagram icon"
               />
             )}
           </Col>

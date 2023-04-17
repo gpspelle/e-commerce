@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef } from "react"
 import { Col, Container, Row } from "react-bootstrap"
 import { useLocation } from "react-router-dom"
 
-import { getAccountsFromDatabase } from "../../actions/database"
-import { ABOUT_US_DESCRIPTION } from "../../constants/constants"
-import scrollToTop from "../../utils/scrollToTop"
-import AdminHome from "../AdminHome/AdminHome"
-import Footer from "../Footer/Footer"
-import NavigationBar from "../NavigationBar/NavigationBar"
-import ProgressiveBlurryImageLoad from "../../basicBlocks/ProgressiveBlurryImageLoad"
-import SearchBar from "../SearchBar/SearchBar"
+import { getAccountsFromDatabase } from "../actions/database"
+import { ABOUT_US_DESCRIPTION } from "../constants/constants"
+import scrollToTop from "../utils/scrollToTop"
+import AdminAvatar from "../components/Admin/AdminAvatar"
+import Footer from "../components/Footer/Footer"
+import NavigationBar from "../components/NavigationBar/NavigationBar"
+import ProgressiveBlurryImageLoad from "../components/Image/ProgressiveBlurryImageLoad"
+import SearchBar from "../components/Search/SearchBar"
 
-export default function AboutUs() {
+export default function AboutUsPage() {
   const location = useLocation()
   const adminsRef = useRef()
   const [accountsData, setAccountsData] = useState({
@@ -96,7 +96,7 @@ export default function AboutUs() {
                     }}
                   >
                     <div>
-                      <AdminHome account={account} />
+                      <AdminAvatar account={account} />
                       <p
                         style={{
                           fontSize: "12px",

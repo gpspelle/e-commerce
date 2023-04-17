@@ -1,4 +1,4 @@
-import ProgressiveBlurryImageLoad from "../../basicBlocks/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../Image/ProgressiveBlurryImageLoad"
 import React from "react"
 
 const fallbackSrc = "/not-found.png"

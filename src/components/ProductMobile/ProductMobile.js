@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom"
 import { Card } from "react-bootstrap"
 
 import { PRODUCT_DESCRIPTION } from "../../constants/constants"
-import LightningDealWaterMark from "../DealWaterMark/LightningDealWaterMark"
-import LightningDealDuration from "../LightningDealDuration/LightningDealDuration"
+import LightningDealWaterMark from "../Deals/WaterMarks/LightningDealWaterMark"
+import LightningDealDuration from "../Deals/LightningDealDuration"
 import { getIsDeal } from "../../utils/DealUtils"
 import { getIsLightningDeal } from "../../utils/LightningDealUtils"
-import ProgressiveBlurryImageLoad from "../../basicBlocks/ProgressiveBlurryImageLoad"
+import ProgressiveBlurryImageLoad from "../Image/ProgressiveBlurryImageLoad"
 
 // this is not used for now, waiting for the designer's work
 export default function ProductMobile({

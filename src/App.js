@@ -13,21 +13,20 @@ import {
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
 import MemoizedProductContainer from "./components/Product/ProductContainer"
-import Home from "./components/Home/Home"
-import AdminDescription from "./components/AdminDescription/AdminDescription"
-import AboutUs from "./components/AboutUs/AboutUs"
+import HomePage from "./Pages/HomePage"
+import AdminPage from "./Pages/AdminPage"
+import AboutUsPage from "./Pages/AboutUsPage"
 import NavigationBar from "./components/NavigationBar/NavigationBar"
 import Footer from "./components/Footer/Footer"
 import "./App.css"
 import "./style/guidelines.css"
-import SearchBar from "./components/SearchBar/SearchBar"
+import SearchBar from "./components/Search/SearchBar"
 import HeroHeader from "./components/HeroHeader/HeroHeader"
+import ProductsPage from "./Pages/ProductsPage"
 
-const ProductDescription = lazy(() =>
-  import("./components/Product/ProductDescription")
-)
+const ProductDescription = lazy(() => import("./Pages/ProductDescription"))
 const ProductDescriptionMobile = lazy(() =>
-  import("./components/ProductMobile/ProductDescriptionMobile")
+  import("./Pages/ProductDescriptionMobile")
 )
 
 function App() {
@@ -42,25 +41,19 @@ function App() {
               {width < 992 ? <ProductDescriptionMobile /> : <ProductDescription />}
             </Route>
             <Route path={`/:id/${ADMIN_DESCRIPTION}`}>
-              <AdminDescription />
+              <AdminPage />
             </Route>
             <Route path={`/${DEALS}`}>
-              <NavigationBar />
-              <HeroHeader />
-              <MemoizedProductContainer isDeals={true} />
-              <Footer />
+              <ProductsPage isDeals={true} />
             </Route>
             <Route path={`/${PRODUCTS}`}>
-              <NavigationBar />
-              <HeroHeader />
-              <MemoizedProductContainer isDeals={false} />
-              <Footer />
+              <ProductsPage isDeals={false} />
             </Route>
             <Route path={`/${ABOUT_US}`}>
-              <AboutUs />
+              <AboutUsPage />
             </Route>
             <Route path="/">
-              <Home screenWidth={width} screenHeight={height} />
+              <HomePage screenWidth={width} screenHeight={height} />
             </Route>
           </Switch>
         </Suspense>
