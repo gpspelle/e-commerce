@@ -28,6 +28,7 @@ function ProgressiveBlurryImageLoad({
         }}
         alt=""
         onClick={onClick}
+        key={small + large + blur}
       />
     )
   }
