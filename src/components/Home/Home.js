@@ -8,6 +8,7 @@ import {
   ABOUT_US,
   ADVANTAGES,
   DEALS,
+  EXTRA_LARGE_SCREEN,
   LARGE_SCREEN,
   PRODUCTS,
 } from "../../constants/constants"
@@ -147,16 +148,19 @@ export default function Home() {
   }
 
   var multiplier
-  if (width > LARGE_SCREEN) {
-    multiplier = 0.28
+  if (width > EXTRA_LARGE_SCREEN) {
+    multiplier = 0.2
+  } else if (width > LARGE_SCREEN) {
+    multiplier = 0.24
   } else if (width > 359) {
-    multiplier = 0.42
+    multiplier = 0.3
   } else {
     multiplier = 0.9
   }
 
-  const productImageSize = width * multiplier
+  let productImageSize = width * multiplier
   const productCardSize = productImageSize + 2.5
+  productImageSize = productImageSize + 0.5
 
   const dealItems = convertProductArrayToDisplayProduct({
     productArray: displayDealProducts,

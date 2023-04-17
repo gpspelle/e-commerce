@@ -57,6 +57,7 @@ export const PRODUCT_TYPES = {
   NORMAL: "NORMAL",
 }
 
+export const EXTRA_LARGE_SCREEN = 1400
 export const LARGE_SCREEN = 992
 
 const aboutUsIcon = (
