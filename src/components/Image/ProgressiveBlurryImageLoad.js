@@ -12,42 +12,22 @@ function ProgressiveBlurryImageLoad({
   onClick,
   style,
 }) {
-  if (small) {
-    const [src, { blur }] = useProgressiveImageLoad(small, large)
-    return (
-      <Image
-        fallbackSrc={largeFallback}
-        src={src}
-        className="light-dark-background"
-        style={{
-          ...style,
-          height,
-          width,
-          filter: blur ? "blur(5px)" : "none",
-          objectFit: "contain",
-        }}
-        alt=""
-        onClick={onClick}
-        key={small + large + blur}
-      />
-    )
-  }
-
+  const [src, { blur }] = useProgressiveImageLoad(small, large)
   return (
     <Image
       fallbackSrc={largeFallback}
-      src={large}
+      src={src}
       className="light-dark-background"
       style={{
         ...style,
         height,
         width,
-        filter: "none",
+        filter: blur ? "blur(5px)" : "none",
         objectFit: "contain",
       }}
       alt=""
       onClick={onClick}
-      key={small + large}
+      key={small + large + blur}
     />
   )
 }
