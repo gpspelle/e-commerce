@@ -86,7 +86,6 @@ export default function ProductDescription() {
     productOwnerId,
     aboutMe,
     aboutProducts,
-    email,
     tags,
     productType,
     dealPrice,
@@ -152,6 +151,7 @@ export default function ProductDescription() {
                     isDeal={isDeal}
                     price={price}
                     dealPrice={dealPrice}
+                    key={images}
                   />
                 )}
               </Col>

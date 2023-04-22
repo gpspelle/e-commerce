@@ -8,7 +8,7 @@ export const convertProductFromDatabaseToProductEntity = ({ product }) => {
     price: product.PRODUCT_PRICE.N,
     images: product.PRODUCT_IMAGES.L.map((image) => image.S),
     productImagesResized: product.PRODUCT_IMAGES_RESIZED?.L.map((image) => image.S),
-    coverImage: product.PRODUCT_COVER_IMAGE?.S,
+    coverImage: product.PRODUCT_COVER_IMAGE?.S, // no longer used because it causes UX defects when image not found
     productOwnerId: product.PRODUCT_OWNER_ID?.S,
     tags: product.PRODUCT_TAGS?.SS || [],
     productType: product.PRODUCT_TYPE?.S,

@@ -20,6 +20,7 @@ function Image({ src, fallbackSrc, style, onClick, alt, className }) {
       onClick={onClick}
       alt={alt}
       className={className}
+      key={src + fallbackSrc + style + onClick}
     />
   )
 }

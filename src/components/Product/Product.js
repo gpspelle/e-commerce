@@ -8,7 +8,7 @@ import LightningDealDuration from "../Deals/LightningDealDuration"
 import { getIsLightningDeal } from "../../utils/lightningDealUtils"
 import { getIsDeal } from "../../utils/dealUtils"
 import DealWaterMark from "../Deals/WaterMarks/DealWaterMark"
-import ProductImage from "./ProductImage"
+import Image from "../Image/Image"
 
 function Product({
   productEntity,
@@ -29,7 +29,6 @@ function Product({
     dealPrice,
     lightningDealStartTime,
     lightningDealDuration,
-    coverImage,
   } = productEntity
 
   const isDeal = getIsDeal(productType)
@@ -54,10 +53,18 @@ function Product({
       }}
       onClick={openDetailPage}
     >
-      <ProductImage
-        coverImage={coverImage}
-        productImageSize={productImageSize}
-        image={images[0]}
+      <Image
+        src={images[0]}
+        fallbackSrc="/not-found.png"
+        style={{
+          width: productImageSize,
+          height: productImageSize,
+          filter: "none",
+          objectFit: "contain",
+        }}
+        alt=""
+        className="light-dark-background"
+        key={images[0] + productImageSize}
       />
       {isLightningDeal && <LightningDealWaterMark />}
       {isDeal && (

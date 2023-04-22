@@ -47,7 +47,7 @@ function ProgressiveBlurryImageLoad({
       }}
       alt=""
       onClick={onClick}
-      key={large}
+      key={small + large}
     />
   )
 }

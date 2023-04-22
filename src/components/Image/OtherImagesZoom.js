@@ -1,10 +1,8 @@
 import React from "react"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
-import { Spinner, Container } from "react-bootstrap"
+import { Container, Spinner } from "react-bootstrap"
 import { LARGE_SCREEN } from "../../constants/constants"
-
-import ProgressiveBlurryImageLoad from "./ProgressiveBlurryImageLoad"
 import Image from "./Image"
 
 const OtherImagesZoom = ({
@@ -21,27 +19,8 @@ const OtherImagesZoom = ({
     1420: { items: 12 },
   }
 
-  const hasCoverImage =
-    productImagesResized && productImagesResized.length === productImages.length
   const components = productImages.map((productImage, i) => {
-    const firstImage = productImage
-
-    return hasCoverImage ? (
-      <ProgressiveBlurryImageLoad
-        width={100}
-        height={100}
-        large={firstImage}
-        onClick={() => setActualShowingImageNumber(i)}
-        style={{
-          cursor: "pointer",
-          border:
-            productImages[actualShowingImageNumber] === productImage
-              ? "2.5px solid orange"
-              : "",
-        }}
-        largeFallback="/not-found.png"
-      />
-    ) : (
+    return (
       <Image
         style={{
           width: 100,
@@ -53,7 +32,7 @@ const OtherImagesZoom = ({
               : "",
         }}
         fallbackSrc="/not-found.png"
-        src={firstImage}
+        src={productImage}
         onClick={() => setActualShowingImageNumber(i)}
       />
     )

@@ -6,10 +6,10 @@ import "react-alice-carousel/lib/alice-carousel.css"
 import {
   getProductsIdsByTagsFromDatabase,
   getSimilarProductsFromDatabase,
-} from "../../../actions/database"
+} from "../../actions/database"
 import "./SimilarProductsMobile.css"
-import { convertProductFromDatabaseToProductEntity } from "../../../utils/convertProductFromDatabaseToProductEntity"
-import Product from "../../Product/Product"
+import { convertProductFromDatabaseToProductEntity } from "../../utils/convertProductFromDatabaseToProductEntity"
+import Product from "../Product/Product"
 
 const SimilarProductsMobile = ({ id, tags }) => {
   const [items, setItems] = useState()

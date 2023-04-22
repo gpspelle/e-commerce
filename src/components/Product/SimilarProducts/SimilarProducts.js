@@ -140,7 +140,7 @@ const SimilarProducts = ({ id, screenWidth, tags }) => {
                   style={{ position: "relative", margin: "auto" }}
                   disabled={start === 0}
                 />
-                {items.slice(start, end).map((similarProduct, i) => {
+                {[items[0]].slice(start, end).map((similarProduct, i) => {
                   return (
                     <Pagination.Item
                       style={{ position: "relative", margin: "auto" }}
