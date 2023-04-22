@@ -28,13 +28,13 @@ export const getAccountsFromDatabase = async ({
 
     setAccountsData({
       accounts: data,
-      accountsPagination: { key, fetch: key ? true : false },
+      accountsPagination: { key, fetch: !!key },
     })
   } else {
     const { data, key } = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`)
     setAccountsData({
       accounts: data,
-      accountsPagination: { key, fetch: key ? true : false },
+      accountsPagination: { key, fetch: !!key },
     })
   }
 }
@@ -46,7 +46,7 @@ export const getProductsFromDatabase = async ({
   productPagination,
 }) => {
   const body = {
-    key: productPagination.key,
+    key: productPagination.key || "", // axios 1 requires this to be "" otherwise it gets dropped
   }
 
   const config = {
@@ -75,7 +75,7 @@ export const getProductsFromDatabase = async ({
   setProductData({
     products: concatProducts,
     allProducts: concatProducts,
-    productPagination: { key, fetch: key ? true : false },
+    productPagination: { key, fetch: !!key },
   })
 }
 
@@ -155,7 +155,7 @@ export const getSimilarProductsFromDatabase = async ({
   productsIds,
 }) => {
   const body = {
-    key: productPagination.key,
+    key: productPagination.key || "", // axios 1 requires this to be "" otherwise it gets dropped
   }
 
   const config = {
@@ -181,8 +181,8 @@ export const getSimilarProductsFromDatabase = async ({
     products: concatProducts,
     productPagination: {
       key,
-      fetch: key ? true : false,
-      isLoading: key ? true : false,
+      fetch: !!key,
+      isLoading: !!key,
     },
   })
 }

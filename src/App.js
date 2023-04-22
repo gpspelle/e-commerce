@@ -12,17 +12,13 @@ import {
   PRODUCTS,
   PRODUCT_DESCRIPTION,
 } from "./constants/constants"
-import MemoizedProductContainer from "./components/Product/ProductContainer"
 import HomePage from "./Pages/HomePage"
 import AdminPage from "./Pages/AdminPage"
 import AboutUsPage from "./Pages/AboutUsPage"
-import NavigationBar from "./components/NavigationBar/NavigationBar"
-import Footer from "./components/Footer/Footer"
+import ProductsPage from "./Pages/ProductsPage"
+
 import "./App.css"
 import "./style/guidelines.css"
-import SearchBar from "./components/Search/SearchBar"
-import HeroHeader from "./components/HeroHeader/HeroHeader"
-import ProductsPage from "./Pages/ProductsPage"
 
 const ProductDescription = lazy(() => import("./Pages/ProductDescription"))
 const ProductDescriptionMobile = lazy(() =>
