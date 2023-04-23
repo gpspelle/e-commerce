@@ -1,11 +1,10 @@
 import React from "react"
 import { Col, Row } from "react-bootstrap"
-import { Link } from "react-router-dom"
 
-import { ADMIN_DESCRIPTION } from "../../constants/constants"
 import "./AboutAdmin.css"
 import Image from "../Image/Image"
 import AdminContact from "./AdminContact"
+import AdminSeeMoreLink from "./AdminSeeMoreLink"
 
 export default function AboutAdmin({
   productOwnerName,
@@ -33,31 +32,17 @@ export default function AboutAdmin({
       </Col>
     ),
     links: isComplete ? (
-      <Link
-        to={{
-          pathname: `/${productOwnerId}/${ADMIN_DESCRIPTION}`,
-          state: {
-            name: productOwnerName,
-            phone_number: phoneNumber,
-            commercial_name: commercialName,
-            crop_profile_photo: cropProfilePhoto,
-            about_me: aboutMe,
-            about_products: aboutProducts,
-            facebook_link: facebookLink,
-            instagram_link: instagramLink,
-          },
-        }}
-        className="secondary-color more-button"
-        style={{
-          display: "inline-block",
-          textDecoration: "none",
-          float: "right",
-          marginTop: "16px",
-          marginBottom: "16px",
-        }}
-      >
-        Ver mais
-      </Link>
+      <AdminSeeMoreLink
+        productOwnerId={productOwnerId}
+        productOwnerName={productOwnerName}
+        phoneNumber={phoneNumber}
+        commercialName={commercialName}
+        cropProfilePhoto={cropProfilePhoto}
+        aboutMe={aboutMe}
+        aboutProducts={aboutProducts}
+        facebookLink={facebookLink}
+        instagramLink={instagramLink}
+      />
     ) : (
       <AdminContact
         phoneNumber={phoneNumber}

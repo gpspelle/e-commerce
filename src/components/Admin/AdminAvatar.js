@@ -25,9 +25,10 @@ export default function AdminAvatar({ account }) {
         cursor: "pointer",
         borderRadius: 500,
       }}
-      src={account.crop_profile_photo || "/user.png"}
+      src={account.crop_profile_photo}
       fallbackSrc="/user.png"
       onClick={(e) => openAdminDetailPage(e, history, account)}
+      key={account.crop_profile_photo}
     />
   )
 }

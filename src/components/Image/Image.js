@@ -13,8 +13,7 @@ const onError = (status, setStatus) => {
 function Image({ src, fallbackSrc, style, onClick, alt, className }) {
   const [status, setStatus] = useState({
     error: false,
-    // when src is undefined or null, onError is not triggered
-    src: !src ? fallbackSrc : src,
+    src,
     fallbackSrc,
   })
   return (

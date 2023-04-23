@@ -26,12 +26,23 @@ export const getAccountsFromDatabase = async ({
       params: body,
     })
 
+    data.forEach((account) => {
+      // when src is undefined or null, onError image load is not triggered
+      account.crop_profile_photo = account.crop_profile_photo || "/user.png"
+    })
+
     setAccountsData({
       accounts: data,
       accountsPagination: { key, fetch: !!key },
     })
   } else {
     const { data, key } = await axios.get(`${REST_API}/${ACCOUNTS_ENDPOINT}`)
+
+    data.forEach((account) => {
+      // when src is undefined or null, onError image load is not triggered
+      account.crop_profile_photo = account.crop_profile_photo || "/user.png"
+    })
+
     setAccountsData({
       accounts: data,
       accountsPagination: { key, fetch: !!key },
@@ -110,7 +121,8 @@ export const getAccountFromDatabase = async ({
       aboutMe: about_me,
       email: email,
       aboutProducts: about_products,
-      cropProfilePhoto: crop_profile_photo,
+      // when src is undefined or null, onError image load is not triggered
+      cropProfilePhoto: crop_profile_photo || "/user.png",
       productOwnerName: name,
       commercialName: commercial_name,
       phoneNumber: phone_number,
