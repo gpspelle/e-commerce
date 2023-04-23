@@ -15,7 +15,6 @@ import {
 import useIsMounted from "../hooks/useIsMounted"
 import useQuery from "../hooks/useQuery"
 import useWindowDimensions from "../hooks/useWindowDimensions"
-import AdminAvatar from "../components/Admin/AdminAvatar"
 import { getRandomFromArray, getRandomFromRangeArray } from "../utils/randomUtils"
 import SwipeToSeeMore from "../components/SwipeToSeeMore/SwipeToSeeMore"
 import { LateralCard } from "../components/LateralCard/LateralCard"
@@ -30,6 +29,8 @@ import { range } from "../utils/range"
 import HeroHeader from "../components/HeroHeader/HeroHeader"
 import { convertProductArrayToDisplayProduct } from "../utils/convertProductArrayToDisplayProduct"
 import { filterDealsAndLightningDealsFromProductArray } from "../utils/filterDealsAndLightningDealsFromProductArray"
+import AdminOpenDescription from "../components/Admin/AdminOpenDescription"
+import Image from "../components/Image/Image"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -191,7 +192,20 @@ export default function HomePage() {
           paddingLeft: "0px",
         }}
       >
-        <AdminAvatar account={account} />
+        <Image
+          style={{
+            width: "120px",
+            height: "120px",
+            objectFit: "contain",
+            backgroundColor: "#F4F4F4",
+            cursor: "pointer",
+            borderRadius: 500,
+          }}
+          src={account.crop_profile_photo}
+          fallbackSrc="/user.png"
+          onClick={AdminOpenDescription({ account })}
+          key={account.crop_profile_photo}
+        />
       </Col>
     )
   })

@@ -5,11 +5,12 @@ import { useLocation } from "react-router-dom"
 import { getAccountsFromDatabase } from "../actions/database"
 import { ABOUT_US_DESCRIPTION } from "../constants/constants"
 import scrollToTop from "../utils/scrollToTop"
-import AdminAvatar from "../components/Admin/AdminAvatar"
 import Footer from "../components/Footer/Footer"
 import NavigationBar from "../components/NavigationBar/NavigationBar"
 import ProgressiveBlurryImageLoad from "../components/Image/ProgressiveBlurryImageLoad"
 import SearchBar from "../components/Search/SearchBar"
+import AdminOpenDescription from "../components/Admin/AdminOpenDescription"
+import Image from "../components/Image/Image"
 
 export default function AboutUsPage() {
   const location = useLocation()
@@ -96,7 +97,20 @@ export default function AboutUsPage() {
                     }}
                   >
                     <div>
-                      <AdminAvatar account={account} />
+                      <Image
+                        style={{
+                          width: "120px",
+                          height: "120px",
+                          objectFit: "contain",
+                          backgroundColor: "#F4F4F4",
+                          cursor: "pointer",
+                          borderRadius: 500,
+                        }}
+                        src={account.crop_profile_photo}
+                        fallbackSrc="/user.png"
+                        onClick={AdminOpenDescription({ account })}
+                        key={account.crop_profile_photo}
+                      />
                       <p
                         style={{
                           fontSize: "12px",
