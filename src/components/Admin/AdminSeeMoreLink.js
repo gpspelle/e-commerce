@@ -2,30 +2,13 @@ import { ADMIN_DESCRIPTION } from "../../constants/constants"
 import { Link } from "react-router-dom"
 import React from "react"
 
-function AdminSeeMoreLink({
-  productOwnerId,
-  productOwnerName,
-  phoneNumber,
-  commercialName,
-  cropProfilePhoto,
-  aboutMe,
-  aboutProducts,
-  facebookLink,
-  instagramLink,
-}) {
+function AdminSeeMoreLink({ account }) {
   return (
     <Link
       to={{
-        pathname: `/${productOwnerId}/${ADMIN_DESCRIPTION}`,
+        pathname: `/${account.id}/${ADMIN_DESCRIPTION}`,
         state: {
-          name: productOwnerName,
-          phone_number: phoneNumber,
-          commercial_name: commercialName,
-          crop_profile_photo: cropProfilePhoto,
-          about_me: aboutMe,
-          about_products: aboutProducts,
-          facebook_link: facebookLink,
-          instagram_link: instagramLink,
+          ...account,
         },
       }}
       className="secondary-color more-button"

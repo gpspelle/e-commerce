@@ -11,6 +11,7 @@ import ProgressiveBlurryImageLoad from "../components/Image/ProgressiveBlurryIma
 import SearchBar from "../components/Search/SearchBar"
 import AdminOpenDescription from "../components/Admin/AdminOpenDescription"
 import Image from "../components/Image/Image"
+import AdminAvatar from "../components/Admin/AdminAvatar"
 
 export default function AboutUsPage() {
   const location = useLocation()
@@ -97,19 +98,10 @@ export default function AboutUsPage() {
                     }}
                   >
                     <div>
-                      <Image
-                        style={{
-                          width: "120px",
-                          height: "120px",
-                          objectFit: "contain",
-                          backgroundColor: "#F4F4F4",
-                          cursor: "pointer",
-                          borderRadius: 500,
-                        }}
+                      <AdminAvatar
                         src={account.crop_profile_photo}
-                        fallbackSrc="/user.png"
-                        onClick={AdminOpenDescription({ account })}
-                        key={account.crop_profile_photo}
+                        imageSize="120px"
+                        account={account}
                       />
                       <p
                         style={{

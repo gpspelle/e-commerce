@@ -97,6 +97,18 @@ export default function ProductDescription() {
     instagramLink,
   } = productData
 
+  const account = {
+    id: productOwnerId,
+    name: productOwnerName,
+    commercial_name: commercialName,
+    crop_profile_photo: cropProfilePhoto,
+    phone_number: phoneNumber,
+    about_me: aboutMe,
+    about_products: aboutProducts,
+    facebook_link: facebookLink,
+    instagram_link: instagramLink,
+  }
+
   const isDeal = getIsDeal(productType)
   const isLightningDeal = getIsLightningDeal(productType)
   const imagesIsDefined = images.length > 0
@@ -243,19 +255,7 @@ export default function ProductDescription() {
                 />
               </Col>
               <h5 style={{ marginBottom: "16px" }}>Sobre o artesão</h5>
-              <AboutAdmin
-                isComplete={true}
-                phoneNumber={phoneNumber}
-                productOwnerName={productOwnerName}
-                commercialName={commercialName}
-                productOwnerId={productOwnerId}
-                cropProfilePhoto={cropProfilePhoto}
-                aboutMe={aboutMe}
-                screenWidth={width}
-                aboutProducts={aboutProducts}
-                facebookLink={facebookLink}
-                instagramLink={instagramLink}
-              />
+              <AboutAdmin isComplete={true} account={account} screenWidth={width} />
             </>
           )}
         </Row>

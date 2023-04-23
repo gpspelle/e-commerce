@@ -29,14 +29,7 @@ export default function AdminPage() {
       setAccountsData({
         accounts: [
           {
-            name: location.state.name,
-            phone_number: location.state.phone_number,
-            commercial_name: location.state.commercial_name,
-            crop_profile_photo: location.state.crop_profile_photo,
-            about_me: location.state.about_me,
-            about_products: location.state.about_products,
-            facebook_link: location.state.facebook_link,
-            instagram_link: location.state.instagram_link,
+            ...location.state,
           },
         ],
         accountsPagination: { key: undefined, fetch: false },
@@ -46,27 +39,11 @@ export default function AdminPage() {
     }
   }, [])
 
-  var name,
-    phone_number,
-    commercial_name,
-    crop_profile_photo,
-    about_me,
-    about_products,
-    facebook_link,
-    instagram_link
+  var about_me, about_products
 
   if (accounts.length > 0) {
     // eslint-disable-next-line prettier/prettier
-    ;({
-      name,
-      phone_number,
-      commercial_name,
-      crop_profile_photo,
-      about_me,
-      about_products,
-      facebook_link,
-      instagram_link,
-    } = accounts[0])
+    ;({ about_me, about_products } = accounts[0])
   } else {
     return <></>
   }
@@ -76,17 +53,7 @@ export default function AdminPage() {
       <NavigationBar />
       <SearchBar />
       <Container>
-        <AboutAdmin
-          isComplete={false}
-          phoneNumber={phone_number}
-          productOwnerName={name}
-          commercialName={commercial_name}
-          productOwnerId={id}
-          cropProfilePhoto={crop_profile_photo}
-          screenWidth={width}
-          facebookLink={facebook_link}
-          instagramLink={instagram_link}
-        />
+        <AboutAdmin isComplete={false} account={accounts[0]} screenWidth={width} />
         <h6
           className="font-face-poppins-bold"
           style={{ marginTop: "32px", marginBottom: "8px" }}

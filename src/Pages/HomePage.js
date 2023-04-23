@@ -31,6 +31,7 @@ import { convertProductArrayToDisplayProduct } from "../utils/convertProductArra
 import { filterDealsAndLightningDealsFromProductArray } from "../utils/filterDealsAndLightningDealsFromProductArray"
 import AdminOpenDescription from "../components/Admin/AdminOpenDescription"
 import Image from "../components/Image/Image"
+import AdminAvatar from "../components/Admin/AdminAvatar"
 
 const RANGE = range(1000)
 const randomIndexes = getRandomFromRangeArray(RANGE)
@@ -192,19 +193,10 @@ export default function HomePage() {
           paddingLeft: "0px",
         }}
       >
-        <Image
-          style={{
-            width: "120px",
-            height: "120px",
-            objectFit: "contain",
-            backgroundColor: "#F4F4F4",
-            cursor: "pointer",
-            borderRadius: 500,
-          }}
+        <AdminAvatar
           src={account.crop_profile_photo}
-          fallbackSrc="/user.png"
-          onClick={AdminOpenDescription({ account })}
-          key={account.crop_profile_photo}
+          imageSize="120px"
+          account={account}
         />
       </Col>
     )
